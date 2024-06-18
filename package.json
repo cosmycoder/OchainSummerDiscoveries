@@ -6,12 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "dependencies": {
+    "@react-three/drei": "^9.107.0",
+    "@react-three/fiber": "^8.16.8",
     "@types/node": "20.1.4",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "@types/three": "^0.165.0",
     "autoprefixer": "10.4.14",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
@@ -19,7 +24,18 @@
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-force-graph-2d": "^1.25.5",
+    "react-force-graph-3d": "^1.24.3",
     "tailwindcss": "3.3.2",
+    "three": "^0.165.0",
+    "three-csg-ts": "^3.2.0",
+    "tsd": "^0.31.0",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.0.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "jsdom": "^24.1.0",
+    "vitest": "^1.6.0"
   }
 }
