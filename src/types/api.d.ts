@@ -1,4 +1,4 @@
-export interface  RegistryData  {
+export interface RegistryData {
   name: string;
   url: string;
   description: string;
@@ -20,9 +20,12 @@ export interface GraphArrow {
   target: string;
   name: string;
   description: string;
+  group: string;
 }
 
 export interface GraphData {
   nodes: GraphNode[],
   links: GraphArrow[]
 }
+
+export interface ImageCacheData { imageUrl: string; base64data: string }
