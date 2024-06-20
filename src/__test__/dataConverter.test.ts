@@ -14,9 +14,12 @@ import {
   createGraphData,
   searchObjectByValues,
   searchGraphDataByValues,
+  searchObjectByTag,
+  searchGraphDataByTag,
   andSearchObjectByValues,
   fetchFleekApi
 } from "../lib/dataConverter";
+import SpriteText from 'three-spritetext';
 
 const testJsonData = fs.readFileSync('src/__test__//ecosystem.test.json', 'utf-8');
 const registryTestData = JSON.parse(testJsonData);
@@ -92,7 +95,7 @@ it("Should get All registry data", async () => {
   expect(filteredData).toHaveLength(9);
 });
 
-it("Should get filtered registry data", async () => {
+it("Should get filtered registry graph data", async () => {
   try {
     const graphData = await searchGraphDataByValues(['Tenderly is a full-stack infrastructure solution ']);
     // console.log(graphData);
@@ -106,9 +109,27 @@ it("Should get filtered registry data", async () => {
 it("Should get filtered registry data through Fleek Functions API", async () => {
   try {
     const graphData = await fetchFleekApi(['Tenderly is a full-stack infrastructure solution ', 'AND', '2']);
-    console.log(graphData);
+    // console.log(graphData);
     expect(graphData.links).toHaveLength(2);
     expect(graphData.nodes).toHaveLength(3);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+it("Should get designated tag of registry objects", async () => {
+  const filteredData = searchObjectByTag(registryTestData, 'defi');
+  console.log(filteredData.length);
+  expect(filteredData).toHaveLength(94);
+});
+
+
+it("Should get filtered registry graph data by tag", async () => {
+  try {
+    const graphData = await searchGraphDataByTag('defi');
+    console.log(graphData);
+    expect(graphData.links).toHaveLength(97);
+    expect(graphData.nodes).toHaveLength(98);
   } catch (error) {
     console.error(error);
   }

@@ -8,10 +8,14 @@ export const main = (request) => {
     return searchGraphDataByValues(keywardsArray, orSearchBool, depth);
    }
    if(request.query.img_url==="true"){
-    return createImageUrlArray()
+    return urlArray
    }
    if(request.query.img_cache==="true"){
     return iconCacheData
+   }
+   if(request.query.tagsearch!==undefined){
+    const tag = request.query.tagsearch;
+    return searchGraphDataByTag(tag)
    }
 };
 export const BASE_LOGO = "/Base_Network_Logo.svg"
@@ -95,11 +99,26 @@ export const andSearchObjectByValues = (registryData, searchValues) => {
     );
 }
 
+// Tag name search
+export const searchObjectByTag = (registryData, searchValue) => {
+    const lowerSearchValue = searchValue.toLowerCase();
+    return registryData.filter(obj =>
+      obj.tags.some(tag => tag.toLowerCase().includes(lowerSearchValue))
+    );
+  }
+
+
 export const searchGraphDataByValues = async (searchValues, searchType = false, depth = 3) => {
     // Default AND search
     const filteredData = searchType ? searchObjectByValues(registryData, searchValues) : andSearchObjectByValues(registryData, searchValues);
     return createGraphData(filteredData, depth);
 }
+
+// Fetching graph data by tag
+export const searchGraphDataByTag = async (searchValue,  depth = 3) => {
+    const filteredData = searchObjectByTag(registryData, searchValue);
+    return createGraphData(filteredData, depth);
+  }
 
 export const createImageUrlArray = () => registryData.map(({imageUrl})=> imageUrl);
 
@@ -3515,4 +3534,5 @@ const createIconCacheData = () => {
        return Promise.all(urlArray.map(async (url) => fetchBase64data(BASE_URL + url)));
 }
 
+const urlArray = createImageUrlArray();
 const iconCacheData = createIconCacheData();

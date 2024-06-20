@@ -4,7 +4,7 @@ export const BASE_URL = "https://base.org/";
 export const REGISTRY_URL = "https://www.base.org/ecosystem";
 export const BASE_LOGO = "/Base_Network_Logo.svg"
 export const JSON_URL = "https://raw.githubusercontent.com/base-org/web/master/apps/web/src/data/ecosystem.json";
-export const FLEEK_API = "https://fleek-test.network/services/1/ipfs/bafkreicoxgojzdkihowll5v2ruxl3o57iq2e65gdjn4c55mh7j5lag4acm";
+export const FLEEK_API = "https://fleek-test.network/services/1/ipfs/bafkreiepvjla2huhmzqgop5vgn2fo6fdwz2h4mcb3ahtqaithtk2es2isu";
 export const DEFAULT_ICON_URL = "/document/mstile-70x70.png";
 export const DEFAULT_ICON_URL_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAA2FBMVEUAAAAAU/8AU/8AUv8AUv8AUv8AUv8AVf8AUv8AUv8AU/8ASf8AYP8AUv8AUv8AUv8AUf8AUv8AT/8AUv8AUv8AUv8AUv8AUv8AUf8AUv8AUv8AU/8AVf8AUv8AUf8AVf8AUf8AUv8AU/8AUv8AUv8AUv8WYf9qmv+Utv+Ttv9ml/8SXv9nmP/0+P/////v9P9dkf9omf9ckP8XYv/u8/8RXv9unf9hlP9QiP+Irv+pxf+Ps/9PiP9tnP9gk//z9//t8/8QXf9ll/9aj/9bkP8VYP+Stf9klv/6pJ+HAAAAJXRSTlMALpTX+viVCZj+lwcIwL6WL/0tk9b29fPV1I+RKvwsBry9K9P0OYlx2QAAAAFiS0dELlTTEIcAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAHdElNRQfnCAcMIyThgpg2AAAArUlEQVQY01WP1xKCUAxEgyhKsQAWRLGvnavYe8H2/38kCOh4nrJnkpkskQcX4+MJXuAoIJkS8UGUZD8raaDb6w+GIyDjGwkY28xjMgWyRDkVDguZQdUohrkdicUSOuWxYl/WyFMBm23AjrE9ilTC4V8YOP5OTiiTie45ypcrKlS14EbiBrVGpAPuZ2dxBwTv03oDeDiD52sJNBW/TF23gnKqIId9W2a7UzR0zZ/fIZoh6l8gFdwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjMtMDgtMDdUMTI6MzU6MzYrMDA6MDCue+XjAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIzLTA4LTA3VDEyOjM1OjM2KzAwOjAw3yZdXwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABXelRYdFJhdyBwcm9maWxlIHR5cGUgaXB0YwAAeJzj8gwIcVYoKMpPy8xJ5VIAAyMLLmMLEyMTS5MUAxMgRIA0w2QDI7NUIMvY1MjEzMQcxAfLgEigSi4A6hcRdPJCNZUAAAAASUVORK5CYII=';
 
@@ -92,7 +92,7 @@ export const searchObjectByValues = (registryData: RegistryData[], searchValues:
 }
 
 // AND search
-export const andSearchObjectByValues = (registryData: RegistryData[], searchValues: string[]) => {
+export const andSearchObjectByValues = (registryData: RegistryData[], searchValues: string[]): RegistryData[] => {
   const lowerSearchValues = searchValues.map(value => value.toLowerCase());
   return registryData.filter(obj =>
     lowerSearchValues.every(sv =>
@@ -103,6 +103,13 @@ export const andSearchObjectByValues = (registryData: RegistryData[], searchValu
   );
 }
 
+// Tag name search
+export const searchObjectByTag = (registryData: RegistryData[], searchValue: string): RegistryData[] => {
+  const lowerSearchValue = searchValue.toLowerCase();
+  return registryData.filter(obj =>
+    obj.tags.some(tag => tag.toLowerCase().includes(lowerSearchValue))
+  );
+}
 
 // Alighning tag value to lowercases.
 const createRegistryData = (rawRegistryData: RegistryData[]) => rawRegistryData.map(item => ({
@@ -110,12 +117,20 @@ const createRegistryData = (rawRegistryData: RegistryData[]) => rawRegistryData.
   tags: item.tags.map(tag => tag.toLowerCase())
 }));
 
-// Fetching data
+// Fetching graph data
 export const searchGraphDataByValues = async (searchValues: string[], searchType: boolean = false, url: string = JSON_URL, depth: number = 3): Promise<GraphData> => {
   const rawRegistryData = await fetchRegistryData(url);
   const registryData = createRegistryData(rawRegistryData);
   // Default AND search
   const filteredData = searchType ? searchObjectByValues(registryData, searchValues) : andSearchObjectByValues(registryData, searchValues);
+  return createGraphData(filteredData, depth);
+}
+
+// Fetching graph data by tag
+export const searchGraphDataByTag = async (searchValue: string, url: string = JSON_URL, depth: number = 3): Promise<GraphData> => {
+  const rawRegistryData = await fetchRegistryData(url);
+  const registryData = createRegistryData(rawRegistryData);
+  const filteredData = searchObjectByTag(registryData, searchValue);
   return createGraphData(filteredData, depth);
 }
 
@@ -138,7 +153,7 @@ export const fetchFleekApi = async (
     : response.json();
 };
 
-export const fetchFeekApiImgArray = async (): Promise<string[]> => {
+export const fetchFleekApiImgArray = async (): Promise<string[]> => {
   const url = `${FLEEK_API}?img_url=true`
   console.log(`Query by Fleek API. URL: ${url}`);
   const response = await fetch(url);
@@ -151,7 +166,7 @@ export const fetchFeekApiImgArray = async (): Promise<string[]> => {
     : response.json();
 };
 
-export const fetchFeekApiImgCache = async (): Promise<ImageCacheData[]> => {
+export const fetchFleekApiImgCache = async (): Promise<ImageCacheData[]> => {
   const url = `${FLEEK_API}?img_cache=true`
   console.log(`Query by Fleek API. URL: ${url}`);
   const response = await fetch(url);
@@ -163,6 +178,21 @@ export const fetchFeekApiImgCache = async (): Promise<ImageCacheData[]> => {
     }
     : response.json();
 };
+
+export const fetchFleekApiByTag = async (tag: string): Promise<GraphData> => {
+  const url = `${FLEEK_API}?tagsearch=${tag}`
+  console.log(`Query by Fleek API. URL: ${url}`);
+  const response = await fetch(url);
+  return !response.ok
+    ? () => {
+      throw new Error(
+        `Failed to fetch data from ${url}: ${response.statusText}`
+      );
+    }
+    : response.json();
+};
+
+
 
 // Base64Icon Bulkdownloading
 
@@ -185,26 +215,37 @@ const blobToBase64 = async (blob: Blob) => {
 const fetchBase64data = async (url: string) => {
   try {
     const response = await fetch(url);
-    if (response.ok) {
-      const blob = await response.blob()
-      const base64data = await blobToBase64(blob);
-      const cacheImageData = { imageUrl: url, base64data: base64data };
-      return cacheImageData as ImageCacheData
-
-    } else {
+    return !response.ok ? () => {
       console.error(`Failed to fetch and cache image ${url}:`);
       fetchBase64data("/document/mstile-70x70.png")
       // throw new Error('Network response was not ok.');
     }
+      : await (async () => {
+        const blob = await response.blob()
+        const base64data = await blobToBase64(blob);
+        const cacheImageData = { imageUrl: url, base64data: base64data };
+        return cacheImageData as ImageCacheData
+
+      })()
   } catch (error) {
     console.error('Failed to fetch and cache image:', url, error);
     return { imageUrl: DEFAULT_ICON_URL, base64data: DEFAULT_ICON_URL_BASE64 } as ImageCacheData
   }
 }
 
-export const createIconCacheData = async () :  Promise<ImageCacheData[]> => {
-     const urlArray = await fetchFeekApiImgArray();  
-     return await Promise.all(urlArray.map(async (url) => fetchBase64data(url))) as  ImageCacheData[];
+export const createIconCacheData = async (): Promise<ImageCacheData[]> => {
+  const urlArray = await fetchFleekApiImgArray();
+  return await Promise.all(urlArray.map(async (url) => fetchBase64data(url))) as ImageCacheData[];
 }
 
-   
+export const mergeGraphData = (prevData: GraphData, newData: GraphData): GraphData => ({
+  nodes: filterDuplicateNode([
+    ...prevData.nodes,
+    ...newData.nodes,
+  ]),
+  links: filterDuplicateArrow([
+    ...prevData.links,
+    ...newData.links
+  ])
+})
+
