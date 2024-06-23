@@ -19,7 +19,7 @@ import {
   andSearchObjectByValues,
   fetchFleekApi
 } from "../lib/dataConverter";
-import SpriteText from 'three-spritetext';
+
 
 const testJsonData = fs.readFileSync('src/__test__//ecosystem.test.json', 'utf-8');
 const registryTestData = JSON.parse(testJsonData);

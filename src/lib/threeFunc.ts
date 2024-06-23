@@ -1,11 +1,11 @@
 import { ImageCacheData } from "@/types/api";
 import * as THREE from 'three';
-import SpriteText from "three-spritetext";
+import SpriteText from 'three-spritetext';
+import { ForceGraphMethods } from 'react-force-graph-3d'
 
-export const createThreeObject = (node: any |undefined, currentCache: ImageCacheData[] ) => {
+export const createThreeObject = (node: any | undefined, currentCache: ImageCacheData[], fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>) => {
     // OnChain Summer Registry Graph Node
     if (node.depth === 1) {
-
         //Sphere object 
         const texture = new THREE.TextureLoader().load("/base-sphere-square.png");
         const geometry = new THREE.SphereGeometry(1, 64, 64);
@@ -105,7 +105,6 @@ export const createThreeObject = (node: any |undefined, currentCache: ImageCache
         text.fontFace = 'Arial'; // Font face (though limited, can be set)
         text.position.set(0, -4, 0);
 
-
         // Group object
         const group = new THREE.Group();
         group.add(sprite);
@@ -114,8 +113,61 @@ export const createThreeObject = (node: any |undefined, currentCache: ImageCache
         return group
     }
 }
+
+
 const isURL = (str: string) => {
     // Regular expression to match URLs starting with http:// or https://
     const urlRegex = /^(?:https?:\/\/)?[\w.-]+\.\w{2,}(?:\/.*)?$/;
     return urlRegex.test(str);
+}
+
+export const createNodeHoverObject = (node: any | undefined, fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>) => {
+    // Scene Object
+    const scene = fgRef.current?.scene();
+
+    const geometry = new THREE.SphereGeometry(1, 64, 64);
+    const material = new THREE.MeshBasicMaterial({
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.scale.set(10, 10, 10);
+    sphere.position.set(node?.x, node?.y, node?.z);
+    scene?.add(sphere);
+}
+
+export const appNodeClick = (node: any) => window.open(node.url);
+
+
+export const appCard = (node: { [others: string]: any; id?: string | number | undefined; x?: number | undefined; y?: number | undefined; z?: number | undefined; vx?: number | undefined; vy?: number | undefined; vz?: number | undefined; fx?: number | undefined; fy?: number | undefined; fz?: number | undefined; } | null) => {
+    return `<div className="flex items-center justify-center min-h-screen">
+    <div className="min-h-32 flex w-full max-w-[1440px] flex-col gap-10 px-8 pb-32">
+      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-4">
+    <a
+    href=${node?.url}
+    rel="noreferrer noopener"
+    target="_blank"
+    className="flex w-full flex-col justify-start gap-8 bg-gray p-8 visited:opacity-50 hover:bg-darkgray"
+  >
+    <div className="flex flex-row justify-between">
+      <div className="relative h-[80px] w-[80px] overflow-hidden rounded-[3px]">
+        <Image src=${node?.imageUrl} fill style={{ objectFit: 'contain' }} alt=Logo of ${node?.id} />
+      </div>
+    </div>
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col">
+        <h3 className="font-mono text-xl uppercase text-white">${node?.id}</h3>
+        <span className="muted truncate font-mono text-muted">
+          ${getNiceDomainDisplayFromUrl(node?.url)}
+        </span>
+      </div>
+      <p className="ecosystem-card-description font-sans text-base text-white">
+       ${node?.description}
+      </p>
+    </div>
+  </a>
+  </div>
+  </div>
+</div>`};
+
+function getNiceDomainDisplayFromUrl(url: string) {
+    return url.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0];
 }

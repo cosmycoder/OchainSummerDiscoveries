@@ -1,22 +1,23 @@
 export const main = (request) => {
-   if(request.query.keywards!==undefined) {
-    const keywards = request.query.keywards;
-    const keywardsArray = keywards.split(',');
-    const orSearchStr = request.query.orsearch;
-    const orSearchBool = (orSearchStr.toLowerCase() === "true");
-    const depth = Number(request.query.depth);
-    return searchGraphDataByValues(keywardsArray, orSearchBool, depth);
-   }
-   if(request.query.img_url==="true"){
-    return urlArray
-   }
-   if(request.query.img_cache==="true"){
-    return iconCacheData
-   }
-   if(request.query.tagsearch!==undefined){
-    const tag = request.query.tagsearch;
-    return searchGraphDataByTag(tag)
-   }
+    if (request.query.keywards !== undefined) {
+        const keywards = request.query.keywards;
+        const keywardsArray = keywards.split(',');
+        const orSearchStr = request.query.orsearch;
+        const orSearchBool = (orSearchStr.toLowerCase() === "true");
+        const depth = Number(request.query.depth);
+        return searchGraphDataByValues(keywardsArray, orSearchBool, depth);
+    }
+    if (request.query.img_url === "true") {
+        return urlArray
+    }
+    if (request.query.img_cache !== undefined) {
+        const imgCache = request.query.img_cache;
+        return getBase64Value(iconCacheData, imgCache)
+    }
+    if (request.query.tagsearch !== undefined) {
+        const tag = request.query.tagsearch;
+        return searchGraphDataByTag(tag)
+    }
 };
 export const BASE_LOGO = "/Base_Network_Logo.svg"
 export const BASE_URL = "https://base.org";
@@ -49,7 +50,7 @@ export const createAppNode = (registryData) =>
 export const createAppArrow = (registryData) =>
     registryData.map((obj) =>
         obj.tags.map((value) =>
-            ({ source: value, target: obj.name, name: obj.name, description: obj.description,  group: value }))).flat(1);
+            ({ source: value, target: obj.name, name: obj.name, description: obj.description, group: value }))).flat(1);
 
 // Removing duplicate arrow objects
 export const filterDuplicateArrow = (graphArrows) => {
@@ -72,10 +73,10 @@ export const filterDuplicateNode = (graphNodes) => {
 export const createGraphData = (registryData, depth = 3) => depth === 3 ? ({
     nodes: filterDuplicateNode([createOnChainRegistryNode(), ...createCategoryNode(registryData), ...createAppNode(registryData)]),
     links: filterDuplicateArrow([...createCategoryArrow(registryData), ...createAppArrow(registryData)])
-  }) : ({
+}) : ({
     nodes: filterDuplicateNode([createOnChainRegistryNode(), ...createCategoryNode(registryData)]),
     links: filterDuplicateArrow([...createCategoryArrow(registryData)])
-  })
+})
 
 // OR search
 export const searchObjectByValues = (registryData, searchValues) => {
@@ -103,9 +104,9 @@ export const andSearchObjectByValues = (registryData, searchValues) => {
 export const searchObjectByTag = (registryData, searchValue) => {
     const lowerSearchValue = searchValue.toLowerCase();
     return registryData.filter(obj =>
-      obj.tags.some(tag => tag.toLowerCase().includes(lowerSearchValue))
+        obj.tags.some(tag => tag.toLowerCase().includes(lowerSearchValue))
     );
-  }
+}
 
 
 export const searchGraphDataByValues = async (searchValues, searchType = false, depth = 3) => {
@@ -115,12 +116,12 @@ export const searchGraphDataByValues = async (searchValues, searchType = false, 
 }
 
 // Fetching graph data by tag
-export const searchGraphDataByTag = async (searchValue,  depth = 3) => {
+export const searchGraphDataByTag = async (searchValue, depth = 3) => {
     const filteredData = searchObjectByTag(registryData, searchValue);
     return createGraphData(filteredData, depth);
-  }
+}
 
-export const createImageUrlArray = () => registryData.map(({imageUrl})=> imageUrl);
+export const createImageUrlArray = () => registryData.map(({ imageUrl }) => imageUrl);
 
 const rawRegistryData = [
     {
@@ -3495,44 +3496,47 @@ const registryData = rawRegistryData.map(item => ({
 // Base64Icon Bulkdownloading
 const blobToBase64 = async (blob) => {
     try {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          resolve(reader.result);
-        };
-        reader.onerror = reject;
-      });
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+                resolve(reader.result);
+            };
+            reader.onerror = reject;
+        });
     } catch (error) {
-      console.error('Error:', error);
-      return DEFAULT_ICON_URL_BASE64
+        console.error('Error:', error);
+        return DEFAULT_ICON_URL_BASE64
     }
-  }
-  
-  const fetchBase64data = async (url) => {
+}
+
+const fetchBase64data = async (url) => {
     try {
-      const response = await fetch(url);
-      if (response.ok) {
-        const blob = await response.blob()
-        const base64data = await blobToBase64(blob);
-        const cacheImageData = { imageUrl: url, base64data: base64data };
-        return cacheImageData 
-  
-      } else {
-        console.error(`Failed to fetch and cache image ${url}:`);
-        fetchBase64data("/document/mstile-70x70.png")
-        // throw new Error('Network response was not ok.');
-      }
+        const response = await fetch(url);
+        if (response.ok) {
+            const blob = await response.blob()
+            const base64data = await blobToBase64(blob);
+            const cacheImageData = { imageUrl: url, base64data: base64data };
+            return cacheImageData
+
+        } else {
+            console.error(`Failed to fetch and cache image ${url}:`);
+            fetchBase64data("/document/mstile-70x70.png")
+            // throw new Error('Network response was not ok.');
+        }
     } catch (error) {
-      console.error('Failed to fetch and cache image:', url, error);
-      return { imageUrl: DEFAULT_ICON_URL, base64data: DEFAULT_ICON_URL_BASE64 } 
+        console.error('Failed to fetch and cache image:', url, error);
+        return { imageUrl: DEFAULT_ICON_URL, base64data: DEFAULT_ICON_URL_BASE64 }
     }
-  }
-  
+}
+
 const createIconCacheData = () => {
-       const urlArray =  createImageUrlArray();  
-       return Promise.all(urlArray.map(async (url) => fetchBase64data(BASE_URL + url)));
+    const urlArray = createImageUrlArray();
+    return Promise.all(urlArray.map(async (url) => fetchBase64data(BASE_URL + url)));
 }
 
 const urlArray = createImageUrlArray();
-const iconCacheData = createIconCacheData();
+const iconCacheData = await createIconCacheData();
+
+const getBase64Value = (imagesArray, targetUrl) =>
+    imagesArray.find(image => image.imageUrl === targetUrl)?.base64data || null;
