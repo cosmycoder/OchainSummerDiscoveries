@@ -18,7 +18,6 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
     const [imageCache, setImageCache] = useState<ImageCacheData[]>([]);
     const [visibility, setVisibility] = useState<boolean>(true);
     const [timeout, setTimeout] = useState<number>(1000);
-    const [card, setCard] = useState();
     const distance = 200;
 
     // Initial Data retrival
@@ -61,7 +60,8 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
 
     // Graph rotation animation
     setInterval(() => {
-        fgRef.current?.scene().rotateZ(0.0004);
+        fgRef.current?.scene().rotateZ(0);
+        fgRef.current?.scene().rotateZ(0.00001);
         if (fgRef.current?.camera()?.position) {
             const position = fgRef.current?.camera()?.position;
             const distBase = position.distanceTo(new THREE.Vector3(0, 0, 0))
@@ -102,11 +102,7 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
         }
     }, 1000);
 
-
     const getCurrentCache = () => imageCache;
-    const listCall = (node : any) => setCard(node);
-
-    const getCard = () => card
 
     return (
         <>
@@ -120,10 +116,9 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
                 // d3AlphaDecay={0.05}
                 graphData={data}
                 linkAutoColorBy="group"
-               // nodeLabel="id"
                 // cooldownTicks={100}
                 // nodeRelSize={10}
-                linkLabel=""
+                linkLabel="name"
                 backgroundColor="black"
                 dagMode="radialout"
                 linkResolution={1}
@@ -143,7 +138,7 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
                     node.depth === 3 ? appNodeClick(node) : null;
                 }}
                 nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), fgRef) as any}
-                nodeLabel={(node) => node?.depth===3?appCard(node):""}
+                nodeLabel={(node) => node.depth===3?appCard(node, getCurrentCache()):String(node.id)}
             />
             <SearchBar onSearch={handleSearch} />
         </>
