@@ -1,0 +1,102 @@
+
+
+/* src/styles/SearchBar.module.css */
+
+.searchBarContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.searchButton {
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white !important;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 2px;
+  margin-right: 5px;
+  border-color: white !important;
+}
+
+.searchButton:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: white !important;
+}
+
+/* New styles for the active state */
+.searchButton:active {
+  background-color:  rgba(255, 255, 255, 0.8); 
+  border-color: white !important;
+}
+
+.toggleContainer {
+  display: flex;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.toggleButton {
+  flex: 1;
+  padding: 10px 16px;
+  cursor: pointer;
+  background-color: transparent;
+  color: white; /* Set the color to white */
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toggleButtonActive {
+  background-color:  rgba(255, 255, 255, 0.3); 
+  color: white; /* Set the color to white */
+}
+@media (max-width: 600px) {
+  .searchBarContainer {
+    flex-direction: row;
+  }
+  .searchBar {
+    flex-direction: row;
+  }
+  .searchInput{
+    width: 60%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .searchButton{
+    width: 20%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .toggleContainer {
+    width: 30%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .toggleContainer {
+    margin-left: 0;
+  }
+}

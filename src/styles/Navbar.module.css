@@ -1,0 +1,29 @@
+/* src/styles/Navbar.module.css */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  z-index: 10;
+  transition: background 0.3s;
+}
+
+.navbar.scrolled {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.navMenu {
+  top: -490px;
+}
+
+.navMenu.active {
+  top: 64px; /* Adjust this value based on the height of your navbar */
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+}
+.navLinkIcon {
+  margin-right: 8px; /* Adjust spacing between icon and text */
+}
