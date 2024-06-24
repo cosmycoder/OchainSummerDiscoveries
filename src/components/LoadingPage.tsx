@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState, forwardRef } from 'react';
+import React, { useEffect, useRef, useState, forwardRef, FC } from 'react';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
-const LoadingPage = forwardRef((_props, _ref) => {
+const LoadingPage: FC = forwardRef((_props, _ref) => {
   const refContainer = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -138,5 +138,8 @@ const LoadingPage = forwardRef((_props, _ref) => {
 
   return <div ref={refContainer} />;
 });
+
+// Adding the display name
+LoadingPage.displayName = 'LoadingPage';
 
 export default LoadingPage;

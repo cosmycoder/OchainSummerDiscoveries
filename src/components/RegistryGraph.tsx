@@ -8,9 +8,8 @@ import { createThreeObject, createNodeHoverObject, appNodeClick, appCard } from 
 import ForceGraph3D, { ForceGraphMethods, ForceGraphProps } from "react-force-graph-3d";
 import * as THREE from 'three';
 import LoadingPage from "./LoadingPage";
-import { List } from "./Ecosystem/List";
 
-export const RegistryGraph = forwardRef((props: any, ref: any) => {
+const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const fgRef = useRef<ForceGraphMethods>();
     const [data, setData] = useState<GraphData>({ links: [], nodes: [] });
     const [loading, setLoading] = useState<boolean>(true);
@@ -144,6 +143,10 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
         </>
     );
 });
+
+// Adding the display name
+RegistryGraph.displayName = 'RegistryGraph';
+
 export default RegistryGraph;
 
 
