@@ -25,10 +25,8 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             try {
                 const result = await fetchFleekApi(['', 'AND', '2']);
                 setData(result);
-                // const fetchedData = await fetchFeekApiImgCache();  // Don't use performance reason
-                const fetchedData = await createIconCacheData();
-                // const fetchedData = await fleekCreateIconCacheData();
-                console.log(fetchedData);
+               // const fetchedData = await createIconCacheData();
+                const fetchedData = await fleekCreateIconCacheData();
                 setImageCache(fetchedData);
 
             } catch (error) {
