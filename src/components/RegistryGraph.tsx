@@ -61,8 +61,7 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
 
     // Graph rotation animation
     setInterval(() => {
-        fgRef.current?.scene().rotateZ(0);
-        fgRef.current?.scene().rotateZ(0.00001);
+        fgRef.current?.scene().rotateZ(0.0001);
         if (fgRef.current?.camera()?.position) {
             const position = fgRef.current?.camera()?.position;
             const distBase = position.distanceTo(new THREE.Vector3(0, 0, 0))
@@ -108,7 +107,7 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
     return (
         <>
             <ForceGraph3D
-             //   onEngineStop={() => fgRef.current?.zoomToFit(1000)}
+                onEngineStop={() => fgRef.current?.zoomToFit(1000)}
                 enableNavigationControls={true}
                 ref={fgRef}
                 cooldownTime={timeout}
@@ -139,7 +138,7 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
                     node.depth === 3 ? appNodeClick(node) : null;
                 }}
                 nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), fgRef) as any}
-                nodeLabel={(node) => node.depth===3?appCard(node, getCurrentCache()):String(node.id)}
+                nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
             />
             <SearchBar onSearch={handleSearch} />
         </>

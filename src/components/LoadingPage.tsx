@@ -70,6 +70,7 @@ const LoadingPage = forwardRef((_props, _ref) => {
 
       textGeometry.center();
       textMesh.position.y = -30;
+      textMesh.rotateY(Math.PI);
       scene.add(textMesh);
 
       animate();
@@ -89,11 +90,7 @@ const LoadingPage = forwardRef((_props, _ref) => {
       sphere4.rotation.z -= 0.01;
       light.position.set(0, 0, -200);
 
-      scene.children.forEach(child => {
-        if ((child as THREE.Mesh).isMesh) {
-          (child as THREE.Mesh).rotation.y += Math.PI + 0.01;
-        }
-      });
+
       renderer.render(scene, camera);
     };
 
