@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
-const LoadingPage = forwardRef((props, ref) => {
+const LoadingPage = forwardRef((_props, _ref) => {
   const refContainer = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -87,14 +87,7 @@ const LoadingPage = forwardRef((props, ref) => {
       sphere4.rotation.x -= 0;
       sphere4.rotation.y -= 0;
       sphere4.rotation.z -= 0.01;
-      renderer.render(scene, camera);
-
-      const t = Date.now() / 500;
-      const r = 40.0;
-      const lx = r * Math.cos(t);
-      const lz = r * Math.sin(t);
-      const ly = 6.0 + 5.0 * Math.sin(t / 3.0);
-      light.position.set(lx, ly, lz);
+      light.position.set(0, 0, -200);
 
       scene.children.forEach(child => {
         if ((child as THREE.Mesh).isMesh) {

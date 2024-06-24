@@ -10,10 +10,6 @@ export const main = (request) => {
     if (request.query.img_url === "true") {
         return urlArray
     }
-    if (request.query.img_cache !== undefined) {
-        const imgCache = request.query.img_cache;
-        return getBase64Value(iconCacheData, imgCache)
-    }
     if (request.query.tagsearch !== undefined) {
         const tag = request.query.tagsearch;
         return searchGraphDataByTag(tag)
@@ -3536,7 +3532,3 @@ const createIconCacheData = () => {
 }
 
 const urlArray = createImageUrlArray();
-const iconCacheData = await createIconCacheData();
-
-const getBase64Value = (imagesArray, targetUrl) =>
-    imagesArray.find(image => image.imageUrl === targetUrl)?.base64data || null;

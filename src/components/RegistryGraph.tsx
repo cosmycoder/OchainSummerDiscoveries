@@ -1,4 +1,4 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData } from "../lib/dataConverter"
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData } from "../lib/dataConverter"
 import { GraphData, GraphNode, ImageCacheData } from "../types/api"
 import { FC, forwardRef, useCallback, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
@@ -27,7 +27,8 @@ export const RegistryGraph = forwardRef((props: any, ref: any) => {
                 const result = await fetchFleekApi(['', 'AND', '2']);
                 setData(result);
                 // const fetchedData = await fetchFeekApiImgCache();  // Don't use performance reason
-                const fetchedData = await createIconCacheData();
+                // const fetchedData = await createIconCacheData();
+                const fetchedData = await fleekCreateIconCacheData();
                 console.log(fetchedData);
                 setImageCache(fetchedData);
 
