@@ -28,6 +28,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
+   <header>
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className="container mx-auto px-4 flex justify-between items-center py-4">
         <Link href="/" legacyBehavior>
@@ -70,6 +71,7 @@ const Navbar: React.FC = () => {
         </ul>
       </div>
     </nav>
+  </header> 
   );
 };
 

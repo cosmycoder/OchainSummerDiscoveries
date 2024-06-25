@@ -1,0 +1,38 @@
+/* app/components/ParallaxHero.module.css */
+.parallaxContainer {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    z-index: 10;
+  }
+  
+  .content h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .content p {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  @media (max-width: 768px) {
+    .content h1 {
+      font-size: 3rem;
+    }
+  
+    .content p {
+      font-size: 1.2rem;
+    }
+  }

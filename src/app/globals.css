@@ -1,3 +1,4 @@
+/* global.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,6 +7,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --font-inter: 'Inter', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,4 +32,41 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: var(--font-inter);
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 1rem;
+  border: none;
+  font-family: var(--font-roboto);
+}
+
+.title {
+  font-family: var(--font-roboto);
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.highlight {
+  color: #0070f3;
+}
+
+.description {
+  font-family: var(--font-inter);
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.cta {
+  font-family: var(--font-roboto);
+  background-color: #0070f3;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
 }

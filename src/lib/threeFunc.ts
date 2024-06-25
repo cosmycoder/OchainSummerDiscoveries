@@ -111,13 +111,8 @@ export const createThreeObject = (node: any | undefined, currentCache: ImageCach
   }
 }
 
-
-const isURL = (str: string) => {
-  // Regular expression to match URLs starting with http:// or https://
-  const urlRegex = /^(?:https?:\/\/)?[\w.-]+\.\w{2,}(?:\/.*)?$/;
-  return urlRegex.test(str);
-}
-
+const isURL = (str: string) => /^(?:https?:\/\/)?[\w.-]+\.\w{2,}(?:\/.*)?$/.test(str);
+  
 const deriveBase64DataFromCache = (node: any | undefined, currentCache: ImageCacheData[]): string => {
   return currentCache.filter((obj: { imageUrl: string }) => {
     const pathname = isURL(obj?.imageUrl) ? new URL(obj?.imageUrl).pathname : obj?.imageUrl;
@@ -140,9 +135,7 @@ export const createNodeHoverObject = (node: any | undefined, fgRef: React.Mutabl
 
 export const appNodeClick = (node: any) => window.open(node.url);
 
-
-export const appCard = (node: any, currentCache: ImageCacheData[]) => {
-  return `<div style="border-radius: 3px; width: 400px; padding: 10px; border: 1px solid #ccc; text-align: center;  background-color: rgba(0, 0, 0, 0.8);">
+export const appCard = (node: any, currentCache: ImageCacheData[]) => `<div style="border-radius: 3px; width: 400px; padding: 10px; border: 1px solid #ccc; text-align: center;  background-color: rgba(0, 0, 0, 0.8);">
     <div className="min-h-32 flex w-full max-w-[1440px] flex-col gap-10 px-8 pb-32">
       <div className="flex flex-col gap-10 lg:grid lg:grid-cols-4">
     <a
@@ -153,7 +146,7 @@ export const appCard = (node: any, currentCache: ImageCacheData[]) => {
   >
     <div className="flex flex-row justify-between">
       <div style="text-align: center; display: block;">
-        <Image src=${deriveBase64DataFromCache(node, currentCache)} style="border-radius: 3px; background-color: rgba(255, 255, 255, 0.5); display: block;margin-left: auto;margin-right: auto;width: 10%;"alt=Logo of ${node?.id} />
+        <Image src=${deriveBase64DataFromCache(node, currentCache)} style="border-radius: 3px; background-color: rgba(255, 255, 255, 0.3); display: block;margin-left: auto;margin-right: auto;width: 15%;"alt=Logo of ${node?.id} />
       </div>
     </div>
     <div className="flex flex-col gap-4">
@@ -170,8 +163,7 @@ export const appCard = (node: any, currentCache: ImageCacheData[]) => {
   </a>
   </div>
   </div>
-</div>`};
+</div>`;
 
-function getNiceDomainDisplayFromUrl(url: string) {
-  return url.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0];
-}
+const getNiceDomainDisplayFromUrl = (url: string) => 
+      url.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0];

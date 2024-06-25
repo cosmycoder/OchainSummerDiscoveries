@@ -37,11 +37,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           value={query}
           onChange={handleInputChange}
           onKeyDown={handleKeyPress}
-          placeholder="Search..."
+          placeholder=""
           className={styles.searchInput}
         />
-         
-
         <button onClick={handleSearch} className={styles.searchButton}>
           Search
         </button>
