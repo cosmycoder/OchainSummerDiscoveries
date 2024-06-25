@@ -1,4 +1,5 @@
 import {  useState, useEffect } from "react";
+import styles from '../app/page.module.css'
 
 const Footer = () => {
     const [year, setYear] = useState(new Date().getFullYear());
@@ -10,7 +11,7 @@ const Footer = () => {
 
     return (
         <footer>
-           <p>{`© ${year} OCS-Discoveries. All Rights Reserved.`}</p>
+           <p>© {year} <span className={styles.highlight}>OCS-Discoveries</span>. All Rights Reserved.</p>
         </footer>
     );
 };
