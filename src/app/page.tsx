@@ -33,7 +33,7 @@ export default function Home() {
 
         <FadeIn delay={0.2}>
           <p className={styles.description}>
-            Discover your favorite Web3 Application
+          Kick off Onchain Summer by participating in a global virtual hackathon hosted by Base and track sponsors including Stripe, Shopify, Farcaster, Zora, Fleek, thirdweb, Nouns, Aerodrome, and Synthetix.
           </p>
         </FadeIn>
 

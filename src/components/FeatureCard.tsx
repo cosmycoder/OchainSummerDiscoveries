@@ -11,7 +11,7 @@ interface FeatureCardProps {
 export function FeatureCard({ title, description, icon }: FeatureCardProps) {
   return (
     <div className={styles.card}>
-      <Image src={icon} alt="" width={150} height={150} className={styles.icon} />
+      <div className={styles.iconContainer}><Image src={icon} alt="" width={150} height={100} className={styles.icon} /></div>
       <h2>{title}</h2>
       <p>{description}</p>
     </div>
