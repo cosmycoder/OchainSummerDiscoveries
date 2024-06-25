@@ -68,7 +68,7 @@ export const createThreeObject = (node: any | undefined, currentCache: ImageCach
   if (node.depth === 3) {
     console.log("base64str is :");
     // Dapp logo texture 
-    const base64str = deriveBase64DataFromCache(node,currentCache);
+    const base64str = deriveBase64DataFromCache(node, currentCache);
     console.log("base64str is :", base64str)
     const texture = new THREE.TextureLoader().load(base64str)
     const material = new THREE.SpriteMaterial({
@@ -118,7 +118,7 @@ const isURL = (str: string) => {
   return urlRegex.test(str);
 }
 
-const deriveBase64DataFromCache = (node: any | undefined, currentCache: ImageCacheData[]) : string => {
+const deriveBase64DataFromCache = (node: any | undefined, currentCache: ImageCacheData[]): string => {
   return currentCache.filter((obj: { imageUrl: string }) => {
     const pathname = isURL(obj?.imageUrl) ? new URL(obj?.imageUrl).pathname : obj?.imageUrl;
     return pathname === node.imageUrl
@@ -141,8 +141,8 @@ export const createNodeHoverObject = (node: any | undefined, fgRef: React.Mutabl
 export const appNodeClick = (node: any) => window.open(node.url);
 
 
-export const appCard = (node: any, currentCache: ImageCacheData[] ) => {
-  return `<div className="flex items-center justify-center min-h-screen">
+export const appCard = (node: any, currentCache: ImageCacheData[]) => {
+  return `<div style="border-radius: 3px; width: 400px; padding: 10px; border: 1px solid #ccc; text-align: center;  background-color: rgba(0, 0, 0, 0.8);">
     <div className="min-h-32 flex w-full max-w-[1440px] flex-col gap-10 px-8 pb-32">
       <div className="flex flex-col gap-10 lg:grid lg:grid-cols-4">
     <a
@@ -152,8 +152,8 @@ export const appCard = (node: any, currentCache: ImageCacheData[] ) => {
     className="flex w-full flex-col justify-start gap-8 bg-gray p-8 visited:opacity-50 hover:bg-darkgray"
   >
     <div className="flex flex-row justify-between">
-      <div className="relative h-[80px] w-[80px] overflow-hidden rounded-[3px]">
-        <Image width="50" height="50" src=${deriveBase64DataFromCache(node, currentCache)} fill style={{ objectFit: 'contain' }} alt=Logo of ${node?.id} />
+      <div style="text-align: center; display: block;">
+        <Image src=${deriveBase64DataFromCache(node, currentCache)} style="border-radius: 3px; background-color: rgba(255, 255, 255, 0.5); display: block;margin-left: auto;margin-right: auto;width: 10%;"alt=Logo of ${node?.id} />
       </div>
     </div>
     <div className="flex flex-col gap-4">
