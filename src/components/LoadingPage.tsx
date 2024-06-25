@@ -20,7 +20,7 @@ const LoadingPage: FC = forwardRef((_props, _ref) => {
     camera.position.set(0, 0, -300);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-    const light = new THREE.DirectionalLight(0xffffff, 10);
+    const light = new THREE.DirectionalLight(0xffffff, 2);
     scene.add(light);
 
     const texture = new THREE.TextureLoader().load("/base-sphere-square.png");

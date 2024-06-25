@@ -4,23 +4,23 @@
 
 .searchBarContainer {
   position: fixed;
-  bottom: 0;
+  bottom: 5px;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding: 5px;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
 .searchBar {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 80%;
 }
 
 .searchInput {
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   flex: 1;
@@ -29,7 +29,7 @@
 }
 
 .searchButton {
-  padding: 10px;
+  padding: 5px;
   background-color: var(--primary-color);
   color: white !important;
   border: 1px solid transparent;
@@ -37,9 +37,10 @@
   cursor: pointer;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   flex-shrink: 0;
-  margin-left: 2px;
-  margin-right: 5px;
+  margin-left: 4px;
+  margin-right: 4px;
   border-color: white !important;
+  width: 10%;
 }
 
 .searchButton:hover {
@@ -55,14 +56,15 @@
 
 .toggleContainer {
   display: flex;
-  margin-left: 10px;
+  margin-left:px;
   border: 1px solid #ccc;
   border-radius: 4px;
   overflow: hidden;
+  width: 10%;
 }
 .toggleButton {
   flex: 1;
-  padding: 10px 16px;
+  padding: 5px 8px;
   cursor: pointer;
   background-color: transparent;
   color: white; /* Set the color to white */
@@ -79,12 +81,14 @@
     flex-direction: row;
   }
   .searchBar {
+    width: 100%;
     flex-direction: row;
   }
   .searchInput{
-    width: 60%;
+    width: 40%;
     border-radius: 4px;
     margin-bottom: 10px;
+    flex-direction: column;
   }
   .searchButton{
     width: 20%;

@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className="container mx-auto px-4 flex justify-between items-center py-4">
         <Link href="/" legacyBehavior>
-          <a className="text-white text-2xl font-bold">OCS-Discovery</a>
+          <a className="text-white text-2xl font-bold">OCS-Discoveries</a>
         </Link>
         <div className="md:hidden" onClick={toggleMenu}>
           <i className="text-white text-3xl cursor-pointer">

@@ -40,6 +40,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           placeholder="Search..."
           className={styles.searchInput}
         />
+         
+
         <button onClick={handleSearch} className={styles.searchButton}>
           Search
         </button>
@@ -56,6 +58,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           >
             OR
           </button>
+
         </div>
       </div>
     </div>
