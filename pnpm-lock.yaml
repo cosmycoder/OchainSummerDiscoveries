@@ -53,9 +53,6 @@ importers:
       framer-motion:
         specifier: ^11.2.12
         version: 11.2.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      google:
-        specifier: link:@next/font/google
-        version: link:@next/font/google
       install:
         specifier: ^0.13.0
         version: 0.13.0
