@@ -27,3 +27,9 @@
 .navLinkIcon {
   margin-right: 8px; /* Adjust spacing between icon and text */
 }
+
+.highlight {
+  background: linear-gradient(45deg, #3498db, #2ecc71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

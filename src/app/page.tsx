@@ -26,9 +26,9 @@ export default function Home() {
           </Link>
         </FadeIn>
         <FadeIn>
-          <h1 className={styles.title}>
+          <h3 className={styles.title}>
             <span className={styles.highlight}>BASE</span> Ecosystem Finder
-          </h1>
+          </h3>
         </FadeIn>
 
         <FadeIn delay={0.2}>
@@ -56,8 +56,7 @@ scale highly performant apps."
           <FadeIn delay={0.8}>
             <FeatureCard
               title="Discover on BASE"
-              description="ON BASE
-Base is a secure, low-cost, builder-friendly Ethereum L2 built to bring the next billion users onchain."
+              description="Base is a secure, low-cost, builder-friendly Ethereum L2 built to bring the next billion users onchain."
               icon="/Base_Wordmark_Blue.png"
             />
           </FadeIn>

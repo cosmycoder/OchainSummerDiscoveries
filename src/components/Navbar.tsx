@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className="container mx-auto px-4 flex justify-between items-center py-4">
         <Link href="/" legacyBehavior>
-          <a className="text-white text-2xl font-bold">OCS-Discoveries</a>
+          <a className="text-white text-2xl font-bold"><span className={styles.highlight}>OCS-Discoveries</span></a>
         </Link>
         <div className="md:hidden" onClick={toggleMenu}>
           <i className="text-white text-3xl cursor-pointer">
@@ -55,14 +55,14 @@ const Navbar: React.FC = () => {
             </Link>
           </li>
           <li className="md:ml-8 text-xl md:my-0 my-7">
-            <Link href="/docs" legacyBehavior>
+            <Link href="https://solidoak.gitbook.io/onchain-summer-discoveries" legacyBehavior>
               <a className={`text-white hover:text-gray-300 duration-500 ${styles.navLink}`}>
                 <FaFileAlt className="mr-2" />Docs
               </a>
             </Link>
           </li>
           <li className="md:ml-8 text-xl md:my-0 my-7">
-            <Link href="/contact" legacyBehavior>
+            <Link href="https://solidoak.tech/" legacyBehavior>
               <a className={`text-white hover:text-gray-300 duration-500 ${styles.navLink}`}>
                 <FaEnvelope className="mr-2" />Contacts
               </a>
