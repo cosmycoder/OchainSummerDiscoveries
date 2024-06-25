@@ -5,7 +5,7 @@
   padding: 2rem;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 350px;
+  height: 370px;
 }
 
 .card:hover {
