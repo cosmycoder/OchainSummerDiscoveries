@@ -17,7 +17,7 @@ export default function Home() {
       <ParallaxHero
         title={<>Onchain Summer <span className={styles.highlight}>Discoveries</span></>}
         subtitle={<><p className={styles.description}>
-          DISCOVER YOUR FAVORITE APPLICATION</p></>}
+          DISCOVER YOUR FAVORITE APPLICATION IN THE UNIVERSE</p></>}
       ></ParallaxHero>
       <main className={styles.main}>
         <FadeIn>

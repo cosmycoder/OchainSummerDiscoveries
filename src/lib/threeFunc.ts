@@ -33,7 +33,7 @@ export const createThreeObject = (node: any | undefined, currentCache: ImageCach
   // Category Graph node
   if (node.depth === 2) {
     const svgData = deriveSvgDataFromCache(node, currentSvgCache);
-    console.log("svg string", svgData);
+    // console.log("svg string", svgData);
     const texture = new THREE.TextureLoader().load(svgData);
 
     // Sprite object
@@ -67,10 +67,9 @@ export const createThreeObject = (node: any | undefined, currentCache: ImageCach
     return group
   }
   if (node.depth === 3) {
-    console.log("base64str is :");
     // Dapp logo texture 
     const base64str = deriveBase64DataFromCache(node, currentCache);
-    console.log("base64str is :", base64str)
+    // console.log("base64str is :", base64str)
     const texture = new THREE.TextureLoader().load(base64str)
     const material = new THREE.SpriteMaterial({
       map: texture,

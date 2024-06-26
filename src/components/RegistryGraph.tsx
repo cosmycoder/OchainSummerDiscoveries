@@ -33,7 +33,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
                 setImageCache(fetchedData);
                 // getting svg cache data
                 setSvgCache(await svgPreloader(result));
-                console.log("tag svg cache", await svgPreloader(result) );
+                // console.log("tag svg cache", await svgPreloader(result));
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError('Failed to fetch initial data.');
@@ -132,7 +132,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
                 linkAutoColorBy="group"
                 // cooldownTicks={100}
                 // nodeRelSize={10}
-                linkLabel="name"
+                linkLabel={(links) => (links.group !== "super") ? (`${links?.group}: ${links.name}`) : ""}
                 backgroundColor="black"
                 dagMode="radialout"
                 linkResolution={1}
