@@ -1,17 +1,19 @@
 /* app/page.module.css */
 .main {
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
-  padding: var(--padding);
+  padding: clamp(1rem, 5vw, var(--padding));
   background: var(--background-gradient);
   color: var(--text-color);
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.8rem, 5vw, 3rem);
   text-align: center;
-  margin-block-end: 1rem;
+  margin-block-end: clamp(0.8rem, 3vw, 1rem);
 }
 
 .highlight {
@@ -22,30 +24,32 @@
 }
 
 .description {
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-size: clamp(1rem, 3vw, 1.5rem);
   text-align: center;
-  margin-block-end: 3rem;
+  margin-block-end: clamp(2rem, 5vw, 3rem);
   color: var(--text-color-secondary);
+  max-width: 90%;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: clamp(1rem, 3vw, 2rem);
   width: 100%;
   max-width: var(--max-width);
-  margin-block-end: 3rem;
+  margin-block-end: clamp(2rem, 5vw, 3rem);
 }
 
 .cta {
   display: inline-block;
-  padding: 1rem 2rem;
+  padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
   background: var(--primary-gradient);
   color: var(--text-color);
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
   transition: transform 0.2s ease;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
 }
 
 .cta:hover {
@@ -53,11 +57,27 @@
 }
 
 @media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 1rem;
+  }
+  
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .description {
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .cta {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
