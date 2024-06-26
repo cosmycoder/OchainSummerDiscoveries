@@ -1,15 +1,19 @@
 'use client'
-import RegistryGraph from '../../components/RegistryGraphWrapper'
-import Navbar from '../../components/Navbar'
-import '../../styles/Navbar.module.css';
 
-const Home = () => {
+import { FC } from 'react';
+import RegistryGraph from '../../components/RegistryGraphWrapper';
+import Navbar from '../../components/Navbar';
+import styles from './page.module.css';
+
+const App: FC = () => {
   return (
-    <div  >
+    <div className={styles.pageContainer}>
       <Navbar />
-      <RegistryGraph />
+      <main>
+        <RegistryGraph />
+      </main>
     </div>
   );
 };
 
-export default Home;
+export default App;

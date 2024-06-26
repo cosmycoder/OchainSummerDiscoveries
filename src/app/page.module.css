@@ -1,65 +1,63 @@
 /* app/page.module.css */
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, #000000, #1a1a1a);
-    color: #ffffff;
-  }
-  
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: var(--padding);
+  background: var(--background-gradient);
+  color: var(--text-color);
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+  margin-block-end: 1rem;
+}
+
+.highlight {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.description {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  text-align: center;
+  margin-block-end: 3rem;
+  color: var(--text-color-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--max-width);
+  margin-block-end: 3rem;
+}
+
+.cta {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--primary-gradient);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.cta:hover {
+  transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
   .title {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 1rem;
+    font-size: 2rem;
   }
-  
-  .highlight {
-    background: linear-gradient(45deg, #3498db, #2ecc71);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
+
   .description {
-    font-size: 1.5rem;
-    text-align: center;
-    margin-bottom: 3rem;
-    color: #bbbbbb;
+    font-size: 1.2rem;
   }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    max-width: 1200px;
-    margin-bottom: 3rem;
-  }
-  
-  .cta {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: linear-gradient(45deg, #3498db, #2ecc71);
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: transform 0.2s ease;
-  }
-  
-  .cta:hover {
-    transform: translateY(-3px);
-  }
-  
-  @media (max-width: 768px) {
-    .title {
-      font-size: 3rem;
-    }
-  
-    .description {
-      font-size: 1.2rem;
-    }
-  }
-  
+}

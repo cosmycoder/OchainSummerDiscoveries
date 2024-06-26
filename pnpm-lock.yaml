@@ -23,6 +23,9 @@ importers:
       '@types/lodash':
         specifier: ^4.17.5
         version: 4.17.5
+      '@types/mocha':
+        specifier: ^10.0.7
+        version: 10.0.7
       '@types/node':
         specifier: 20.1.4
         version: 20.1.4
@@ -828,6 +831,9 @@ packages:
 
   '@types/minimist@1.2.5':
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
+
+  '@types/mocha@10.0.7':
+    resolution: {integrity: sha512-GN8yJ1mNTcFcah/wKEFIJckJx9iJLoMSzWcfRRuxz/Jk+U6KQNnml+etbtxFK8lPjzOw3zp4Ha/kjSst9fsHYw==}
 
   '@types/node@20.1.4':
     resolution: {integrity: sha512-At4pvmIOki8yuwLtd7BNHl3CiWNbtclUbNtScGx4OHfBd4/oWoJC8KRCIxXwkdndzhxOsPXihrsOoydxBjlE9Q==}
@@ -4086,6 +4092,8 @@ snapshots:
 
   '@types/minimist@1.2.5': {}
 
+  '@types/mocha@10.0.7': {}
+
   '@types/node@20.1.4': {}
 
   '@types/normalize-package-data@2.4.4': {}
@@ -4993,7 +5001,7 @@ snapshots:
       eslint: 8.40.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.40.0))(eslint@8.40.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.40.0))(eslint@8.40.0))(eslint@8.40.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.40.0)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@8.40.0)
       eslint-plugin-react: 7.34.3(eslint@8.40.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.40.0)
@@ -5028,7 +5036,7 @@ snapshots:
       enhanced-resolve: 5.17.0
       eslint: 8.40.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.40.0))(eslint@8.40.0))(eslint@8.40.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.40.0))(eslint@8.40.0))(eslint@8.40.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.40.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
       is-core-module: 2.14.0
@@ -5050,7 +5058,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.40.0))(eslint@8.40.0))(eslint@8.40.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.40.0)(typescript@5.0.4))(eslint-import-resolver-typescript@3.6.1)(eslint@8.40.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5

@@ -1,8 +1,6 @@
-import { it, expect, test, expectTypeOf, assertType } from "vitest";
+import { it, expect, expectTypeOf, assertType, describe } from "vitest";
 import * as fs from 'fs';
 import { RegistryData, GraphNode, GraphArrow, GraphData } from "../types/api";
-import {tagTestGraph} from "./tagObjectGraph";
-
 import {
   fetchRegistryData,
   JSON_URL,
@@ -23,127 +21,104 @@ import {
   svgPreloader
 } from "../lib/dataConverter";
 
-
-const testJsonData = fs.readFileSync('src/__test__//ecosystem.test.json', 'utf-8');
+const testJsonData = fs.readFileSync('src/__test__/ecosystem.test.json', 'utf-8');
+const tagGraphData = fs.readFileSync('src/__test__/tagObjectGraph.json', 'utf-8');
 const registryTestData = JSON.parse(testJsonData);
 
-it("Should get Onchain registry json data", async () => {
-  try {
+describe('Data Fetching and Node Creation', () => {
+  it("Should get Onchain registry json data", async () => {
     const registryData = await fetchRegistryData(JSON_URL);
-    // console.log(registryData);
     expectTypeOf(registryData).toEqualTypeOf<RegistryData[]>();
     assertType<RegistryData[]>(registryData);
-  } catch (error) {
-    console.error(error);
-  }
+  });
+
+  it("Should get an Onchain registry graph node", () => {
+    expect(createOnChainRegistryNode()).toEqual({
+      id: "Onchain Summer Registry",
+      group: "super",
+      description: "Onchain Summer Registry",
+      imageUrl: BASE_LOGO,
+      url: REGISTRY_URL,
+      depth: 1
+    });
+  });
+
+  it("Should get category graph nodes", () => {
+    const categoryNode = createCategoryNode(registryTestData);
+    expectTypeOf(categoryNode).toEqualTypeOf<GraphNode[]>();
+  });
+
+  it("Should get category graph arrows", () => {
+    const categoryArrow = createCategoryArrow(registryTestData);
+    expectTypeOf(categoryArrow).toEqualTypeOf<GraphArrow[]>();
+  });
+
+  it("Should get app graph nodes", () => {
+    const appNode = createAppNode(registryTestData);
+    expectTypeOf(appNode).toEqualTypeOf<GraphNode[]>();
+  });
+
+  it("Should get app graph arrows", () => {
+    const appArrow = createAppArrow(registryTestData);
+    expectTypeOf(appArrow).toEqualTypeOf<GraphArrow[]>();
+  });
+
+  it("Should get graph data", () => {
+    const graphData = createGraphData(registryTestData);
+    expectTypeOf(graphData).toEqualTypeOf<GraphData>();
+  });
 });
 
-it("Should get an Onchain registry graph node", async () => {
-  expect(createOnChainRegistryNode()).toEqual({ id: "Onchain Summer Registry", group: "super", description: "Onchain Summer Registry", imageUrl: BASE_LOGO, url: REGISTRY_URL, depth: 1 })
-});
+describe('Data Filtering and Searching', () => {
+  it("Should get filtered registry data", () => {
+    const filteredData = searchObjectByValues(registryTestData, ['Tenderly is a full-stack infrastructure solution ']);
+    expect(filteredData).toHaveLength(1);
+    expect(filteredData[0].description).toMatch(/Tenderly is a full-stack infrastructure solution/);
+  });
 
-it("Should get category graph nodes", async () => {
-  const categoryNode = createCategoryNode(registryTestData);
-  //console.log(categoryNode);
-  expectTypeOf(categoryNode).toEqualTypeOf<GraphNode[]>(categoryNode);
-});
+  it("Should get NO registry data for non-existent search", () => {
+    const filteredData = searchObjectByValues(registryTestData, ['kdssdfanoei333']);
+    expect(filteredData).toHaveLength(0);
+  });
 
-it("Should get category graph arrows", async () => {
-  const categoryArrow = createCategoryArrow(registryTestData);
-  //console.log(categoryArrow);
-  expectTypeOf(categoryArrow).toEqualTypeOf<GraphArrow[]>(categoryArrow);
-});
+  it("Should get All registry data for empty search", () => {
+    const filteredData = searchObjectByValues(registryTestData, ['']);
+    expect(filteredData.length).toBeGreaterThan(350);
+  });
 
-it("Should get app graph nodes", async () => {
-  const appNode = createAppNode(registryTestData);
-  //console.log(appNode);
-  expectTypeOf(appNode).toEqualTypeOf<GraphNode[]>(appNode);
-});
+  it("Should get filtered data with AND search", () => {
+    const filteredData = andSearchObjectByValues(registryTestData, ['defi', 'bridge']);
+    expect(filteredData).toHaveLength(9);
+  });
 
-
-it("Should get app graph arrows", async () => {
-  const appArrow = createAppArrow(registryTestData);
-  // console.log(appArrow);
-  expectTypeOf(appArrow).toEqualTypeOf<GraphArrow[]>(appArrow);
-});
-
-it("Should get graph data", async () => {
-  const graphData = createGraphData(registryTestData);
-  //console.log(graphData) ;
-  expectTypeOf(graphData).toEqualTypeOf<GraphData>(graphData);
-});
-
-it("Should get filtered registry data", async () => {
-  const filteredData = searchObjectByValues(registryTestData, ['Tenderly is a full-stack infrastructure solution ']);
-  //console.log(filteredData);
-  expect(filteredData).toHaveLength(1);
-  expect(filteredData[0].description).toMatch(/Tenderly is a full-stack infrastructure solution/);
-});
-
-it("Should get NO registry data", async () => {
-
-  const filteredData = searchObjectByValues(registryTestData, ['kdssdfanoei333']);
-  //console.log(filteredData);
-  expect(filteredData).toHaveLength(0);
-});
-
-it("Should get All registry data", async () => {
-  const filteredData = searchObjectByValues(registryTestData, ['']);
-  // console.log(filteredData.length);
-  expect(filteredData.length > 350).toBe(true);
-});
-
-it("Should get All registry data", async () => {
-  const filteredData = andSearchObjectByValues(registryTestData, ['defi', 'bridge']);
-  expect(filteredData).toHaveLength(9);
-});
-
-it("Should get filtered registry graph data", async () => {
-  try {
+  it("Should get filtered registry graph data", async () => {
     const graphData = await searchGraphDataByValues(['Tenderly is a full-stack infrastructure solution ']);
-    // console.log(graphData);
     expect(graphData.links).toHaveLength(4);
     expect(graphData.nodes).toHaveLength(4);
-  } catch (error) {
-    console.error(error);
-  }
-});
+  });
 
-it("Should get filtered registry data through Fleek Functions API", async () => {
-  try {
+  it("Should get filtered registry data through Fleek Functions API", async () => {
     const graphData = await fetchFleekApi(['Tenderly is a full-stack infrastructure solution ', 'AND', '2']);
-    // console.log(graphData);
     expect(graphData.links).toHaveLength(2);
     expect(graphData.nodes).toHaveLength(3);
-  } catch (error) {
-    console.error(error);
-  }
-});
+  });
 
-it("Should get designated tag of registry objects", async () => {
-  const filteredData = searchObjectByTag(registryTestData, 'defi');
-  // console.log(filteredData.length);
-  expect(filteredData).toHaveLength(94);
-});
+  it("Should get designated tag of registry objects", () => {
+    const filteredData = searchObjectByTag(registryTestData, 'defi');
+    expect(filteredData).toHaveLength(94);
+  });
 
-
-it("Should get filtered registry graph data by tag", async () => {
-  try {
+  it("Should get filtered registry graph data by tag", async () => {
     const graphData = await searchGraphDataByTag('defi');
-   //  console.log(graphData);
     expect(graphData.links).toHaveLength(97);
     expect(graphData.nodes).toHaveLength(98);
-  } catch (error) {
-    console.error(error);
-  }
+  });
 });
 
-// it("Should get SVG cache data from tag graph", async () => {
-//   try {
+// Commented out as it requires a web server to be running
+// describe('SVG Preloading', () => {
+//   it("Should get SVG cache data from tag graph", async () => {
 //     const svgCacheData = await svgPreloader(tagTestGraph as any);
-//     console.log(svgCacheData);
-//   } catch (error) {
-//     console.error(error);
-//     console.error("YOU NEED TO UP WEB SERVER FOR THE TEST")
-//   }
+//     // Add assertions here
+//   });
 // });
