@@ -36,7 +36,7 @@ export default function Home() {
               title="Powered by Fleek"
               description="Fleek is an edge-optimized cloud platform. Effortlessly build, ship and
 scale highly performant apps."
-              icon="/fleekLogo.svg"
+              icon="/fleek-xyz-full-on-dark.svg"
             />
           </FadeIn>
           <FadeIn delay={0.6}>
