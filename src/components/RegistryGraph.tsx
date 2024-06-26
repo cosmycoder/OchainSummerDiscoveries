@@ -8,6 +8,7 @@ import { createThreeObject, createNodeHoverObject, appNodeClick, appCard } from 
 import ForceGraph3D, { ForceGraphMethods, ForceGraphProps } from "react-force-graph-3d";
 import * as THREE from 'three';
 import LoadingPage from "./LoadingPage";
+import ErrorMessage from '../components/ErrorMessage';
 
 const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const fgRef = useRef<ForceGraphMethods>();
@@ -17,6 +18,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const [imageCache, setImageCache] = useState<ImageCacheData[]>([]);
     const [visibility, setVisibility] = useState<boolean>(true);
     const [timeout, setTimeout] = useState<number>(1000);
+    const [error, setError] = useState<string | null>(null);
     const distance = 200;
 
     // Initial Data retrival
@@ -25,12 +27,13 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             try {
                 const result = await fetchFleekApi(['', 'AND', '2']);
                 setData(result);
-               // const fetchedData = await createIconCacheData();
+                // const fetchedData = await createIconCacheData();
                 const fetchedData = await fleekCreateIconCacheData();
                 setImageCache(fetchedData);
 
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setError('Failed to fetch initial data.');
             } finally {
                 setLoading(false);
             }
@@ -79,26 +82,36 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
 
     // Loading Page
     if (loading) return <LoadingPage />;
+    if (error) return <ErrorMessage message={error} />;
 
     const handleSearch = debounce(async (query: string[]) => {
-        // const result = await searchGraphDataByValues(query);
-        const result = query[0].length === 0 ? await fetchFleekApi(['', 'AND', '2']) : await fetchFleekApi(query);
-        setData(result);
-        setVisibility(false);
-        setTimeout(result.links.length * 50 + 1000);
-    }, 1000);
-
-    const handleClick = debounce(async (query: string) => {
-        // const result = await searchGraphDataByValues(query);
-        const result = await fetchFleekApiByTag(query);
-        const mergedData = mergeGraphData(data, result);
-        if (data.links.length !== mergedData.nodes.length) {
-            setData(mergedData);
+        try {
+            // const result = await searchGraphDataByValues(query);
+            const result = query[0].length === 0 ? await fetchFleekApi(['', 'AND', '2']) : await fetchFleekApi(query);
+            setData(result);
             setVisibility(false);
-            setTimeout(mergedData.links.length * 50 + 1000);
+            setTimeout(result.links.length * 50 + 1000);
+        } catch (error) {
+            console.error('Error during search:', error);
+            setError('Failed to search graph data.');
         }
     }, 1000);
 
+    const handleClick = debounce(async (query: string) => {
+        try {
+            // const result = await searchGraphDataByValues(query);
+            const result = await fetchFleekApiByTag(query);
+            const mergedData = mergeGraphData(data, result);
+            if (data.links.length !== mergedData.nodes.length) {
+                setData(mergedData);
+                setVisibility(false);
+                setTimeout(mergedData.links.length * 50 + 1000);
+            }
+        } catch (error) {
+            console.error('Error on click:', error);
+            setError('Failed to fetch data by tag.');
+        }
+    }, 1000);
     const getCurrentCache = () => imageCache;
 
     return (

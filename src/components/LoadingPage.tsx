@@ -61,7 +61,7 @@ function initializeScene() {
 function createSpheres() {
   const texture = new THREE.TextureLoader().load("/base-sphere-square.png");
   const geometry = new THREE.SphereGeometry(1, 128, 128); // Increased segments for smoother geometry
-  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.8 });
 
   return [
     createSphere(geometry, material, -60, 0, 50, Math.PI, 0.01, 0, 0),
