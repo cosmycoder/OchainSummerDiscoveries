@@ -5,6 +5,8 @@ import { ReactNode, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { EnhancedCanvas3DBackground } from './EnhancedCanvas3DBackground'
 import styles from './ParallaxHero.module.css'
+import { FadeIn } from './FadeIn'
+import Link from 'next/link'
 
 interface ParallaxHeroProps {
     title: ReactNode;
@@ -40,6 +42,11 @@ export function ParallaxHero({ title, subtitle }: ParallaxHeroProps) {
         >
           {subtitle}
         </motion.p>
+        <FadeIn delay={1}>
+          <Link href="/discovery" className={styles.cta}>
+            Launch App
+          </Link>
+        </FadeIn>
       </div>
     </div>
   )
