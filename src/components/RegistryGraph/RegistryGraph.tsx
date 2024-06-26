@@ -1,14 +1,14 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData, svgPreloader } from "../lib/dataConverter"
-import { GraphData, GraphNode, ImageCacheData, SvgCacheData } from "../types/api"
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData, svgPreloader } from "../../lib/dataConverter"
+import { GraphData, GraphNode, ImageCacheData, SvgCacheData } from "../../types/api"
 import { FC, forwardRef, useCallback, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../../components/Search/Search';
 import { debounce } from 'lodash';
-import { createThreeObject, createNodeHoverObject, appNodeClick, appCard } from '../lib/threeFunc'
+import { createThreeObject, createNodeHoverObject, appNodeClick, appCard } from '../../lib/threeFunc'
 import ForceGraph3D, { ForceGraphMethods, ForceGraphProps } from "react-force-graph-3d";
 import * as THREE from 'three';
 import LoadingPage from "./LoadingPage";
-import ErrorMessage from '../components/ErrorMessage';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const fgRef = useRef<ForceGraphMethods>();

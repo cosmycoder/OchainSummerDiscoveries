@@ -1,11 +1,11 @@
 'use client';
 
 import styles from './page.module.css';
-import { FadeIn } from '../components/FadeIn';
-import { FeatureCard } from '@/components/FeatureCard';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { ParallaxHero } from '@/components/ParallaxHero';
+import { FadeIn } from '../components/FadeIn/FadeIn';
+import FeatureCard from '@/components/FeatureCard/FeatureCard';
+import Navbar from '@/components/Navbar/Navbar';
+import Footer from '@/components/Footer/Footer';
+import { ParallaxHero } from '@/components/Hero/ParallaxHero';
 import { FC } from 'react';
 
 interface FeatureCardProps {

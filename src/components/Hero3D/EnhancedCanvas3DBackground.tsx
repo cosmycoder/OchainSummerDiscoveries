@@ -1,4 +1,4 @@
-// app/components/EnhancedCanvas3DBackground.tsx
+// app/components/Hero3D/EnhancedCanvas3DBackground.tsx
 'use client'
 
 import React, { useRef, useEffect } from 'react'
@@ -6,10 +6,8 @@ import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { OrbitControls } from '@react-three/drei'
 
-function Particles() {
+const Particles = () => {
     const particlesRef = useRef<THREE.Points>(null)
-    const { camera } = useThree()
-
     useEffect(() => {
         if (particlesRef.current) {
             const geometry = particlesRef.current.geometry as THREE.BufferGeometry
@@ -43,21 +41,18 @@ interface EyesProps {
     position: [number, number, number]
 }
 
-function Eyes({ position }: EyesProps) {
+const Eyes = ({ position }: EyesProps) => {
     const meshRef = useRef<THREE.Mesh>(null)
     const texture = useLoader(THREE.TextureLoader, "/base-sphere-square.png")
-    const { viewport } = useThree()
 
     useFrame(() => {
         if (meshRef.current) {
-
             // Limit the rotation to create a more natural eye movement
             meshRef.current.rotation.x = THREE.MathUtils.clamp(meshRef.current.rotation.x, -Math.PI / 4, Math.PI / 4)
             meshRef.current.rotation.y = THREE.MathUtils.clamp(meshRef.current.rotation.y, -Math.PI / 4, Math.PI / 4)
             //meshRef.current.rotation.z = THREE.MathUtils.clamp(meshRef.current.rotation.z, -Math.PI / 4, Math.PI / 4)
             meshRef.current.rotation.z += 0.005;
         }
-        
     })
 
     return (
@@ -68,7 +63,7 @@ function Eyes({ position }: EyesProps) {
     )
 }
 
-function EyesGroup() {
+const EyesGroup = () => {
     const groupRef = useRef<THREE.Group>(null)
 
     useFrame((state) => {
@@ -96,7 +91,7 @@ function EyesGroup() {
     )
 }
 
-export function EnhancedCanvas3DBackground() {
+export const EnhancedCanvas3DBackground = () => {
     return (
         <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
             camera={{ position: [0, 0, 5], fov: 75 }}>

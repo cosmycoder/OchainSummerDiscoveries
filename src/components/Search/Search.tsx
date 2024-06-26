@@ -1,11 +1,13 @@
-import { useState, ChangeEvent, KeyboardEvent } from 'react';
-import styles from '../styles/Search.module.css';
+/* src/components/Search/Search */
 
-interface SearchBarProps {
+import { useState, ChangeEvent, KeyboardEvent, FC } from 'react';
+import styles from './Search.module.css';
+
+interface SearchProps {
   onSearch: (query: string[]) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const Search: FC<SearchProps> = ({ onSearch }) => {
   const [query, setQuery] = useState<string>('');
   const [searchMode, setSearchMode] = useState<'AND' | 'OR'>('AND');
 
@@ -63,4 +65,4 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   );
 };
 
-export default SearchBar;
+export default Search;
