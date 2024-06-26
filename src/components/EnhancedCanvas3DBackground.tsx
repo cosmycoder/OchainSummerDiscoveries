@@ -54,8 +54,10 @@ function Eyes({ position }: EyesProps) {
             // Limit the rotation to create a more natural eye movement
             meshRef.current.rotation.x = THREE.MathUtils.clamp(meshRef.current.rotation.x, -Math.PI / 4, Math.PI / 4)
             meshRef.current.rotation.y = THREE.MathUtils.clamp(meshRef.current.rotation.y, -Math.PI / 4, Math.PI / 4)
-            meshRef.current.rotation.z = THREE.MathUtils.clamp(meshRef.current.rotation.z, -Math.PI / 4, Math.PI / 4)
+            //meshRef.current.rotation.z = THREE.MathUtils.clamp(meshRef.current.rotation.z, -Math.PI / 4, Math.PI / 4)
+            meshRef.current.rotation.z += 0.005;
         }
+        
     })
 
     return (
@@ -82,12 +84,14 @@ function EyesGroup() {
 
     return (
         <group ref={groupRef} position={[0, 0, -10]}>
-            <Eyes position={[-5, -5, 0]} />
-            <Eyes position={[-3, -5, 0]} />
-            <Eyes position={[-1, -5, 0]} />
-            <Eyes position={[1, -5, 0]} />
-            <Eyes position={[3, -5, 0]} />
-            <Eyes position={[5, -5, 0]} />
+            <Eyes position={[-7, -6, 4]} />
+            <Eyes position={[-5, -5, 3]} />
+            <Eyes position={[-3, -4, 2]} />
+            <Eyes position={[-1, -3, 1]} />
+            <Eyes position={[1, -2, 0]} />
+            <Eyes position={[3, -1, -1]} />
+            <Eyes position={[5, 0, -2]} />
+            <Eyes position={[7, 1, -3]} />
         </group>
     )
 }

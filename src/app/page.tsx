@@ -17,10 +17,10 @@ export default function Home() {
       <ParallaxHero
         title={<>Onchain Summer <span className={styles.highlight}>Discoveries</span></>}
         subtitle={<><p className={styles.description}>
-          Discover your favorite Web3 Application</p></>}
+          DISCOVER YOUR FAVORITE APPLICATION</p></>}
       ></ParallaxHero>
       <main className={styles.main}>
-      <FadeIn delay={1}>
+        <FadeIn delay={1}>
           <Link href="/discovery" className={styles.cta}>
             Launch App
           </Link>
@@ -33,7 +33,7 @@ export default function Home() {
 
         <FadeIn delay={0.2}>
           <p className={styles.description}>
-          Kick off Onchain Summer by participating in a global virtual hackathon hosted by Base and track sponsors including Stripe, Shopify, Farcaster, Zora, Fleek, thirdweb, Nouns, Aerodrome, and Synthetix.
+            Kick off Onchain Summer by participating in a global virtual hackathon hosted by Base and track sponsors including Stripe, Shopify, Farcaster, Zora, Fleek, thirdweb, Nouns, Aerodrome, and Synthetix.
           </p>
         </FadeIn>
 
