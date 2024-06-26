@@ -29,3 +29,4 @@ export interface GraphData {
 }
 
 export interface ImageCacheData { imageUrl: string; base64data: string }
+export interface SvgCacheData { imageUrl: string; svgData: string }

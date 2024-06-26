@@ -17,7 +17,7 @@ export const main = (request) => {
         return searchGraphDataByTag(tag)
     }
 };
-export const BASE_LOGO = "/Base_Network_Logo.svg"
+export const BASE_LOGO = "/Base_Network_Logo" // DO NOT NEED FILE EXTENTION
 export const BASE_URL = "https://base.org";
 export const REGISTRY_URL = "https://www.base.org/ecosystem";
 export const DEFAULT_ICON_URL = "/document/mstile-70x70.png";

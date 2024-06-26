@@ -1,9 +1,9 @@
-import { ImageCacheData } from "@/types/api";
+import { ImageCacheData, SvgCacheData } from "@/types/api";
 import * as THREE from 'three';
 import SpriteText from 'three-spritetext';
 import { ForceGraphMethods } from 'react-force-graph-3d'
 
-export const createThreeObject = (node: any | undefined, currentCache: ImageCacheData[], fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>) => {
+export const createThreeObject = (node: any | undefined, currentCache: ImageCacheData[], currentSvgCache: SvgCacheData[], fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>) => {
   // OnChain Summer Registry Graph Node
   if (node.depth === 1) {
     //Sphere object 
@@ -32,8 +32,9 @@ export const createThreeObject = (node: any | undefined, currentCache: ImageCach
   }
   // Category Graph node
   if (node.depth === 2) {
-
-    const texture = new THREE.TextureLoader().load(`${node.imageUrl}.svg`);
+    const svgData = deriveSvgDataFromCache(node, currentSvgCache);
+    console.log("svg string", svgData);
+    const texture = new THREE.TextureLoader().load(svgData);
 
     // Sprite object
     const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
@@ -118,6 +119,13 @@ const deriveBase64DataFromCache = (node: any | undefined, currentCache: ImageCac
     const pathname = isURL(obj?.imageUrl) ? new URL(obj?.imageUrl).pathname : obj?.imageUrl;
     return pathname === node.imageUrl
   })[0].base64data;
+}
+
+const deriveSvgDataFromCache = (node: any | undefined, currentSvgCache: SvgCacheData[]): string => {
+  return currentSvgCache.filter((obj: { imageUrl: string }) => {
+    const pathname = isURL(obj?.imageUrl) ? new URL(obj?.imageUrl).pathname : obj?.imageUrl;
+    return pathname === node.imageUrl
+  })[0].svgData;
 }
 
 export const createNodeHoverObject = (node: any | undefined, fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>) => {

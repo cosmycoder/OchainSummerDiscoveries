@@ -1,6 +1,8 @@
 import { it, expect, test, expectTypeOf, assertType } from "vitest";
 import * as fs from 'fs';
 import { RegistryData, GraphNode, GraphArrow, GraphData } from "../types/api";
+import {tagTestGraph} from "./tagObjectGraph";
+
 import {
   fetchRegistryData,
   JSON_URL,
@@ -17,7 +19,8 @@ import {
   searchObjectByTag,
   searchGraphDataByTag,
   andSearchObjectByValues,
-  fetchFleekApi
+  fetchFleekApi,
+  svgPreloader
 } from "../lib/dataConverter";
 
 
@@ -119,7 +122,7 @@ it("Should get filtered registry data through Fleek Functions API", async () => 
 
 it("Should get designated tag of registry objects", async () => {
   const filteredData = searchObjectByTag(registryTestData, 'defi');
-  console.log(filteredData.length);
+  // console.log(filteredData.length);
   expect(filteredData).toHaveLength(94);
 });
 
@@ -127,10 +130,20 @@ it("Should get designated tag of registry objects", async () => {
 it("Should get filtered registry graph data by tag", async () => {
   try {
     const graphData = await searchGraphDataByTag('defi');
-    console.log(graphData);
+   //  console.log(graphData);
     expect(graphData.links).toHaveLength(97);
     expect(graphData.nodes).toHaveLength(98);
   } catch (error) {
     console.error(error);
   }
 });
+
+// it("Should get SVG cache data from tag graph", async () => {
+//   try {
+//     const svgCacheData = await svgPreloader(tagTestGraph as any);
+//     console.log(svgCacheData);
+//   } catch (error) {
+//     console.error(error);
+//     console.error("YOU NEED TO UP WEB SERVER FOR THE TEST")
+//   }
+// });

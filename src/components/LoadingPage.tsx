@@ -92,7 +92,7 @@ function loadFont() {
 
 function createTextMesh(font: Font) {
   const textGeometry = new TextGeometry('Loading...', {
-    font, size: 10, height: 2, curveSegments: 12,
+    font, size: 10, depth: 2, curveSegments: 12,
     bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.02, bevelSegments: 5
   });
   const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });

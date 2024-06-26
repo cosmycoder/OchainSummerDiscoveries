@@ -1,5 +1,5 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData } from "../lib/dataConverter"
-import { GraphData, GraphNode, ImageCacheData } from "../types/api"
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData, svgPreloader } from "../lib/dataConverter"
+import { GraphData, GraphNode, ImageCacheData, SvgCacheData } from "../types/api"
 import { FC, forwardRef, useCallback, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
@@ -16,6 +16,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [camloading, setCamLoading] = useState<boolean>(true);
     const [imageCache, setImageCache] = useState<ImageCacheData[]>([]);
+    const [svgCache, setSvgCache] = useState<SvgCacheData[]>([]);
     const [visibility, setVisibility] = useState<boolean>(true);
     const [timeout, setTimeout] = useState<number>(1000);
     const [error, setError] = useState<string | null>(null);
@@ -30,7 +31,9 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
                 // const fetchedData = await createIconCacheData();
                 const fetchedData = await fleekCreateIconCacheData();
                 setImageCache(fetchedData);
-
+                // getting svg cache data
+                setSvgCache(await svgPreloader(result));
+                console.log("tag svg cache", await svgPreloader(result) );
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError('Failed to fetch initial data.');
@@ -113,6 +116,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
         }
     }, 1000);
     const getCurrentCache = () => imageCache;
+    const getCurrentSvgCache = () => svgCache;
 
     return (
         <>
@@ -147,7 +151,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
                     node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
                     node.depth === 3 ? appNodeClick(node) : null;
                 }}
-                nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), fgRef) as any}
+                nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache(), fgRef) as any}
                 nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
             />
             <SearchBar onSearch={handleSearch} />
