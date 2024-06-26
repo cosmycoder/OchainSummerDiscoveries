@@ -5,7 +5,6 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 
 const LoadingPage: FC = forwardRef((_props, _ref) => {
   const refContainer = useRef<HTMLDivElement | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const { scene, camera, renderer, cleanUp } = initializeScene();
@@ -25,14 +24,12 @@ const LoadingPage: FC = forwardRef((_props, _ref) => {
     const handleResize = createResizeHandler(camera, renderer);
     window.addEventListener('resize', handleResize);
 
-
     return () => {
       window.removeEventListener('resize', handleResize);
       cleanUp();
     };
   }, []);
 
-  if (!loading) return null;
   return <div ref={refContainer} />;
 });
 
@@ -63,7 +60,7 @@ function initializeScene() {
 
 function createSpheres() {
   const texture = new THREE.TextureLoader().load("/base-sphere-square.png");
-  const geometry = new THREE.SphereGeometry(1, 64, 64);
+  const geometry = new THREE.SphereGeometry(1, 128, 128); // Increased segments for smoother geometry
   const material = new THREE.MeshBasicMaterial({ map: texture });
 
   return [
@@ -84,7 +81,9 @@ function createSphere(geometry: THREE.SphereGeometry, material: THREE.MeshBasicM
 }
 
 function createLight() {
-  return new THREE.DirectionalLight(0xffffff, 2);
+  const light = new THREE.DirectionalLight(0xffffff, 2);
+  light.position.set(0, 0, -200);
+  return light;
 }
 
 function loadFont() {
@@ -93,7 +92,7 @@ function loadFont() {
 
 function createTextMesh(font: Font) {
   const textGeometry = new TextGeometry('Loading...', {
-    font, size: 10, depth: 2, curveSegments: 12,
+    font, size: 10, height: 2, curveSegments: 12,
     bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.02, bevelSegments: 5
   });
   const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
@@ -112,7 +111,6 @@ function animate(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THRE
     sphere.rotation.y += y;
     sphere.rotation.z += z;
   });
-  light.position.set(0, 0, -200);
   renderer.render(scene, camera);
 }
 
@@ -123,7 +121,6 @@ function createResizeHandler(camera: THREE.PerspectiveCamera, renderer: THREE.We
     renderer.setSize(window.innerWidth, window.innerHeight);
   };
 }
-
 
 function disposeScene(scene: THREE.Scene) {
   scene.traverse((child: THREE.Object3D) => {
@@ -139,4 +136,3 @@ function disposeScene(scene: THREE.Scene) {
 }
 
 export default LoadingPage;
-

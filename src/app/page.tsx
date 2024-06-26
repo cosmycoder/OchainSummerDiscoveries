@@ -41,7 +41,7 @@ scale highly performant apps."
           </FadeIn>
           <FadeIn delay={0.6}>
             <FeatureCard
-              title="Joined Onchain Summer"
+              title="Joined in Onchain Summer"
               description="Build a compelling app on top of the Onchain Summer Registry, with a focus on discoverability and daily engagement. Sponsored by Fleek and Base."
               icon="/ocs_banner.svg"
             />
