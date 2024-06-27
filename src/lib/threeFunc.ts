@@ -5,7 +5,8 @@ import SpriteText from 'three-spritetext';
 export const createThreeObject = (
   node: any,
   currentCache: ImageCacheData[],
-  currentSvgCache: SvgCacheData[]
+  currentSvgCache: SvgCacheData[],
+  base3dLogo: any
 ): THREE.Group | undefined => {
   if (!node) return undefined;
 
@@ -13,7 +14,7 @@ export const createThreeObject = (
 
   switch (node.depth) {
     case 1:
-      addOnChainSummerRegistryNode(group, node);
+      addOnChainSummerRegistryNode(group, node, base3dLogo);
       break;
     case 2:
       addCategoryNode(group, node, currentSvgCache);
@@ -28,8 +29,8 @@ export const createThreeObject = (
   return group;
 };
 
-const addOnChainSummerRegistryNode = (group: THREE.Group, node: any) => {
-  const texture = new THREE.TextureLoader().load("/base-sphere-square.png");
+const addOnChainSummerRegistryNode = (group: THREE.Group, node: any, base3dLogo: any) => {
+  const texture = new THREE.TextureLoader().load(base3dLogo.imageUrl);
   const sphere = createSphere(10, texture);
   const text = createText(node.description, "#99CCFF", 3, 0, -15, 0);
 

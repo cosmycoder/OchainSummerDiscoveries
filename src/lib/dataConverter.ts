@@ -224,7 +224,7 @@ const blobToBase64 = async (blob: Blob) => {
   }
 }
 
-const fetchBase64data = async (url: string) => {
+export const fetchBase64data = async (url: string) => {
   try {
     const response = await fetch(url);
     return !response.ok ? () => {
@@ -245,7 +245,7 @@ const fetchBase64data = async (url: string) => {
   }
 }
 
-const fleekFetchBase64data = async (url: string) => {
+export const fleekFetchBase64data = async (url: string) => {
   try {
     const response = await fetch(`${FLEEK_CACHE_API}?img_cache=${url}`);
     return !response.ok ? () => {

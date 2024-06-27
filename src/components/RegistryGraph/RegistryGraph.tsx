@@ -1,4 +1,4 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader } from "../../lib/dataConverter"
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader, fetchBase64data } from "../../lib/dataConverter"
 import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
 import { FC, forwardRef, useCallback, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
@@ -21,6 +21,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const [visibility, setVisibility] = useState<boolean>(true);
     const [timeout, setTimeout] = useState<number>(1000);
     const [error, setError] = useState<string | null>(null);
+    const [base3dLogo, setBase3dLogo] = useState<ImageCacheData | (() => void)>();
     const distance = 200;
 
     // Initial Data retrival
@@ -35,6 +36,9 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
                 // getting svg cache data
                 setSvgCache(await svgPreloader(result));
                 // console.log("tag svg cache", await svgPreloader(result));
+                const base3dLogoData = await fetchBase64data('/base-sphere-square.png')
+                // console.log(base3dLogoData);
+                setBase3dLogo(base3dLogoData);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError('Failed to fetch initial data.');
@@ -60,8 +64,6 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
         }, 1000);
         return () => clearInterval(interval); // Clean up the interval on component unmount
     }, [camloading]);
-
-
 
     // Graph rotation animation
     setInterval(() => {
@@ -118,6 +120,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     }, 1000);
     const getCurrentCache = () => imageCache;
     const getCurrentSvgCache = () => svgCache;
+    const getBase3dLogo = () => base3dLogo;
 
     return (
         <>
@@ -152,7 +155,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
                     node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
                     node.depth === 3 ? appNodeClick(node) : null;
                 }}
-                nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache()) as any}
+                nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache(),  getBase3dLogo() as any) as any}
                 nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
             />
             <SearchBar onSearch={handleSearch} />
