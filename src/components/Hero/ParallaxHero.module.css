@@ -1,54 +1,59 @@
 /* app/components/ParallaxHero.module.css */
 .parallaxContainer {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #ffffff;
-    z-index: 10;
-  }
-  
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #ffffff;
+  z-index: 10;
+}
+
+.content h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.content p {
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
   .content h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-  
-  .content p {
-    font-size: 1.5rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  }
-  
-  @media (max-width: 768px) {
-    .content h1 {
-      font-size: 3rem;
-    }
-  
-    .content p {
-      font-size: 1.2rem;
-    }
+    font-size: 3rem;
   }
 
-  .cta {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background: linear-gradient(45deg, #0052ff, #2ecc71);
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: transform 0.2s ease;
+  .content p {
+    font-size: 1.2rem;
   }
-  
-  .cta:hover {
-    transform: translateY(-3px);
-  }
-  
+}
+
+.cta {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #0052ff, #2ecc71);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.cta:active {
+  background: linear-gradient(45deg, #002a80, #17a34b);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.cta:hover {
+  background: linear-gradient(45deg, #003bb3, #1eb25d);
+}
