@@ -35,22 +35,17 @@ const LoadingPage: FC = forwardRef((_props, _ref) => {
 
 LoadingPage.displayName = 'LoadingPage';
 
-function initializeScene() {
+const initializeScene = () => {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.position.set(0, 0, -300);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
-
   const container = document.querySelector('div');
-  if (container) container.appendChild(renderer.domElement);
-
+  (container) ? container.appendChild(renderer.domElement) : null;
   const cleanUp = () => {
-    if (container && renderer.domElement.parentNode === container) {
-      container.removeChild(renderer.domElement);
-    }
+    (container && renderer.domElement.parentNode === container) ? container.removeChild(renderer.domElement) : null;
     disposeScene(scene);
     renderer.dispose();
   };
@@ -58,7 +53,7 @@ function initializeScene() {
   return { scene, camera, renderer, cleanUp };
 }
 
-function createSpheres() {
+const createSpheres = () => {
   const texture = new THREE.TextureLoader().load("/base-sphere-square.png");
   const geometry = new THREE.SphereGeometry(1, 128, 128); // Increased segments for smoother geometry
   const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.8 });
@@ -71,7 +66,7 @@ function createSpheres() {
   ];
 }
 
-function createSphere(geometry: THREE.SphereGeometry, material: THREE.MeshBasicMaterial, x: number, y: number, z: number, rotationZ: number, rotationSpeedX: number, rotationSpeedY: number, rotationSpeedZ: number) {
+const createSphere = (geometry: THREE.SphereGeometry, material: THREE.MeshBasicMaterial, x: number, y: number, z: number, rotationZ: number, rotationSpeedX: number, rotationSpeedY: number, rotationSpeedZ: number) => {
   const sphere = new THREE.Mesh(geometry, material);
   sphere.scale.set(18, 18, 18);
   sphere.position.set(x, y, z);
@@ -80,17 +75,15 @@ function createSphere(geometry: THREE.SphereGeometry, material: THREE.MeshBasicM
   return sphere;
 }
 
-function createLight() {
+const createLight = () => {
   const light = new THREE.DirectionalLight(0xffffff, 2);
   light.position.set(0, 0, -200);
   return light;
 }
 
-function loadFont() {
-  return new FontLoader().loadAsync('/helvetiker_bold.typeface.json');
-}
+const loadFont = () => (new FontLoader().loadAsync('/helvetiker_bold.typeface.json'));
 
-function createTextMesh(font: Font) {
+const createTextMesh = (font: Font) => {
   const textGeometry = new TextGeometry('Loading...', {
     font, size: 10, depth: 2, curveSegments: 12,
     bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.02, bevelSegments: 5
@@ -103,7 +96,7 @@ function createTextMesh(font: Font) {
   return textMesh;
 }
 
-function animate(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.PerspectiveCamera, spheres: any[], light: THREE.DirectionalLight) {
+const animate = (renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THREE.PerspectiveCamera, spheres: any[], light: THREE.DirectionalLight) => {
   requestAnimationFrame(() => animate(renderer, scene, camera, spheres, light));
   spheres.forEach((sphere: { userData: { rotationSpeed: { x: any; y: any; z: any; }; }; rotation: { x: any; y: any; z: any; }; }) => {
     const { x, y, z } = sphere.userData.rotationSpeed;
@@ -114,24 +107,22 @@ function animate(renderer: THREE.WebGLRenderer, scene: THREE.Scene, camera: THRE
   renderer.render(scene, camera);
 }
 
-function createResizeHandler(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer) {
-  return () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  };
-}
+const createResizeHandler = (camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer) => () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+};
 
-function disposeScene(scene: THREE.Scene) {
+const disposeScene = (scene: THREE.Scene) => {
   scene.traverse((child: THREE.Object3D) => {
-    if (child instanceof THREE.Mesh) {
-      child.geometry?.dispose();
-      if (Array.isArray(child.material)) {
-        child.material.forEach(material => material.dispose());
-      } else {
-        child.material?.dispose();
+    (!(child instanceof THREE.Mesh)) //if
+      ? null
+      : () => {
+        child.geometry?.dispose();
+        (Array.isArray(child.material)) // if
+          ? child.material.forEach(material => material.dispose())
+          : child.material?.dispose();
       }
-    }
   });
 }
 
