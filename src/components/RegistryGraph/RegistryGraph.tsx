@@ -18,6 +18,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const [visibility, setVisibility] = useState<boolean>(true);
     const [timeout, setTimeout] = useState<number>(1000);
     const [error, setError] = useState<string | null>(null);
+    const [camloading, setCamLoading] = useState<boolean>(true);
     const distance = 200;
 
     // Retrieve initial data
@@ -66,6 +67,21 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             clearInterval(visibilityInterval);
         };
     }, [visibility, timeout]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (camloading) {
+                if (fgRef.current) {
+                    fgRef.current.cameraPosition(
+                        { x: 0, y: 0, z: distance }, // new position
+                        { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
+                        1000  // ms transition duration
+                    );
+                    setCamLoading(false);
+                }
+            }
+        }, 1000);
+        return () => clearInterval(interval); // Clean up the interval on component unmount
+    }, [camloading]);
 
     const handleSearch = useCallback(debounce(async (query: string[]) => {
         try {
@@ -102,7 +118,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     return (
         <>
             <ForceGraph3D
-                onEngineStop={() => fgRef.current?.zoomToFit(1000)}
+                // onEngineStop={() => fgRef.current?.zoomToFit(2000)}
                 enableNavigationControls={true}
                 ref={fgRef}
                 cooldownTime={timeout}
