@@ -132,7 +132,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                     node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
                     node.depth === 3 ? appNodeClick(node) : null;
                 }}
-                nodeThreeObject={(node) => createThreeObject(node, imageCache, svgCache, fgRef) as any}
+                nodeThreeObject={(node) => createThreeObject(node, imageCache, svgCache) as any}
                 nodeLabel={(node) => node.depth === 3 ? appCard(node, imageCache) : String(node.id)}
             />
             <SearchBar onSearch={handleSearch} />

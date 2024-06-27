@@ -1,14 +1,11 @@
 import { ImageCacheData, SvgCacheData } from "@/types/api";
 import * as THREE from 'three';
 import SpriteText from 'three-spritetext';
-import { ForceGraphMethods } from 'react-force-graph-3d'
-
 
 export const createThreeObject = (
   node: any,
   currentCache: ImageCacheData[],
-  currentSvgCache: SvgCacheData[],
-  fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>
+  currentSvgCache: SvgCacheData[]
 ): THREE.Group | undefined => {
   if (!node) return undefined;
 

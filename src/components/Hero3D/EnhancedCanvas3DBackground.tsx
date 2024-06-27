@@ -1,4 +1,4 @@
-// app/components/Hero3D/EnhancedCanvas3DBackground.tsx
+// app/components/EnhancedCanvas3DBackground.tsx
 'use client'
 
 import React, { useRef, useEffect } from 'react'
@@ -32,7 +32,7 @@ const Particles = () => {
     return (
         <points ref={particlesRef}>
             <bufferGeometry />
-            <pointsMaterial size={0.02} color="#ffffff" />
+            <pointsMaterial size={0.01} color="#ffffff" />
         </points>
     )
 }

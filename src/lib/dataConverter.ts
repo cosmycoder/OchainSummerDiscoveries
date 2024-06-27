@@ -24,7 +24,6 @@ export const fetchRegistryData = async (
     : response.json();
 };
 
-
 export const createImageUrlArray = (registryData: RegistryData[]) => registryData.map(({ imageUrl }) => imageUrl);
 
 // Making the top tier parent node
@@ -33,37 +32,57 @@ export const createOnChainRegistryNode = (): GraphNode =>
 
 
 // Making category nodes
-export const createCategoryNode = (registryData: RegistryData[]): GraphNode[] =>
-  registryData.map(({ tags }) =>
-    tags.map((value: string) =>
-      ({ id: value, group: value, description: value, imageUrl: `/${value}`, url: value, depth: 2 }))).flat(1);
+export const createCategoryNode = (registryData: RegistryData[]): GraphNode[] => {
+  return registryData.flatMap(({ tags }) =>
+    tags.map((value: string) => ({
+      id: value,
+      group: value,
+      description: value,
+      imageUrl: `/${value}`,
+      url: value,
+      depth: 2
+    }))
+  );
+};
 
-
-// Making category arrows 
-export const createCategoryArrow = (registryData: RegistryData[]): GraphArrow[] =>
-  registryData.map(({ tags }) =>
-    tags.map((value: string) =>
-      ({ source: createOnChainRegistryNode().id, target: value, name: value, description: value, group: createOnChainRegistryNode().group }))).flat(1);
-
+// Making category arrows
+export const createCategoryArrow = (registryData: RegistryData[]): GraphArrow[] => {
+  const registryNode = createOnChainRegistryNode();
+  return registryData.flatMap(({ tags }) =>
+    tags.map((value: string) => ({
+      source: registryNode.id,
+      target: value,
+      name: value,
+      description: value,
+      group: registryNode.group
+    }))
+  );
+};
 
 // Making app nodes
 export const createAppNode = (registryData: RegistryData[]): GraphNode[] =>
-  registryData.map((obj) =>
-    ({ id: obj.name, group: String(...obj.tags), description: obj.description, imageUrl: obj.imageUrl, url: obj.url, depth: 3 }));
+  registryData.map(obj =>
+    ({ id: obj.name, group: obj.tags.join(', '), description: obj.description, imageUrl: obj.imageUrl, url: obj.url, depth: 3 }));
 
 
-// Making app arrows 
+// Making app arrows
 export const createAppArrow = (registryData: RegistryData[]): GraphArrow[] =>
-  registryData.map((obj) =>
-    obj.tags.map((value: string) =>
-      ({ source: value, target: obj.name, name: obj.name, description: obj.description, group: value }))).flat(1);
+  registryData.flatMap(obj =>
+    obj.tags.map((value: string) => ({
+      source: value,
+      target: obj.name,
+      name: obj.name,
+      description: obj.description,
+      group: value
+    }))
+  );
 
 // Removing duplicate arrow objects
-export const filterDuplicateArrow = (graphArrows: any[]): GraphArrow[] => {
-  return graphArrows.reduce((unique, obj) => {
-    return unique.some((item: { source: any; target: any; }) => item.source === obj.source && item.target === obj.target) ? unique : [...unique, obj];
-  }, []);
-};
+export const filterDuplicateArrow = (graphArrows: any[]): GraphArrow[] => 
+  graphArrows.reduce((unique, obj) => unique.some((item: { source: any; target: any; }) => 
+    item.source === obj.source && item.target === obj.target) ? unique : [...unique, obj], []);
+
+  
 // Removing duplicate with **new** node objects
 export const filterDuplicateNode = (graphNodes: any[]): GraphNode[] => {
   const uniqueNodes = graphNodes.reduce((acc, obj) => {
