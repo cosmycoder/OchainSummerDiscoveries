@@ -72,7 +72,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             const result = query[0].length === 0 ? await fetchFleekApi(['', 'AND', '2']) : await fetchFleekApi(query);
             setData(result);
             setVisibility(false);
-            setTimeout(result.links.length * 50 + 1000);
+            setTimeout(result.links.length * 30 + 1000);
         } catch (error) {
             console.error('Error during search:', error);
             setError('Failed to search graph data.');
@@ -87,7 +87,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             if (data.links.length !== mergedData.nodes.length) {
                 setData(mergedData);
                 setVisibility(false);
-                setTimeout(mergedData.links.length * 50 + 1000);
+              setTimeout(mergedData.links.length * 30 + 1000);
             }
         } catch (error) {
             console.error('Error on click:', error);

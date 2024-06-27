@@ -3,174 +3,166 @@ import * as THREE from 'three';
 import SpriteText from 'three-spritetext';
 import { ForceGraphMethods } from 'react-force-graph-3d'
 
-export const createThreeObject = (node: any | undefined, currentCache: ImageCacheData[], currentSvgCache: SvgCacheData[], fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>) => {
-  // OnChain Summer Registry Graph Node
-  if (node.depth === 1) {
-    //Sphere object 
-    const texture = new THREE.TextureLoader().load("/base-sphere-square.png");
-    const geometry = new THREE.SphereGeometry(1, 64, 64);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture
-    });
-    const sphere = new THREE.Mesh(geometry, material);
-    sphere.scale.set(10, 10, 10);
-    sphere.position.set(0, 0, 0);
 
-    // Text Object
-    const text = new SpriteText(node?.description);
-    text.color = "#99CCFF";
-    text.textHeight = 3;
-    text.fontFace = 'Arial';
-    text.position.set(0, -15, 0);
+export const createThreeObject = (
+  node: any,
+  currentCache: ImageCacheData[],
+  currentSvgCache: SvgCacheData[],
+  fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>
+): THREE.Group | undefined => {
+  if (!node) return undefined;
 
-    // Group Object 
-    const group = new THREE.Group();
-    group.add(sphere);
-    group.add(text);
+  const group = new THREE.Group();
 
-    return group
+  switch (node.depth) {
+    case 1:
+      addOnChainSummerRegistryNode(group, node);
+      break;
+    case 2:
+      addCategoryNode(group, node, currentSvgCache);
+      break;
+    case 3:
+      addDappNode(group, node, currentCache);
+      break;
+    default:
+      return undefined;
   }
-  // Category Graph node
-  if (node.depth === 2) {
-    const svgData = deriveSvgDataFromCache(node, currentSvgCache);
-    // console.log("svg string", svgData);
-    const texture = new THREE.TextureLoader().load(svgData);
 
-    // Sprite object
-    const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
-    const sprite = new THREE.Sprite(spriteMaterial);
-    sprite.scale.set(8, 8, 8);
-    sprite.position.set(0, 0, 0);
+  return group;
+};
 
-    // Sphere object
-    const sphereGeometry = new THREE.SphereGeometry(5, 32, 32);
-    const sphereMaterial = new THREE.MeshBasicMaterial({
-      color: 0x87cefa,
-      transparent: true,
-      opacity: 0.2
-    });
-    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+const addOnChainSummerRegistryNode = (group: THREE.Group, node: any) => {
+  const texture = new THREE.TextureLoader().load("/base-sphere-square.png");
+  const sphere = createSphere(10, texture);
+  const text = createText(node.description, "#99CCFF", 3, 0, -15, 0);
 
-    // Text Object
-    const text = new SpriteText(node?.description);
-    text.color = "#00bfff";
-    text.textHeight = 3;
-    text.fontFace = 'Arial'; // Font face (though limited, can be set)
-    text.position.set(0, -8, 0);
+  group.add(sphere);
+};
 
-    // Group object
-    const group = new THREE.Group();
-    group.add(sprite);
-    group.add(sphere);
-    group.add(text);
+const addCategoryNode = (group: THREE.Group, node: any, currentSvgCache: SvgCacheData[]) => {
+  const svgData = deriveSvgDataFromCache(node, currentSvgCache);
+  const texture = new THREE.TextureLoader().load(svgData);
 
-    return group
-  }
-  if (node.depth === 3) {
-    // Dapp logo texture 
-    const base64str = deriveBase64DataFromCache(node, currentCache);
-    // console.log("base64str is :", base64str)
-    const texture = new THREE.TextureLoader().load(base64str)
-    const material = new THREE.SpriteMaterial({
-      map: texture,
-      alphaToCoverage: true,
-      premultipliedAlpha: true,
-      transparent: true,
-      alphaTest: 0.5,
-      blending: THREE.AdditiveBlending
-    });
-    const sprite = new THREE.Sprite(material);
-    sprite.scale.set(4, 4, 4);
-    sprite.position.set(0, 0, 0);
+  const sprite = createSprite(texture, 8);
+  const sphere = createTransparentSphere(5, 0x87cefa, 0.2);
+  const text = createText(node.description, "#00bfff", 3, 0, -8, 0);
 
-    // Sphere object
-    const geometry = new THREE.SphereGeometry(1, 64, 64);
-    const sphereMaterial = new THREE.MeshBasicMaterial({
-      color: 0xffffff, // red color
-      transparent: true,
-      opacity: 0.1 // 50% opacity
-    });
-    const sphere = new THREE.Mesh(geometry, sphereMaterial);
-    sphere.scale.set(4, 4, 4);
-    sphere.position.set(0, 0, 0);
+  group.add(sprite, sphere, text);
+};
 
+const addDappNode = (group: THREE.Group, node: any, currentCache: ImageCacheData[]) => {
+  const base64str = deriveBase64DataFromCache(node, currentCache);
+  const texture = new THREE.TextureLoader().load(base64str);
 
-    // Text object
-    const text = new SpriteText(String(node?.id));
-    text.color = "#d3d3d3";
-    text.textHeight = 2;
-    text.fontFace = 'Arial'; // Font face (though limited, can be set)
-    text.position.set(0, -4, 0);
+  const sprite = createDappSprite(texture);
+  const sphere = createTransparentSphere(4, 0xffffff, 0.1);
+  const text = createText(String(node.id), "#d3d3d3", 2, 0, -4, 0);
 
-    // Group object
-    const group = new THREE.Group();
-    group.add(sprite);
-    group.add(text);
+  group.add(sprite, text);
+};
 
-    return group
-  }
-}
+const createSphere = (scale: number, texture: THREE.Texture): THREE.Mesh => {
+  const geometry = new THREE.SphereGeometry(1, 64, 64);
+  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const sphere = new THREE.Mesh(geometry, material);
+  sphere.scale.set(scale, scale, scale);
+  return sphere;
+};
 
-const isURL = (str: string) => /^(?:https?:\/\/)?[\w.-]+\.\w{2,}(?:\/.*)?$/.test(str);
+const createTransparentSphere = (scale: number, color: number, opacity: number): THREE.Mesh => {
+  const geometry = new THREE.SphereGeometry(1, 32, 32);
+  const material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity });
+  const sphere = new THREE.Mesh(geometry, material);
+  sphere.scale.set(scale, scale, scale);
+  return sphere;
+};
+
+const createSprite = (texture: THREE.Texture, scale: number): THREE.Sprite => {
+  const material = new THREE.SpriteMaterial({ map: texture });
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(scale, scale, scale);
+  return sprite;
+};
+
+const createDappSprite = (texture: THREE.Texture): THREE.Sprite => {
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    alphaToCoverage: true,
+    premultipliedAlpha: true,
+    transparent: true,
+    alphaTest: 0.5,
+    blending: THREE.AdditiveBlending
+  });
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(4, 4, 4);
+  return sprite;
+};
+
+const createText = (
+  text: string | undefined,
+  color: string,
+  height: number,
+  x: number,
+  y: number,
+  z: number
+): SpriteText => {
+  const spriteText = new SpriteText(text);
+  spriteText.color = color;
+  spriteText.textHeight = height;
+  spriteText.fontFace = 'Arial';
+  spriteText.position.set(x, y, z);
+  return spriteText;
+};
   
 const deriveBase64DataFromCache = (node: any | undefined, currentCache: ImageCacheData[]): string => {
-  return currentCache.filter((obj: { imageUrl: string }) => {
-    const pathname = isURL(obj?.imageUrl) ? new URL(obj?.imageUrl).pathname : obj?.imageUrl;
-    return pathname === node.imageUrl
-  })[0].base64data;
+  const cachedItem = currentCache.find((obj: { imageUrl: string }) => {
+    const pathname = isURL(obj.imageUrl) ? new URL(obj.imageUrl).pathname : obj.imageUrl;
+    return pathname === node?.imageUrl;
+  });
+
+  return cachedItem?.base64data || '';
 }
 
 const deriveSvgDataFromCache = (node: any | undefined, currentSvgCache: SvgCacheData[]): string => {
-  return currentSvgCache.filter((obj: { imageUrl: string }) => {
-    const pathname = isURL(obj?.imageUrl) ? new URL(obj?.imageUrl).pathname : obj?.imageUrl;
-    return pathname === node.imageUrl
-  })[0].svgData;
-}
-
-export const createNodeHoverObject = (node: any | undefined, fgRef: React.MutableRefObject<ForceGraphMethods<{}, {}> | undefined>) => {
-  // Scene Object
-  const scene = fgRef.current?.scene();
-
-  const geometry = new THREE.SphereGeometry(1, 64, 64);
-  const material = new THREE.MeshBasicMaterial({
+  const cachedItem = currentSvgCache.find((obj: { imageUrl: string }) => {
+    const pathname = isURL(obj.imageUrl) ? new URL(obj.imageUrl).pathname : obj.imageUrl;
+    return pathname === node?.imageUrl;
   });
-  const sphere = new THREE.Mesh(geometry, material);
-  sphere.scale.set(10, 10, 10);
-  sphere.position.set(node?.x, node?.y, node?.z);
-  scene?.add(sphere);
+  return cachedItem?.svgData || '';
 }
 
 export const appNodeClick = (node: any) => window.open(node.url);
 
-export const appCard = (node: any, currentCache: ImageCacheData[]) => `<div style="border-radius: 3px; width: 400px; padding: 10px; border: 1px solid #ccc; text-align: center;  background-color: rgba(0, 0, 0, 0.8);">
-    <div className="min-h-32 flex w-full max-w-[1440px] flex-col gap-10 px-8 pb-32">
-      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-4">
-    <a
-    href=${node?.url}
-    rel="noreferrer noopener"
-    target="_blank"
-    className="flex w-full flex-col justify-start gap-8 bg-gray p-8 visited:opacity-50 hover:bg-darkgray"
-  >
-    <div className="flex flex-row justify-between">
-      <div style="text-align: center; display: block;">
-        <Image src=${deriveBase64DataFromCache(node, currentCache)} style="border-radius: 3px; background-color: rgba(255, 255, 255, 0.3); display: block;margin-left: auto;margin-right: auto;width: 15%;"alt=Logo of ${node?.id} />
-      </div>
-    </div>
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col">
-        <h3 className="font-mono text-xl uppercase text-white">${node?.id}</h3>
-        <span className="muted truncate font-mono text-muted">
-          ${getNiceDomainDisplayFromUrl(node?.url)}
-        </span>
-      </div>
-      <p className="ecosystem-card-description font-sans text-base text-white">
-       ${node?.description}
-      </p>
-    </div>
-  </a>
-  </div>
-  </div>
-</div>`;
+
+const isURL = (str: string) => /^(?:https?:\/\/)?[\w.-]+\.\w{2,}(?:\/.*)?$/.test(str);
 
 const getNiceDomainDisplayFromUrl = (url: string) => 
-      url.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0];
+  url.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0];
+
+export const appCard = (node: any, currentCache: ImageCacheData[]) => `
+<div style="border-radius: 3px; width: 400px; padding: 10px; border: 1px solid #ccc; text-align: center; background-color: rgba(0, 0, 0, 0.8);">
+  <div>
+    <div>
+      <a href="${node?.url}" rel="noreferrer noopener" target="_blank">
+        <div className="flex flex-row justify-between">
+          <div style="text-align: center; display: block;">
+            <Image
+              src="${deriveBase64DataFromCache(node, currentCache)}"
+              style="border-radius: 3px; background-color: rgba(255, 255, 255, 0.3); display: block; margin-left: auto; margin-right: auto; width: 15%;"
+              alt="Logo of ${node?.id}"
+            />
+          </div>
+        </div>
+        <div>
+          <div>
+            <h3>${node?.id}</h3>
+            <span>${getNiceDomainDisplayFromUrl(node?.url)}</span>
+          </div>
+          <p>${node?.description}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
