@@ -1,72 +1,49 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader } from "../../lib/dataConverter"
-import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
-import { FC, forwardRef, useRef, useState, useEffect, useCallback } from 'react';
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData, svgPreloader } from "../../lib/dataConverter"
+import { GraphData, GraphNode, ImageCacheData, SvgCacheData } from "../../types/api"
+import { FC, forwardRef, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/Search/Search';
 import { debounce } from 'lodash';
 import { createThreeObject, appNodeClick, appCard } from '../../lib/threeFunc'
-import ForceGraph3D, { ForceGraphMethods } from "react-force-graph-3d";
+import ForceGraph3D, { ForceGraphMethods, ForceGraphProps } from "react-force-graph-3d";
 import * as THREE from 'three';
 import LoadingPage from "./LoadingPage";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
-const RegistryGraph: FC = forwardRef((_props, _ref) => {
+const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const fgRef = useRef<ForceGraphMethods>();
     const [data, setData] = useState<GraphData>({ links: [], nodes: [] });
     const [loading, setLoading] = useState<boolean>(true);
+    const [camloading, setCamLoading] = useState<boolean>(true);
     const [imageCache, setImageCache] = useState<ImageCacheData[]>([]);
     const [svgCache, setSvgCache] = useState<SvgCacheData[]>([]);
     const [visibility, setVisibility] = useState<boolean>(true);
     const [timeout, setTimeout] = useState<number>(1000);
     const [error, setError] = useState<string | null>(null);
-    const [camloading, setCamLoading] = useState<boolean>(true);
     const distance = 200;
 
-    // Retrieve initial data
-    const fetchInitialData = useCallback(async () => {
-        try {
-            const result = await fetchFleekApi(['', 'AND', '2']);
-            setData(result);
-            const fetchedData = await createIconCacheData();
-            // const fetchedData = await fleekCreateIconCacheData();
-            setImageCache(fetchedData);
-            setSvgCache(await svgPreloader(result));
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setError('Failed to fetch initial data.');
-        } finally {
-            setLoading(false);
-        }
+    // Initial Data retrival
+    useEffect(() => {
+        const fetchDataAsync = async () => {
+            try {
+                const result = await fetchFleekApi(['', 'AND', '2']);
+                setData(result);
+                const fetchedData = await createIconCacheData();
+                // const fetchedData = await fleekCreateIconCacheData();
+                setImageCache(fetchedData);
+                // getting svg cache data
+                setSvgCache(await svgPreloader(result));
+                // console.log("tag svg cache", await svgPreloader(result));
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setError('Failed to fetch initial data.');
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchDataAsync();
     }, []);
 
-    useEffect(() => {
-        fetchInitialData();
-    }, [fetchInitialData]);
-
-    useEffect(() => {
-        const rotationInterval = setInterval(() => {
-            fgRef.current?.scene().rotateZ(0.0001);
-            const position = fgRef.current?.camera()?.position;
-            if (position) {
-                const distBase = position.distanceTo(new THREE.Vector3(0, 0, 0));
-                if (distBase < 50) {
-                    fgRef.current?.cameraPosition(
-                        { x: 0, y: 0, z: distance },
-                        { x: 0, y: 0, z: 0 },
-                        1000
-                    );
-                }
-            }
-        }, 100);
-
-        const visibilityInterval = setInterval(() => {
-            if (!visibility) setVisibility(true);
-        }, timeout);
-
-        return () => {
-            clearInterval(rotationInterval);
-            clearInterval(visibilityInterval);
-        };
-    }, [visibility, timeout]);
     useEffect(() => {
         const interval = setInterval(() => {
             if (camloading) {
@@ -83,42 +60,66 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
         return () => clearInterval(interval); // Clean up the interval on component unmount
     }, [camloading]);
 
-    const handleSearch = useCallback(debounce(async (query: string[]) => {
+
+
+    // Graph rotation animation
+    setInterval(() => {
+        fgRef.current?.scene().rotateZ(0.0001);
+        if (fgRef.current?.camera()?.position) {
+            const position = fgRef.current?.camera()?.position;
+            const distBase = position.distanceTo(new THREE.Vector3(0, 0, 0))
+            // Minimum distance from Base planet 
+            if (distBase < 50) {
+                //   console.log(position.distanceTo(new THREE.Vector3(0, 0, 0)))
+                fgRef.current.cameraPosition(
+                    { x: 0, y: 0, z: distance }, // new position
+                    { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
+                    1000  // ms transition duration
+                );
+            }
+        };
+    }, 100);
+
+    // Graph node visivility
+    setInterval(() => (visibility === false) ? setVisibility(true) : null, timeout);
+
+
+
+    const handleSearch = debounce(async (query: string[]) => {
         try {
+            // const result = await searchGraphDataByValues(query);
             const result = query[0].length === 0 ? await fetchFleekApi(['', 'AND', '2']) : await fetchFleekApi(query);
             setData(result);
             setVisibility(false);
-            setTimeout(result.links.length * 30 + 1000);
+            setTimeout(result.links.length * 50 + 1000);
         } catch (error) {
             console.error('Error during search:', error);
             setError('Failed to search graph data.');
         }
-    }, 1000), []);
+    }, 1000);
 
-
-    const handleClick = useCallback(debounce(async (query: string) => {
+    const handleClick = debounce(async (query: string) => {
         try {
+            // const result = await searchGraphDataByValues(query);
             const result = await fetchFleekApiByTag(query);
             const mergedData = mergeGraphData(data, result);
             if (data.links.length !== mergedData.nodes.length) {
                 setData(mergedData);
                 setVisibility(false);
-              setTimeout(mergedData.links.length * 30 + 1000);
+                setTimeout(mergedData.links.length * 50 + 1000);
             }
         } catch (error) {
             console.error('Error on click:', error);
             setError('Failed to fetch data by tag.');
         }
-    }, 1000), [data]);
-
-    // Loading Page
-    if (loading) return <LoadingPage />;
-    if (error) return <ErrorMessage message={error} />;
+    }, 1000);
+    const getCurrentCache = () => imageCache;
+    const getCurrentSvgCache = () => svgCache;
 
     return (
         <>
             <ForceGraph3D
-                // onEngineStop={() => fgRef.current?.zoomToFit(2000)}
+                onEngineStop={() => fgRef.current?.zoomToFit(1000)}
                 enableNavigationControls={true}
                 ref={fgRef}
                 cooldownTime={timeout}
@@ -148,8 +149,8 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                     node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
                     node.depth === 3 ? appNodeClick(node) : null;
                 }}
-                nodeThreeObject={(node) => createThreeObject(node, imageCache, svgCache) as any}
-                nodeLabel={(node) => node.depth === 3 ? appCard(node, imageCache) : String(node.id)}
+                nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache()) as any}
+                nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
             />
             <SearchBar onSearch={handleSearch} />
         </>
