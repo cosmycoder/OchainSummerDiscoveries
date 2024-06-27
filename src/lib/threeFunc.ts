@@ -12,18 +12,23 @@ export const createThreeObject = (
 
   const group = new THREE.Group();
 
-  switch (node.depth) {
-    case 1:
-      addOnChainSummerRegistryNode(group, node, base3dLogo);
-      break;
-    case 2:
-      addCategoryNode(group, node, currentSvgCache);
-      break;
-    case 3:
-      addDappNode(group, node, currentCache);
-      break;
-    default:
-      return undefined;
+  try {
+    switch (node.depth) {
+      case 1:
+        addOnChainSummerRegistryNode(group, node, base3dLogo);
+        break;
+      case 2:
+        addCategoryNode(group, node, currentSvgCache);
+        break;
+      case 3:
+        addDappNode(group, node, currentCache);
+        break;
+      default:
+        return undefined;
+    }
+  } catch (error) {
+    console.error('Error creating Three.js object:', error);
+    return undefined;
   }
 
   return group;
