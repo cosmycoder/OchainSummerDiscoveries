@@ -17,7 +17,7 @@
 }
 
 .highlight {
-  background: var(--primary-gradient);
+  background: linear-gradient(45deg, #0052ff, #2ecc71);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -43,7 +43,7 @@
 .cta {
   display: inline-block;
   padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
-  background: linear-gradient(45deg, #0052ff, #2ecc71);;
+  background: linear-gradient(45deg, #0052ff, #2ecc71);
   color: var(--text-color);
   text-decoration: none;
   border-radius: 5px;
