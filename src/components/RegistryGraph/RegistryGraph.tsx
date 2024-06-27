@@ -1,5 +1,5 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, filterDuplicateArrow, filterDuplicateNode, mergeGraphData, svgPreloader } from "../../lib/dataConverter"
-import { GraphData, GraphNode, ImageCacheData, SvgCacheData } from "../../types/api"
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader } from "../../lib/dataConverter"
+import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
 import { FC, forwardRef, useCallback, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/Search/Search';
@@ -9,6 +9,7 @@ import ForceGraph3D, { ForceGraphMethods, ForceGraphProps } from "react-force-gr
 import * as THREE from 'three';
 import LoadingPage from "./LoadingPage";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+
 
 const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const fgRef = useRef<ForceGraphMethods>();
@@ -83,7 +84,9 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     // Graph node visivility
     setInterval(() => (visibility === false) ? setVisibility(true) : null, timeout);
 
-
+    // Loading Page
+    if (loading) return <LoadingPage />;
+    if (error) return <ErrorMessage message={error} />;
 
     const handleSearch = debounce(async (query: string[]) => {
         try {

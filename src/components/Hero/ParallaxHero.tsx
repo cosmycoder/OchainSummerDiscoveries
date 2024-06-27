@@ -35,13 +35,13 @@ export const ParallaxHero: FC<ParallaxHeroProps> = ({ title, subtitle }) => {
         >
           {title}
         </motion.h1>
-        <motion.p
+        <motion.span
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           {subtitle}
-        </motion.p>
+        </motion.span>
         <FadeIn delay={1}>
           <Link href="/discovery" className={styles.cta}>
             Launch App
