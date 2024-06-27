@@ -17,12 +17,13 @@ export const main = (request) => {
         return searchGraphDataByTag(tag)
     }
 };
+
+// Settings
 export const BASE_LOGO = "/Base_Network_Logo" // DO NOT NEED FILE EXTENTION
 export const BASE_URL = "https://base.org";
 export const REGISTRY_URL = "https://www.base.org/ecosystem";
 export const DEFAULT_ICON_URL = "/document/mstile-70x70.png";
 export const DEFAULT_ICON_URL_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAA2FBMVEUAAAAAU/8AU/8AUv8AUv8AUv8AUv8AVf8AUv8AUv8AU/8ASf8AYP8AUv8AUv8AUv8AUf8AUv8AT/8AUv8AUv8AUv8AUv8AUv8AUf8AUv8AUv8AU/8AVf8AUv8AUf8AVf8AUf8AUv8AU/8AUv8AUv8AUv8WYf9qmv+Utv+Ttv9ml/8SXv9nmP/0+P/////v9P9dkf9omf9ckP8XYv/u8/8RXv9unf9hlP9QiP+Irv+pxf+Ps/9PiP9tnP9gk//z9//t8/8QXf9ll/9aj/9bkP8VYP+Stf9klv/6pJ+HAAAAJXRSTlMALpTX+viVCZj+lwcIwL6WL/0tk9b29fPV1I+RKvwsBry9K9P0OYlx2QAAAAFiS0dELlTTEIcAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAHdElNRQfnCAcMIyThgpg2AAAArUlEQVQY01WP1xKCUAxEgyhKsQAWRLGvnavYe8H2/38kCOh4nrJnkpkskQcX4+MJXuAoIJkS8UGUZD8raaDb6w+GIyDjGwkY28xjMgWyRDkVDguZQdUohrkdicUSOuWxYl/WyFMBm23AjrE9ilTC4V8YOP5OTiiTie45ypcrKlS14EbiBrVGpAPuZ2dxBwTv03oDeDiD52sJNBW/TF23gnKqIId9W2a7UzR0zZ/fIZoh6l8gFdwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjMtMDgtMDdUMTI6MzU6MzYrMDA6MDCue+XjAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIzLTA4LTA3VDEyOjM1OjM2KzAwOjAw3yZdXwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAABXelRYdFJhdyBwcm9maWxlIHR5cGUgaXB0YwAAeJzj8gwIcVYoKMpPy8xJ5VIAAyMLLmMLEyMTS5MUAxMgRIA0w2QDI7NUIMvY1MjEzMQcxAfLgEigSi4A6hcRdPJCNZUAAAAASUVORK5CYII=';
-
 
 export const createOnChainRegistryNode = () =>
     ({ id: "Onchain Summer Registry", group: "super", description: "Onchain Summer Registry", imageUrl: BASE_LOGO, url: REGISTRY_URL, depth: 1 });
@@ -30,29 +31,29 @@ export const createOnChainRegistryNode = () =>
 // Making category nodes
 export const createCategoryNode = (registryData) => {
     return registryData.flatMap(({ tags }) =>
-      tags.map((value) => ({
-        id: value,
-        group: value,
-        description: value,
-        imageUrl: `/${value}`,
-        url: value,
-        depth: 2
-      }))
+        tags.map((value) => ({
+            id: value,
+            group: value,
+            description: value,
+            imageUrl: `/${value}`,
+            url: value,
+            depth: 2
+        }))
     );
-  };
+};
 // Making category arrows
 export const createCategoryArrow = (registryData) => {
     const registryNode = createOnChainRegistryNode();
     return registryData.flatMap(({ tags }) =>
-      tags.map((value) => ({
-        source: registryNode.id,
-        target: value,
-        name: value,
-        description: value,
-        group: registryNode.group
-      }))
+        tags.map((value) => ({
+            source: registryNode.id,
+            target: value,
+            name: value,
+            description: value,
+            group: registryNode.group
+        }))
     );
-  };
+};
 // Making app nodes
 export const createAppNode = (registryData) =>
     registryData.map((obj) =>
@@ -61,13 +62,13 @@ export const createAppNode = (registryData) =>
 // Making app arrows
 export const createAppArrow = (registryData) =>
     registryData.flatMap(obj =>
-      obj.tags.map((value) => ({
-        source: value,
-        target: obj.name,
-        name: obj.name,
-        description: obj.description,
-        group: value
-      }))
+        obj.tags.map((value) => ({
+            source: value,
+            target: obj.name,
+            name: obj.name,
+            description: obj.description,
+            group: value
+        }))
     );
 // Removing duplicate arrow objects
 export const filterDuplicateArrow = (graphArrows) => {
