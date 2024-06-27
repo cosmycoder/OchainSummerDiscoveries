@@ -31,7 +31,7 @@ const FeatureCards: FeatureCardProps[] = [
   {
     title: "Discover on BASE",
     description: "Base is a secure, low-cost, builder-friendly Ethereum L2 built to bring the next billion users onchain.",
-    icon: "/Base_Wordmark_Blue.png",
+    icon: "/Base_Wordmark_White.svg",
     delay: 0.8
   }
 ];
