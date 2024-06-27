@@ -28,28 +28,47 @@ export const createOnChainRegistryNode = () =>
     ({ id: "Onchain Summer Registry", group: "super", description: "Onchain Summer Registry", imageUrl: BASE_LOGO, url: REGISTRY_URL, depth: 1 });
 
 // Making category nodes
-export const createCategoryNode = (registryData) =>
-    registryData.map(({ tags }) =>
-        tags.map((value) =>
-            ({ id: value, group: value, description: value, imageUrl: `/${value}`, url: value, depth: 2 }))).flat(1);
-
-// Making category arrows 
-export const createCategoryArrow = (registryData) =>
-    registryData.map(({ tags }) =>
-        tags.map((value) =>
-            ({ source: createOnChainRegistryNode().id, target: value, name: value, description: value, group: createOnChainRegistryNode().group }))).flat(1);
-
+export const createCategoryNode = (registryData) => {
+    return registryData.flatMap(({ tags }) =>
+      tags.map((value) => ({
+        id: value,
+        group: value,
+        description: value,
+        imageUrl: `/${value}`,
+        url: value,
+        depth: 2
+      }))
+    );
+  };
+// Making category arrows
+export const createCategoryArrow = (registryData) => {
+    const registryNode = createOnChainRegistryNode();
+    return registryData.flatMap(({ tags }) =>
+      tags.map((value) => ({
+        source: registryNode.id,
+        target: value,
+        name: value,
+        description: value,
+        group: registryNode.group
+      }))
+    );
+  };
 // Making app nodes
 export const createAppNode = (registryData) =>
     registryData.map((obj) =>
         ({ id: obj.name, group: String(...obj.tags), description: obj.description, imageUrl: obj.imageUrl, url: obj.url, depth: 3 }));
 
-// Making app arrows 
+// Making app arrows
 export const createAppArrow = (registryData) =>
-    registryData.map((obj) =>
-        obj.tags.map((value) =>
-            ({ source: value, target: obj.name, name: obj.name, description: obj.description, group: value }))).flat(1);
-
+    registryData.flatMap(obj =>
+      obj.tags.map((value) => ({
+        source: value,
+        target: obj.name,
+        name: obj.name,
+        description: obj.description,
+        group: value
+      }))
+    );
 // Removing duplicate arrow objects
 export const filterDuplicateArrow = (graphArrows) => {
     return graphArrows.reduce((unique, obj) => {
