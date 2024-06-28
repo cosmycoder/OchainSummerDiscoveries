@@ -27,7 +27,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     useEffect(() => {
         const canvas = fgRef.current?.renderer().domElement;
 
-        const handleContextLost = (event) => {
+        const handleContextLost = (event: { preventDefault: () => void; }) => {
             event.preventDefault();
             console.log('WebGL context lost');
         };
