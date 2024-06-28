@@ -26,7 +26,7 @@ $ git clone git@github.com:HiroyukiNaito/OchainSummerDiscoveries.git
 $ cd ./OnchainSummerDiscoveries
 ```
 
-### 1. Deploying Fleek functions
+### 2. Deploying Fleek functions
 
 1. login to fleek
 ```bash
@@ -68,7 +68,7 @@ $ fleek functions deploy --name get-base64data.js --path ./get-base64data.js
 | FLEEK_API  | get-graph.js Fleek functions InvokeUrl |
 | FLEEK_CACHE_API  | get-base64data.js Fleek functions InvokeUrl |
 
-### 2. Spinning up Next.js server
+### 3. Spinning up Next.js server
 
 Development environment
 ```bash
