@@ -7,10 +7,15 @@
 ## Table of Contents
 
 - [Installation](#installation)
+- [Manual](#Maanual)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
+
+## Manual
+
+The user manual can be kindly found in the [GitBook](https://solidoak.gitbook.io/onchain-summer-discoveries).
 
 ## Installation
 
