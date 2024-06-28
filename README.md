@@ -2,7 +2,7 @@
 
 ![image](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/assets/32320988/3e45cee4-8a44-441d-a5e0-67682b8a0481)
 
-[OCS Discoveries (Onchain Summer Discoveries)](https://ocs-discoveries.universalbase.xyz/) focuses on enhancing the discoverability of the BASE ecosystem using Fleek Infrastructure, which provides highly discoverable graph representations. As the driving force behind the Onchain Summer Registry, OCS Discoveries emphasizes the ease of finding registered apps powered by Fleek's robust technical foundation. This approach effectively addresses the challenge of locating applications within the growing BASE ecosystem.
+[OCS Discoveries (Onchain Summer Discoveries)](https://ocs-discoveries.universalbase.xyz/) focuses on enhancing the discoverability of the BASE ecosystem using Fleek Infrastructure, which provides highly discoverable graph representations. As the driving force behind the Onchain Summer Registry, OCS Discoveries emphasizes the ease of finding registered apps powered by Fleek's robust technical foundation. This approach effectively addresses the challenge of locating applications within the rapidly growing BASE ecosystem.
 
 ## Table of Contents
 
