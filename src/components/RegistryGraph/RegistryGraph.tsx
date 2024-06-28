@@ -159,7 +159,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
                 linkAutoColorBy="group"
                 // cooldownTicks={100}
                 // nodeRelSize={10}
-                linkLabel={(links) => (links.group !== "super") ? (`${links?.group}: ${links.name}`) : ""}
+                linkLabel={(links) => (links.group !== "super") ? (`${links?.group}: ${links.name}`) : links.name}
                 backgroundColor="black"
                 dagMode="radialout"
                 linkResolution={1}
