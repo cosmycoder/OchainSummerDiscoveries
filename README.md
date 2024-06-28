@@ -13,6 +13,7 @@ Short description of what the project does.
 - [License](#license)
 
 ## Installation
+`
 
 ## Contributing
 
@@ -27,10 +28,9 @@ Short description of what the project does.
 - Author: Hiroyuki Naito @HiroyukiNaito
 - Maintainer: Hiroyuki Naito @HiroyukiNaito
 
-
 ## License
 
-Distributed under the MIT License. See [LICENSE] for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ## Contacts
 
