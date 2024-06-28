@@ -79,7 +79,7 @@ const NavMenu: FC<NavMenuProps> = ({ isOpen }) => (
 
 const menuItems = [
   { href: '/', label: 'Home', Icon: FaHome },
-  { href: 'https://github.com', label: 'GitHub', Icon: FaGithub },
+  { href: 'https://github.com/HiroyukiNaito/OchainSummerDiscoveries', label: 'GitHub', Icon: FaGithub },
   { href: 'https://solidoak.gitbook.io/onchain-summer-discoveries', label: 'Docs', Icon: FaFileAlt },
   { href: 'https://solidoak.tech/', label: 'Contacts', Icon: FaEnvelope },
 ];
