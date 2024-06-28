@@ -35,7 +35,7 @@ Distributed under the MIT License. See LICENSE for more information.
 ## Contacts
 
 - Email: hiroyukinait.eth@gmail.com
-- X: @hhnaito_eth
+- X: @hnaito_eth
 - Warpcast: @hiroyukinaito
 
 
