@@ -13,7 +13,74 @@ Short description of what the project does.
 - [License](#license)
 
 ## Installation
-`
+
+### Requirements
+
+- npm package manager
+- [Fleek CLI](https://fleek.xyz/docs/cli/)
+
+### 1. Clone GitHub Repository
+
+```bash
+$ git clone git@github.com:HiroyukiNaito/OchainSummerDiscoveries.git
+$ cd ./OnchainSummerDiscoveries
+```
+
+### 1. Deploying Fleek functions
+
+1. login to fleek
+```bash
+$ cd ./src/fleek-functions/
+$ fleek login
+```
+
+2. Deploy `ecosystem-data.js` to Fleek functions
+`ecosystem-data.js` is one of Fleek's functions for storing the BASE ecosystem data as an in-memory database.
+```bash
+$ fleek functions deploy --name ecosystem-data --path ./ecosystem-data.js 
+```
+It returns **IPFS HASH with url**
+
+3. Deploy `get-graph.js`  to Fleek functions
+
+`get-graph.js` is a query function for retrieving BASE ecosystem data for graph representation.
+
+Change and change [the first line](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/blob/main/src/fleek-functions/get-graph.js#L1) to `ecosystem-data.js` hash value you got.
+```bash
+vi get-graph.js
+```
+Then deploy the edited code with `--noBundle` option
+```bash
+$ fleek functions deploy --noBundle --name get-graph --path ./get-graph.js
+```
+
+4. Deploy 'get-base64data.js'
+
+'get-base64data.js' is a key-value store for retrieving BASE ecosystem logo data as a base64 format.
+```bash
+$ fleek functions deploy --name get-base64data.js --path ./get-base64data.js
+```
+
+5. Describe Fleek functions API URL in [app.settings.ts](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/blob/main/src/app.settings.ts)
+
+| VALUABLE      | FLEEK　API　URL |
+| ------------- | -------------  |
+| FLEEK_API  | get-graph.js Fleek functions InvokeUrl |
+| FLEEK_CACHE_API  | get-base64data.js Fleek functions InvokeUrl |
+
+### 2. Spinning up Next.js server
+
+Development environment
+```bash
+$ pnpm install
+$ pnpm run dev
+```
+
+Production environment
+```
+$ pnpm build
+$ pnpm start
+```
 
 ## Contributing
 
