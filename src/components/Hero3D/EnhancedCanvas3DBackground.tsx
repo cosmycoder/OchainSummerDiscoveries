@@ -1,7 +1,7 @@
 // app/components/EnhancedCanvas3DBackground.tsx
 'use client'
 
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { OrbitControls } from '@react-three/drei'
@@ -94,33 +94,32 @@ const EyesGroup = () => {
 export const EnhancedCanvas3DBackground = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
+    const [graphKey, setGraphKey] = useState(0);
     useEffect(() => {
-        const handleContextLost = (event: WebGLContextEvent) => {
-            event.preventDefault()
-            // Implement any necessary logic to handle context loss
-            console.warn('WebGL context lost')
-        }
-
-        const handleContextRestored = () => {
-            // Implement any necessary logic to handle context restoration
-            console.log('WebGL context restored')
-        }
-
         if (canvasRef.current) {
-            canvasRef.current.addEventListener('webglcontextlost', handleContextLost as EventListener)
-            canvasRef.current.addEventListener('webglcontextrestored', handleContextRestored as EventListener)
-        }
+            const handleContextLost = (event: { preventDefault: () => void; }) => {
+                event.preventDefault();
+                console.warn('WebGL context lost. Attempting to restore...');
+            };
 
-        return () => {
-            if (canvasRef.current) {
-                canvasRef.current.removeEventListener('webglcontextlost', handleContextLost as EventListener)
-                canvasRef.current.removeEventListener('webglcontextrestored', handleContextRestored as EventListener)
-            }
+            const handleContextRestored = () => {
+                console.log('WebGL context restored.');
+                setGraphKey(graphKey + 1); 
+            };
+
+          
+            canvasRef.current.addEventListener('webglcontextlost', handleContextLost, false);
+            canvasRef.current.addEventListener('webglcontextrestored', handleContextRestored, false);
+
+            return () => {
+                canvasRef.current?.removeEventListener('webglcontextlost', handleContextLost);
+                canvasRef.current?.removeEventListener('webglcontextrestored', handleContextRestored);
+            };
         }
-    }, [])
+    }, [graphKey]);
 
     return (
-        <Canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        <Canvas key={graphKey} ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
             camera={{ position: [0, 0, 5], fov: 75 }}>
             <color attach="background" args={['#000000']} />
             <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
