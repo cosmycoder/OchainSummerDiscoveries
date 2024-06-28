@@ -8,14 +8,9 @@
 
 - [Installation](#installation)
 - [Manual](#Maanual)
-- [Usage](#usage)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
-
-## Manual
-
-The user manual can be kindly found in the [GitBook](https://solidoak.gitbook.io/onchain-summer-discoveries).
 
 ## Installation
 
@@ -87,6 +82,10 @@ $ pnpm build
 $ pnpm start
 ```
 *Strongly recommend using Fleek PaaS for running a Next.js server. It allows for easy deployment of a Next.js site.*
+
+## Manual
+
+The user manual can be kindly found in the [GitBook](https://solidoak.gitbook.io/onchain-summer-discoveries).
 
 ## Contributing
 
