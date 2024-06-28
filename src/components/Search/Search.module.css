@@ -43,6 +43,7 @@
   margin-right: 4px;
   border-color: white !important;
   width: 10%;
+  opacity: 0.8;
 }
 
 .searchButton:hover {

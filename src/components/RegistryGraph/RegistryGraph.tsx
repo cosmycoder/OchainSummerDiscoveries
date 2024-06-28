@@ -23,7 +23,28 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const [error, setError] = useState<string | null>(null);
     const [base3dLogo, setBase3dLogo] = useState<ImageCacheData | (() => void)>();
     const distance = 200;
+    const [graphKey, setGraphKey] = useState(0);
+    useEffect(() => {
+        const canvas = fgRef.current?.renderer().domElement;
 
+        const handleContextLost = (event) => {
+            event.preventDefault();
+            console.log('WebGL context lost');
+        };
+
+        const handleContextRestored = () => {
+            console.log('WebGL context restored');
+            setGraphKey(graphKey + 1); // Force re-render of the graph
+        };
+
+        canvas?.addEventListener('webglcontextlost', handleContextLost, false);
+        canvas?.addEventListener('webglcontextrestored', handleContextRestored, false);
+
+        return () => {
+            canvas?.removeEventListener('webglcontextlost', handleContextLost);
+            canvas?.removeEventListener('webglcontextrestored', handleContextRestored);
+        };
+    }, [graphKey]);
     // Initial Data retrival
     useEffect(() => {
         const fetchDataAsync = async () => {
@@ -125,6 +146,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     return (
         <>
             <ForceGraph3D
+                key={graphKey} // Force re-render by changing the key
                 onEngineStop={() => fgRef.current?.zoomToFit(1000)}
                 enableNavigationControls={true}
                 ref={fgRef}
