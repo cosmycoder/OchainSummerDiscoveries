@@ -25,25 +25,26 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const distance = 200;
     const [graphKey, setGraphKey] = useState(0);
     useEffect(() => {
-        const canvas = fgRef.current?.renderer().domElement;
+        if (fgRef.current) {
+            const handleContextLost = (event: { preventDefault: () => void; }) => {
+                event.preventDefault();
+                console.warn('WebGL context lost. Attempting to restore...');
+            };
 
-        const handleContextLost = (event: { preventDefault: () => void; }) => {
-            event.preventDefault();
-            console.log('WebGL context lost');
-        };
+            const handleContextRestored = () => {
+                console.log('WebGL context restored.');
+                setGraphKey(graphKey + 1); 
+            };
 
-        const handleContextRestored = () => {
-            console.log('WebGL context restored');
-            setGraphKey(graphKey + 1); // Force re-render of the graph
-        };
+            const canvas = fgRef.current?.renderer().domElement;
+            canvas.addEventListener('webglcontextlost', handleContextLost, false);
+            canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
 
-        canvas?.addEventListener('webglcontextlost', handleContextLost, false);
-        canvas?.addEventListener('webglcontextrestored', handleContextRestored, false);
-
-        return () => {
-            canvas?.removeEventListener('webglcontextlost', handleContextLost);
-            canvas?.removeEventListener('webglcontextrestored', handleContextRestored);
-        };
+            return () => {
+                canvas.removeEventListener('webglcontextlost', handleContextLost);
+                canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+            };
+        }
     }, [graphKey]);
     // Initial Data retrival
     useEffect(() => {
