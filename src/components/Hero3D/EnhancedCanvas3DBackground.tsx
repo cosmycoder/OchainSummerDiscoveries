@@ -2,12 +2,13 @@
 'use client'
 
 import React, { useRef, useEffect } from 'react'
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { OrbitControls } from '@react-three/drei'
 
 const Particles = () => {
     const particlesRef = useRef<THREE.Points>(null)
+
     useEffect(() => {
         if (particlesRef.current) {
             const geometry = particlesRef.current.geometry as THREE.BufferGeometry
@@ -50,8 +51,7 @@ const Eyes = ({ position }: EyesProps) => {
             // Limit the rotation to create a more natural eye movement
             meshRef.current.rotation.x = THREE.MathUtils.clamp(meshRef.current.rotation.x, -Math.PI / 4, Math.PI / 4)
             meshRef.current.rotation.y = THREE.MathUtils.clamp(meshRef.current.rotation.y, -Math.PI / 4, Math.PI / 4)
-            //meshRef.current.rotation.z = THREE.MathUtils.clamp(meshRef.current.rotation.z, -Math.PI / 4, Math.PI / 4)
-            meshRef.current.rotation.z += 0.005;
+            meshRef.current.rotation.z += 0.005
         }
     })
 
@@ -92,8 +92,35 @@ const EyesGroup = () => {
 }
 
 export const EnhancedCanvas3DBackground = () => {
+    const canvasRef = useRef<HTMLCanvasElement>(null)
+
+    useEffect(() => {
+        const handleContextLost = (event: WebGLContextEvent) => {
+            event.preventDefault()
+            // Implement any necessary logic to handle context loss
+            console.warn('WebGL context lost')
+        }
+
+        const handleContextRestored = () => {
+            // Implement any necessary logic to handle context restoration
+            console.log('WebGL context restored')
+        }
+
+        if (canvasRef.current) {
+            canvasRef.current.addEventListener('webglcontextlost', handleContextLost as EventListener)
+            canvasRef.current.addEventListener('webglcontextrestored', handleContextRestored as EventListener)
+        }
+
+        return () => {
+            if (canvasRef.current) {
+                canvasRef.current.removeEventListener('webglcontextlost', handleContextLost as EventListener)
+                canvasRef.current.removeEventListener('webglcontextrestored', handleContextRestored as EventListener)
+            }
+        }
+    }, [])
+
     return (
-        <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        <Canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
             camera={{ position: [0, 0, 5], fov: 75 }}>
             <color attach="background" args={['#000000']} />
             <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
