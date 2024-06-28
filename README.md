@@ -7,7 +7,7 @@
 ## Table of Contents
 
 - [Installation](#installation)
-- [Manual](#Maanual)
+- [Manual](#Manual)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
