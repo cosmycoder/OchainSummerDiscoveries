@@ -81,6 +81,7 @@ Production environment
 $ pnpm build
 $ pnpm start
 ```
+* Strongly recommend using Fleek PaaS for running a Next.js server. It allows for easy deployment of a Next.js site. *
 
 ## Contributing
 
