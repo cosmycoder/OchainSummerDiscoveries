@@ -1,6 +1,6 @@
 import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader, fetchBase64data } from "../../lib/dataConverter"
 import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
-import React, { useState, useEffect, useRef, forwardRef, FC} from 'react';
+import React, { useState, useEffect, useRef, forwardRef, FC } from 'react';
 import SearchBar from '../../components/Search/Search';
 import { debounce } from 'lodash';
 import { createThreeObject, appNodeClick, appCard } from '../../lib/threeFunc'
@@ -10,7 +10,7 @@ import LoadingPage from "./LoadingPage";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 
-const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
+const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const fgRef = useRef<ForceGraphMethods>();
     const [data, setData] = useState<GraphData>({ links: [], nodes: [] });
     const [loading, setLoading] = useState<boolean>(true);
@@ -22,12 +22,13 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const [error, setError] = useState<string | null>(null);
     const [base3dLogo, setBase3dLogo] = useState<ImageCacheData | (() => void)>();
     const [graphKey, setGraphKey] = useState(0);
-    
+
     const DISTANCE = 200;
     const ROTATION_SPEED = 0.0001;
     const DEBOUNCE_DELAY = 1000;
     const MIN_DISTANCE = 50;
-
+    // calc delay time
+    const imageDelay = (graphData: GraphData) => Math.sqrt(graphData.links.length * 100000) + 1000 as number;
 
     useEffect(() => {
         if (fgRef.current) {
@@ -38,7 +39,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
 
             const handleContextRestored = () => {
                 console.log('WebGL context restored.');
-                setGraphKey(graphKey + 1); 
+                setGraphKey(graphKey + 1);
             };
 
             const canvas = fgRef.current?.renderer().domElement;
@@ -123,7 +124,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             const result = query[0].length === 0 ? await fetchFleekApi(['', 'AND', '2']) : await fetchFleekApi(query);
             setData(result);
             setVisibility(false);
-            setTimeout(result.links.length * 50 + 1000);
+            setTimeout(imageDelay(result));
         } catch (error) {
             console.error('Error during search:', error);
             setError('Failed to search graph data.');
@@ -138,7 +139,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             if (data.links.length !== mergedData.nodes.length) {
                 setData(mergedData);
                 setVisibility(false);
-                setTimeout(mergedData.links.length * 50 + 1000);
+                setTimeout(imageDelay(mergedData));
             }
         } catch (error) {
             console.error('Error on click:', error);
