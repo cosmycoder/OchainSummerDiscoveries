@@ -1,7 +1,6 @@
 import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader, fetchBase64data } from "../../lib/dataConverter"
 import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
-import { FC, forwardRef, useCallback, useRef } from 'react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, FC} from 'react';
 import SearchBar from '../../components/Search/Search';
 import { debounce } from 'lodash';
 import { createThreeObject, appNodeClick, appCard } from '../../lib/threeFunc'
@@ -52,8 +51,8 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             try {
                 const result = await fetchFleekApi(['', 'AND', '2']);
                 setData(result);
-                const fetchedData = await createIconCacheData();
-                // const fetchedData = await fleekCreateIconCacheData();
+                // const fetchedData = await createIconCacheData();
+                const fetchedData = await fleekCreateIconCacheData();
                 setImageCache(fetchedData);
                 // getting svg cache data
                 setSvgCache(await svgPreloader(result));
