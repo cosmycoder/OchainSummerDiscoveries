@@ -49,6 +49,11 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             return () => {
                 canvas.removeEventListener('webglcontextlost', handleContextLost);
                 canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+                if (fgRef.current) {
+                    const scene = fgRef.current.scene();
+                    disposeScene(scene);
+                    fgRef.current.renderer().dispose();
+                }
             };
         }
     }, [graphKey]);
@@ -125,6 +130,10 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             setData(result);
             setVisibility(false);
             setTimeout(imageDelay(result));
+            if (fgRef.current) {
+                const scene = fgRef.current.scene();
+                disposeScene(scene);
+            }
         } catch (error) {
             console.error('Error during search:', error);
             setError('Failed to search graph data.');
@@ -137,6 +146,10 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             const result = await fetchFleekApiByTag(query);
             const mergedData = mergeGraphData(data, result);
             if (data.links.length !== mergedData.nodes.length) {
+                if (fgRef.current) {
+                    const scene = fgRef.current.scene();
+                    disposeScene(scene);
+                }
                 setData(mergedData);
                 setVisibility(false);
                 setTimeout(imageDelay(mergedData));
@@ -198,6 +211,21 @@ RegistryGraph.displayName = 'RegistryGraph';
 export default RegistryGraph;
 
 
-
+const disposeScene = (scene: THREE.Scene) => {
+    scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+            if (object.geometry) {
+                object.geometry.dispose();
+            }
+            if (object.material) {
+                if (Array.isArray(object.material)) {
+                    object.material.forEach((material) => material.dispose());
+                } else {
+                    object.material.dispose();
+                }
+            }
+        }
+    });
+};
 
 
