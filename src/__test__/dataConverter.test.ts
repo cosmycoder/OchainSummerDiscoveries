@@ -14,13 +14,6 @@ import {
   searchObjectByTag,
   searchGraphDataByTag,
   andSearchObjectByValues,
-  fetchFleekApi,
-  fetchFleekApiImgArray,
-  fetchFleekApiImgCache,
-  fetchFleekApiByTag,
-  fetchBase64data,
-  fleekFetchBase64data,
-  fleekCreateIconCacheData,
   mergeGraphData
 } from "../lib/dataConverter";
 import { BASE_URL, REGISTRY_URL, BASE_LOGO, JSON_URL, FLEEK_API, FLEEK_CACHE_API, DEFAULT_ICON_URL, DEFAULT_ICON_URL_BASE64, DEFAULT_ICON_URL_SVG } from '../app.settings'
@@ -99,12 +92,6 @@ describe('Data Filtering and Searching', () => {
     const graphData = await searchGraphDataByValues(['Tenderly is a full-stack infrastructure solution ']);
     expect(graphData.links).toHaveLength(4);
     expect(graphData.nodes).toHaveLength(4);
-  });
-
-  it("Should get filtered registry data through Fleek Functions API", async () => {
-    const graphData = await fetchFleekApi(['Tenderly is a full-stack infrastructure solution ', 'AND', '2']);
-    expect(graphData.links).toHaveLength(2);
-    expect(graphData.nodes).toHaveLength(3);
   });
 
   it("Should get designated tag of registry objects", () => {

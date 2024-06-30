@@ -178,19 +178,6 @@ export const fetchFleekApiImgArray = async (): Promise<string[]> => {
     : response.json();
 };
 
-export const fetchFleekApiImgCache = async (): Promise<ImageCacheData[]> => {
-  const url = `${FLEEK_API}?img_cache=true`
-  console.log(`Query by Fleek API. URL: ${url}`);
-  const response = await fetch(url);
-  return !response.ok
-    ? () => {
-      throw new Error(
-        `Failed to fetch data from ${url}: ${response.statusText}`
-      );
-    }
-    : response.json();
-};
-
 export const fetchFleekApiByTag = async (tag: string): Promise<GraphData> => {
   const url = `${FLEEK_API}?tagsearch=${tag}`
   console.log(`Query by Fleek API. URL: ${url}`);

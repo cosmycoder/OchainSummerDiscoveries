@@ -1,4 +1,4 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, fetchFleekApiImgCache, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader, fetchBase64data } from "../../lib/dataConverter"
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader, fetchBase64data } from "../../lib/dataConverter"
 import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
 import React, { useState, useEffect, useRef, forwardRef, FC } from 'react';
 import SearchBar from '../../components/Search/Search';
