@@ -2,7 +2,7 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { OrbitControls } from '@react-three/drei'
 
@@ -21,6 +21,13 @@ const Particles = () => {
             }
 
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+        }
+
+        return () => {
+            if (particlesRef.current) {
+                const geometry = particlesRef.current.geometry as THREE.BufferGeometry
+                geometry.dispose()
+            }
         }
     }, [])
 
@@ -48,7 +55,6 @@ const Eyes = ({ position }: EyesProps) => {
 
     useFrame(() => {
         if (meshRef.current) {
-            // Limit the rotation to create a more natural eye movement
             meshRef.current.rotation.x = THREE.MathUtils.clamp(meshRef.current.rotation.x, -Math.PI / 4, Math.PI / 4)
             meshRef.current.rotation.y = THREE.MathUtils.clamp(meshRef.current.rotation.y, -Math.PI / 4, Math.PI / 4)
             meshRef.current.rotation.z += 0.005
@@ -68,11 +74,9 @@ const EyesGroup = () => {
 
     useFrame((state) => {
         if (groupRef.current) {
-            // Rotate the entire group slowly
             groupRef.current.rotation.y += 0.001
             groupRef.current.rotation.z += 0.001
             groupRef.current.rotation.x += 0.001
-            // Add some "bobbing" motion
             groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
         }
     })
@@ -93,8 +97,8 @@ const EyesGroup = () => {
 
 export const EnhancedCanvas3DBackground = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
-
     const [graphKey, setGraphKey] = useState(0);
+
     useEffect(() => {
         if (canvasRef.current) {
             const handleContextLost = (event: { preventDefault: () => void; }) => {
@@ -107,7 +111,6 @@ export const EnhancedCanvas3DBackground = () => {
                 setGraphKey(graphKey + 1); 
             };
 
-          
             canvasRef.current.addEventListener('webglcontextlost', handleContextLost, false);
             canvasRef.current.addEventListener('webglcontextrestored', handleContextRestored, false);
 
@@ -118,9 +121,30 @@ export const EnhancedCanvas3DBackground = () => {
         }
     }, [graphKey]);
 
+    const disposeScene = (scene: THREE.Scene) => {
+        scene.traverse((object) => {
+            if (object instanceof THREE.Mesh) {
+                object.geometry.dispose()
+                if (object.material instanceof THREE.Material) {
+                    object.material.dispose()
+                }
+                if (Array.isArray(object.material)) {
+                    object.material.forEach((material) => material.dispose())
+                }
+            }
+        })
+    }
+
     return (
         <Canvas key={graphKey} ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-            camera={{ position: [0, 0, 5], fov: 75 }}>
+            camera={{ position: [0, 0, 5], fov: 75 }}
+            onCreated={({ gl, scene }) => {
+                return () => {
+                    disposeScene(scene)
+                    gl.dispose()
+                    console.log('Scene and WebGL context disposed.')
+                };
+            }}>
             <color attach="background" args={['#000000']} />
             <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
             <Particles />
@@ -128,3 +152,5 @@ export const EnhancedCanvas3DBackground = () => {
         </Canvas>
     )
 }
+
+export default EnhancedCanvas3DBackground;
