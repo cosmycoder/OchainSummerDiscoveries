@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { useState, useEffect, FC } from 'react';
 import { FaBars, FaTimes, FaHome, FaGithub, FaFileAlt, FaEnvelope } from 'react-icons/fa';
 import styles from './Navbar.module.css';
-
+import { BlueCreateWalletButton } from '../SmartWallet/BlueCreateWalletButton';
+import toast from "react-hot-toast";
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -74,6 +75,10 @@ const NavMenu: FC<NavMenuProps> = ({ isOpen }) => (
         </Link>
       </li>
     ))}
+    <li><BlueCreateWalletButton
+      handleSuccess={() => toast.success("Wallet created")}
+      handleError={(error: any) => console.log("Exited wallet creation." + error)}
+    /></li>
   </ul>
 );
 

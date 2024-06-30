@@ -51,7 +51,7 @@ const Home: FC = () => (
       </FadeIn>
       <FadeIn delay={0.2}>
         <p className={styles.description}>
-          Kick off Onchain Summer by participating in a global virtual hackathon hosted by Base and track sponsors including Stripe, Shopify, Farcaster, Zora, Fleek, thirdweb, Nouns, Aerodrome, and Synthetix.
+           Boosting the discoverability of the BASE ecosystem with highly accessible graph visualizations
         </p>
       </FadeIn>
       <div className={styles.grid}>
