@@ -21,8 +21,14 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
     const [timeout, setTimeout] = useState<number>(1000);
     const [error, setError] = useState<string | null>(null);
     const [base3dLogo, setBase3dLogo] = useState<ImageCacheData | (() => void)>();
-    const distance = 200;
     const [graphKey, setGraphKey] = useState(0);
+    
+    const DISTANCE = 200;
+    const ROTATION_SPEED = 0.0001;
+    const DEBOUNCE_DELAY = 1000;
+    const MIN_DISTANCE = 50;
+
+
     useEffect(() => {
         if (fgRef.current) {
             const handleContextLost = (event: { preventDefault: () => void; }) => {
@@ -75,7 +81,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             if (camloading) {
                 if (fgRef.current) {
                     fgRef.current.cameraPosition(
-                        { x: 0, y: 0, z: distance }, // new position
+                        { x: 0, y: 0, z: DISTANCE }, // new position
                         { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
                         1000  // ms transition duration
                     );
@@ -88,15 +94,15 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
 
     // Graph rotation animation
     setInterval(() => {
-        fgRef.current?.scene().rotateZ(0.0001);
+        fgRef.current?.scene().rotateZ(ROTATION_SPEED);
         if (fgRef.current?.camera()?.position) {
             const position = fgRef.current?.camera()?.position;
             const distBase = position.distanceTo(new THREE.Vector3(0, 0, 0))
             // Minimum distance from Base planet 
-            if (distBase < 50) {
+            if (distBase < MIN_DISTANCE) {
                 //   console.log(position.distanceTo(new THREE.Vector3(0, 0, 0)))
                 fgRef.current.cameraPosition(
-                    { x: 0, y: 0, z: distance }, // new position
+                    { x: 0, y: 0, z: DISTANCE }, // new position
                     { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
                     1000  // ms transition duration
                 );
@@ -122,7 +128,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             console.error('Error during search:', error);
             setError('Failed to search graph data.');
         }
-    }, 1000);
+    }, DEBOUNCE_DELAY);
 
     const handleClick = debounce(async (query: string) => {
         try {
@@ -138,7 +144,7 @@ const RegistryGraph: FC = forwardRef((props: any, ref: any) => {
             console.error('Error on click:', error);
             setError('Failed to fetch data by tag.');
         }
-    }, 1000);
+    }, DEBOUNCE_DELAY);
     const getCurrentCache = () => imageCache;
     const getCurrentSvgCache = () => svgCache;
     const getBase3dLogo = () => base3dLogo;
