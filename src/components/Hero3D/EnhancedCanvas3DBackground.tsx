@@ -104,6 +104,7 @@ export const EnhancedCanvas3DBackground = () => {
             const handleContextLost = (event: { preventDefault: () => void; }) => {
                 event.preventDefault();
                 console.warn('WebGL context lost. Attempting to restore...');
+                window.location.reload(); 
             };
 
             const handleContextRestored = () => {
