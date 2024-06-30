@@ -1,11 +1,8 @@
-import { it, expect, expectTypeOf, assertType, describe } from "vitest";
+import { it, expect, expectTypeOf, assertType, describe, vi, beforeEach, test  } from "vitest";
 import * as fs from 'fs';
 import { RegistryData, GraphNode, GraphArrow, GraphData } from "../types/api";
 import {
   fetchRegistryData,
-  JSON_URL,
-  BASE_LOGO,
-  REGISTRY_URL,
   createOnChainRegistryNode,
   createCategoryNode,
   createCategoryArrow,
@@ -18,9 +15,15 @@ import {
   searchGraphDataByTag,
   andSearchObjectByValues,
   fetchFleekApi,
-  svgPreloader
+  fetchFleekApiImgArray,
+  fetchFleekApiImgCache,
+  fetchFleekApiByTag,
+  fetchBase64data,
+  fleekFetchBase64data,
+  fleekCreateIconCacheData,
+  mergeGraphData
 } from "../lib/dataConverter";
-
+import { BASE_URL, REGISTRY_URL, BASE_LOGO, JSON_URL, FLEEK_API, FLEEK_CACHE_API, DEFAULT_ICON_URL, DEFAULT_ICON_URL_BASE64, DEFAULT_ICON_URL_SVG } from '../app.settings'
 const testJsonData = fs.readFileSync('src/__test__/ecosystem.test.json', 'utf-8');
 const tagGraphData = fs.readFileSync('src/__test__/tagObjectGraph.json', 'utf-8');
 const registryTestData = JSON.parse(testJsonData);
@@ -33,6 +36,7 @@ describe('Data Fetching and Node Creation', () => {
   });
 
   it("Should get an Onchain registry graph node", () => {
+   // console.log(createOnChainRegistryNode());
     expect(createOnChainRegistryNode()).toEqual({
       id: "Onchain Summer Registry",
       group: "super",
@@ -114,6 +118,25 @@ describe('Data Filtering and Searching', () => {
     expect(graphData.nodes).toHaveLength(98);
   });
 });
+
+describe('Graph data functions', () => {
+  test('mergeGraphData should combine two GraphData objects', () => {
+    const prevData = {
+      nodes: [{ id: '1', name: 'Node 1' }],
+      links: [{ source: '1', target: '2' }],
+    } as unknown as GraphData
+    const newData = {
+      nodes: [{ id: '2', name: 'Node 2' }],
+      links: [{ source: '2', target: '3' }],
+    } as unknown as GraphData
+
+    const result = mergeGraphData(prevData , newData)
+    expect(result.nodes).toHaveLength(2)
+    expect(result.links).toHaveLength(2)
+  })
+})
+
+
 
 // Commented out as it requires a web server to be running
 // describe('SVG Preloading', () => {

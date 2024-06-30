@@ -68,7 +68,8 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 const fetchedData = await fleekCreateIconCacheData();
                 setImageCache(fetchedData);
                 // getting svg cache data
-                setSvgCache(await svgPreloader(result));
+                const svgData = await svgPreloader(result)
+                setSvgCache(svgData);
                 // console.log("tag svg cache", await svgPreloader(result));
                 const base3dLogoData = await fetchBase64data('/base-sphere-square.png')
                 // console.log(base3dLogoData);
