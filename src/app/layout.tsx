@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'OCS-Discoveries',
   description: 'Onchain Summer Discoveries',
   keywords: ['Onchain', 'Summer', 'Discoveries', 'Blockchain'],
-  authors: [{ name: 'Your Name' }],
+  authors: [{ name: 'Hiroyuki Naito' }],
   // viewport: 'width=device-width, initial-scale=1',
   // icons: {
   //   icon: '/favicon.ico',

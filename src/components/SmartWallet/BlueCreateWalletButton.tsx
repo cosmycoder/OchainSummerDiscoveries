@@ -10,7 +10,7 @@ interface BlueCreateWalletButtonProps {
 
 
 
-export function BlueCreateWalletButton({ handleSuccess, handleError }: BlueCreateWalletButtonProps) {
+export const BlueCreateWalletButton = ({ handleSuccess, handleError }: BlueCreateWalletButtonProps) => {
   const [provider, setProvider] = useState<any>(null);
 
   useEffect(() => {
