@@ -6,11 +6,15 @@
 
 ## Table of Contents
 
+- [Architecture](#Architecture)
 - [Installation](#installation)
 - [Manual](#Manual)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
+
+## Architecture
+![ocs-discoveries-techbackground-2](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/assets/32320988/213739dd-43d1-4a9a-92f6-70215367f75b)
 
 ## Installation
 
