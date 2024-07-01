@@ -1,4 +1,4 @@
-import { it, expect, expectTypeOf, assertType, describe, vi, beforeEach, test  } from "vitest";
+import { it, expect, expectTypeOf, assertType, describe, vi, beforeEach, test } from "vitest";
 import * as fs from 'fs';
 import { RegistryData, GraphNode, GraphArrow, GraphData } from "../types/api";
 import {
@@ -29,7 +29,7 @@ describe('Data Fetching and Node Creation', () => {
   });
 
   it("Should get an Onchain registry graph node", () => {
-   // console.log(createOnChainRegistryNode());
+    // console.log(createOnChainRegistryNode());
     expect(createOnChainRegistryNode()).toEqual({
       id: "Onchain Summer Registry",
       group: "super",
@@ -117,7 +117,7 @@ describe('Graph data functions', () => {
       links: [{ source: '2', target: '3' }],
     } as unknown as GraphData
 
-    const result = mergeGraphData(prevData , newData)
+    const result = mergeGraphData(prevData, newData)
     expect(result.nodes).toHaveLength(2)
     expect(result.links).toHaveLength(2)
   })

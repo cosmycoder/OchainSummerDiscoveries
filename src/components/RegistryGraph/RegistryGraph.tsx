@@ -35,7 +35,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             const handleContextLost = (event: { preventDefault: () => void; }) => {
                 event.preventDefault();
                 console.warn('WebGL context lost. Attempting to restore...');
-                window.location.reload();
+               // window.location.reload();
             };
 
             const handleContextRestored = () => {
@@ -76,7 +76,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 setBase3dLogo(base3dLogoData);
             } catch (error) {
                 console.error('Error fetching data:', error);
-                setError('Failed to fetch initial data.');
+                // setError('Failed to fetch initial data.');
             } finally {
                 setLoading(false);
             }

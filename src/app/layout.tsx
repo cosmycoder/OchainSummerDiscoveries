@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: 'Onchain Summer Discoveries',
   keywords: ['Onchain', 'Summer', 'Discoveries', 'Blockchain'],
   authors: [{ name: 'Hiroyuki Naito' }],
-  viewport: 'width=device-width, initial-scale=1',
   icons: {
     icon: '/favicon.ico',
   },
@@ -18,11 +17,12 @@ interface RootLayoutProps {
 }
 
 const RootLayout: FC<RootLayoutProps> = ({ children }) => (
-  <html lang="en">
+  <html lang="en" data-new-gr-c-s-check-loaded data-gr-ext-installed>
     <body>
       <main>{children}</main>
     </body>
   </html>
 )
+
 
 export default RootLayout;
