@@ -35,7 +35,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             const handleContextLost = (event: { preventDefault: () => void; }) => {
                 event.preventDefault();
                 console.warn('WebGL context lost. Attempting to restore...');
-               // window.location.reload();
+                window.location.reload();
             };
 
             const handleContextRestored = () => {
@@ -68,7 +68,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                     fetchBase64data('/base-sphere-square.png')
                 ]);
                 const svgData = await svgPreloader(initialGraph);
-                setData(initialGraph),setImageCache(fetchedData),setSvgCache(svgData),setBase3dLogo(base3dLogoData);
+                setData(initialGraph), setImageCache(fetchedData), setSvgCache(svgData), setBase3dLogo(base3dLogoData);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 //setError('Failed to fetch initial data.');
