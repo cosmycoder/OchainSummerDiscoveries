@@ -71,7 +71,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 setData(initialGraph), setImageCache(fetchedData), setSvgCache(svgData), setBase3dLogo(base3dLogoData);
             } catch (error) {
                 console.error('Error fetching data:', error);
-                //setError('Failed to fetch initial data.');
+                setError('Failed to fetch initial data.');
             } finally {
                 setLoading(false);
             }
