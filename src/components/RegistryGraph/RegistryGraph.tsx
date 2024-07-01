@@ -207,7 +207,7 @@ RegistryGraph.displayName = 'RegistryGraph';
 
 export default RegistryGraph;
 
-
+// disposeScene when corrupted
 const disposeScene = (scene: THREE.Scene) => {
     scene.traverse((object) => {
         if (object instanceof THREE.Mesh) {

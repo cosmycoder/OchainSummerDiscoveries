@@ -1,34 +1,34 @@
 .coolButton {
-    background: transparent;
-    border: 0px solid transparent;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 200px;
-    font-weight: bold;
-    font-size: 18px;
-    background: linear-gradient(45deg, #0052ff, #2ecc71);
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 10px;
-    margin-left: 10px;
-    opacity: 0.9;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    white-space: pre-wrap;
-  }
-  
-  .coolButton:hover {
-    background: linear-gradient(45deg, #003bb3, #1eb25d);
-    transform: scale(1.05);
-  }
-  
-  .coolButton:active {
-    background: linear-gradient(45deg, #002a80, #17a34b);
-    transform: scale(1);
-  }
-  
-  .coolButtonSpan {
-    margin-right: 10px;
-  }
+  background: transparent;
+  border: 0px solid transparent;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+  font-weight: bold;
+  font-size: 18px;
+  background: linear-gradient(45deg, #0052ff, #2ecc71);
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
+  margin-left: 10px;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  white-space: pre-wrap;
+}
+
+.coolButton:hover {
+  background: linear-gradient(45deg, #003bb3, #1eb25d);
+  transform: scale(1.05);
+}
+
+.coolButton:active {
+  background: linear-gradient(45deg, #002a80, #17a34b);
+  transform: scale(1);
+}
+
+.coolButtonSpan {
+  margin-right: 10px;
+}
