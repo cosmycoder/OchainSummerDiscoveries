@@ -17,12 +17,11 @@ interface RootLayoutProps {
 }
 
 const RootLayout: FC<RootLayoutProps> = ({ children }) => (
-  <html lang="en" data-new-gr-c-s-check-loaded data-gr-ext-installed>
+  <html lang="en">
     <body>
       <main>{children}</main>
     </body>
   </html>
 )
-
 
 export default RootLayout;
