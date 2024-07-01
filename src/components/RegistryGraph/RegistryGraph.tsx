@@ -62,17 +62,19 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     useEffect(() => {
         const fetchDataAsync = async () => {
             try {
-                const result = await fetchFleekApi(['', 'AND', '2']);
-                setData(result);
+                const initialGraph = await fetchFleekApi(['', 'AND', '2']);
                 // const fetchedData = await createIconCacheData();
-                const fetchedData = await fleekCreateIconCacheData();
-                setImageCache(fetchedData);
+                const fetchedData = await fleekCreateIconCacheData()
                 // getting svg cache data
-                const svgData = await svgPreloader(result)
-                setSvgCache(svgData);
+                const svgData = await svgPreloader(initialGraph)
                 // console.log("tag svg cache", await svgPreloader(result));
                 const base3dLogoData = await fetchBase64data('/base-sphere-square.png')
                 // console.log(base3dLogoData);
+
+
+                setData(initialGraph);
+                setImageCache(fetchedData);
+                setSvgCache(svgData);
                 setBase3dLogo(base3dLogoData);
             } catch (error) {
                 console.error('Error fetching data:', error);
