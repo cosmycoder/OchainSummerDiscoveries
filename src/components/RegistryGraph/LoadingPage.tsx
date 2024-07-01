@@ -50,7 +50,7 @@ const initializeScene = (container: HTMLDivElement | null) => {
   const handleContextLost = (event: Event) => {
     event.preventDefault();
     console.warn('WebGL context lost. Attempting to restore...');
-    // window.location.reload();
+    window.location.reload();
   };
 
   const handleContextRestored = () => {
