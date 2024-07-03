@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  manifest: '/manifest.json', // Add this line for PWA support
+  themeColor: '#000000', // Optional: Set your theme color
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, themeColor=#000000'// Optional: Recommended for mobile devices
 }
 
 interface RootLayoutProps {
@@ -18,6 +21,9 @@ interface RootLayoutProps {
 
 const RootLayout: FC<RootLayoutProps> = ({ children }) => (
   <html lang="en">
+    <head>
+      <link rel="apple-touch-icon" href="/ocs-discoveries.webp" /> {/* Optional: For iOS devices */}
+    </head>
     <body>
       <main>{children}</main>
     </body>

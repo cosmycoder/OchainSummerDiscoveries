@@ -1,0 +1,21 @@
+{
+    "name": "OCS-Discoveries",
+    "short_name": "OCS-D",
+    "icons": [
+      {
+        "src": "/ocs-discoveries.webp",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/ocs-discoveries.webp",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+  }
