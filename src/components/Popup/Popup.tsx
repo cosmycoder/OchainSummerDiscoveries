@@ -22,8 +22,8 @@ const Popup: FC<PopupProps> = ({ isOpen, onClose, popupValue, currentCache }) =>
                     <Image
                         src={deriveBase64DataFromCache(popupValue, currentCache)}
                         alt={`Logo of ${popupValue?.id}`}
-                        width={150}  // Adjusted size (15% of 1000px width)
-                        height={150} // Adjusted size (15% of 1000px width)
+                        width={100}  // Adjusted size (10% of 1000px width)
+                        height={100} // Adjusted size (10% of 1000px width)
                         className="rounded-lg bg-white bg-opacity-30"
                     />
                 </div>
