@@ -29,12 +29,12 @@
     "eslint": "8.40.0",
     "eslint-config-next": "14.2.4",
     "ethers": "^6.13.1",
-    "framer-motion": "^11.2.12",
+    "framer-motion": "^11.2.13",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
     "next": "14.2.4",
     "next-pwa": "^5.6.0",
-    "postcss": "8.4.23",
+    "postcss": "8.4.31",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-force-graph-2d": "^1.25.5",
@@ -45,11 +45,11 @@
     "three": "^0.165.0",
     "three-csg-ts": "^3.2.0",
     "three-spritetext": "^1.8.2",
-    "three-stdlib": "^2.30.3",
+    "three-stdlib": "^2.30.4",
     "tsd": "^0.31.1",
     "typescript": "5.0.4",
     "viem": "~2.16.5",
-    "wagmi": "^2.10.8"
+    "wagmi": "^2.10.9"
   },
   "devDependencies": {
     "@testing-library/react": "^16.0.0",
