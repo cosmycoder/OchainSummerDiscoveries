@@ -177,41 +177,43 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
 
     return (
         <>
-            <ForceGraph3D
-                key={graphKey} // Force re-render by changing the key
-                onEngineStop={() => fgRef.current?.zoomToFit(1000)}
-                enableNavigationControls={true}
-                ref={fgRef}
-                cooldownTime={timeout}
-                enableNodeDrag={true}
-                d3VelocityDecay={0.91}
-                // d3AlphaDecay={0.05}
-                graphData={data}
-                linkAutoColorBy="group"
-                // cooldownTicks={100}
-                // nodeRelSize={10}
-                linkLabel={(links) => (links.group !== "super") ? (`${links?.group}: ${links.name}`) : links.name}
-                backgroundColor="black"
-                dagMode="radialout"
-                linkResolution={1}
-                linkOpacity={0.5}
-                linkPositionUpdate={() => false}
-                linkVisibility={true}
-                nodeResolution={1}
-                nodeVisibility={() => visibility}
-                numDimensions={2}
-                dagLevelDistance={50}
-                linkWidth={0}
-                nodeRelSize={1}
-                showNavInfo={false}
-                onNodeClick={(node) => {
-                    node.depth === 1 ? handleSearch(['', 'AND', '2']) : null; // Back to initial graph
-                    node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
-                    node.depth === 3 ? handleOpenPopup(node) : null;
-                }}
-                nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache(), getBase3dLogo() as any) as any}
-                nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
-            />
+            <div>
+                <ForceGraph3D
+                    key={graphKey} // Force re-render by changing the key
+                    onEngineStop={() => fgRef.current?.zoomToFit(1000)}
+                    enableNavigationControls={true}
+                    ref={fgRef}
+                    cooldownTime={timeout}
+                    enableNodeDrag={true}
+                    d3VelocityDecay={0.91}
+                    // d3AlphaDecay={0.05}
+                    graphData={data}
+                    linkAutoColorBy="group"
+                    // cooldownTicks={100}
+                    // nodeRelSize={10}
+                    linkLabel={(links) => (links.group !== "super") ? (`${links?.group}: ${links.name}`) : links.name}
+                    backgroundColor="black"
+                    dagMode="radialout"
+                    linkResolution={1}
+                    linkOpacity={0.5}
+                    linkPositionUpdate={() => false}
+                    linkVisibility={true}
+                    nodeResolution={1}
+                    nodeVisibility={() => visibility}
+                    numDimensions={2}
+                    dagLevelDistance={50}
+                    linkWidth={0}
+                    nodeRelSize={1}
+                    showNavInfo={false}
+                    onNodeClick={(node) => {
+                        node.depth === 1 ? handleSearch(['', 'AND', '2']) : null; // Back to initial graph
+                        node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
+                        node.depth === 3 ? handleOpenPopup(node) : null;
+                    }}
+                    nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache(), getBase3dLogo() as any) as any}
+                    nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
+                />
+            </div>
             <SearchBar onSearch={handleSearch} />
             <Popup isOpen={isPopupOpen} onClose={handleClosePopup} popupValue={getPopupValue()} currentCache={getCurrentCache()} />
         </>
