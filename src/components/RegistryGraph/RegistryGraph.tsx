@@ -69,7 +69,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 const [initialGraph, fetchedData, base3dLogoData] = await Promise.all([
                     fetchFleekApi(['', 'AND', '2']),
                     fleekCreateIconCacheData(),
-                    // createIconCacheData(),
+                    //createIconCacheData(),
                     fetchBase64data('/base-sphere-square.png')
                 ]);
                 const svgData = await svgPreloader(initialGraph);
@@ -180,7 +180,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             <div>
                 <ForceGraph3D
                     key={graphKey} // Force re-render by changing the key
-                    onEngineStop={() => fgRef.current?.zoomToFit(1000)}
+                    // onEngineStop={() => fgRef.current?.zoomToFit(1000)}
                     enableNavigationControls={true}
                     ref={fgRef}
                     cooldownTime={timeout}
