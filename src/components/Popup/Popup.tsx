@@ -30,7 +30,7 @@ const Popup: FC<PopupProps> = ({ isOpen, onClose, popupValue, currentCache }) =>
             </div>
             <div className="text-center"> {/* Centering title and content */}
                 <h2>{popupValue?.id}</h2>
-                <span>{getNiceDomainDisplayFromUrl(popupValue?.url ?? "http://example.com")}</span>
+                <span>{getNiceDomainDisplayFromUrl(popupValue?.url)}</span>
                 <p>{popupValue?.description}</p>
                 <button className={styles.goToSiteButton} onClick={() => window.open(popupValue?.url, '_blank')}>
                     Go to Site
