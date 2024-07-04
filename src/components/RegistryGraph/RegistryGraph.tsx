@@ -2,6 +2,7 @@ import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, createIconCa
 import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
 import React, { useState, useEffect, useRef, forwardRef, FC } from 'react';
 import SearchBar from '../../components/Search/Search';
+import Popup from '../Popup/Popup'; // 
 import { debounce } from 'lodash';
 import { createThreeObject, appNodeClick, appCard } from '../../lib/threeFunc'
 import ForceGraph3D, { ForceGraphMethods, ForceGraphProps } from "react-force-graph-3d";
@@ -22,6 +23,9 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const [error, setError] = useState<string | null>(null);
     const [base3dLogo, setBase3dLogo] = useState<ImageCacheData | (() => void)>();
     const [graphKey, setGraphKey] = useState(0);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [popupValue, setPopupValue] = useState<any>();
+
 
     const DISTANCE = 200;
     const ROTATION_SPEED = 0.0001;
@@ -64,7 +68,8 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             try {
                 const [initialGraph, fetchedData, base3dLogoData] = await Promise.all([
                     fetchFleekApi(['', 'AND', '2']),
-                    fleekCreateIconCacheData(),
+                    //  fleekCreateIconCacheData(),
+                    createIconCacheData(),
                     fetchBase64data('/base-sphere-square.png')
                 ]);
                 const svgData = await svgPreloader(initialGraph);
@@ -120,6 +125,15 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     if (loading) return <LoadingPage />;
     if (error) return <ErrorMessage message={error} />;
 
+    const handleOpenPopup = (node: any) => {
+        setIsPopupOpen(true);
+        setPopupValue(node);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupOpen(false);
+    };
+
     const handleSearch = debounce(async (query: string[]) => {
         try {
             // const result = await searchGraphDataByValues(query);
@@ -159,6 +173,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const getCurrentCache = () => imageCache;
     const getCurrentSvgCache = () => svgCache;
     const getBase3dLogo = () => base3dLogo;
+    const getPopupValue = () => popupValue;
 
     return (
         <>
@@ -192,12 +207,13 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 onNodeClick={(node) => {
                     node.depth === 1 ? handleSearch(['', 'AND', '2']) : null; // Back to initial graph
                     node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
-                    node.depth === 3 ? appNodeClick(node) : null;
+                    node.depth === 3 ? handleOpenPopup(node) : null;
                 }}
                 nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache(), getBase3dLogo() as any) as any}
                 nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
             />
             <SearchBar onSearch={handleSearch} />
+            <Popup isOpen={isPopupOpen} onClose={handleClosePopup} popupValue={getPopupValue()} currentCache={getCurrentCache()} />
         </>
     );
 });

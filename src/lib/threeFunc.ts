@@ -116,8 +116,8 @@ const createText = (
   spriteText.position.set(x, y, z);
   return spriteText;
 };
-  
-const deriveBase64DataFromCache = (node: any | undefined, currentCache: ImageCacheData[]): string => {
+
+export const deriveBase64DataFromCache = (node: any | undefined, currentCache: ImageCacheData[]): string => {
   const cachedItem = currentCache.find((obj: { imageUrl: string }) => {
     const pathname = isURL(obj.imageUrl) ? new URL(obj.imageUrl).pathname : obj.imageUrl;
     return pathname === node?.imageUrl;
@@ -139,14 +139,13 @@ export const appNodeClick = (node: any) => window.open(node.url);
 
 const isURL = (str: string) => /^(?:https?:\/\/)?[\w.-]+\.\w{2,}(?:\/.*)?$/.test(str);
 
-const getNiceDomainDisplayFromUrl = (url: string) => 
+export const getNiceDomainDisplayFromUrl = (url: string) =>
   url.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0];
 
 export const appCard = (node: any, currentCache: ImageCacheData[]) => `
 <div style="border-radius: 3px; width: 400px; padding: 10px; border: 1px solid #ccc; text-align: center; background-color: rgba(0, 0, 0, 0.8);">
   <div>
     <div>
-      <a href="${node?.url}" rel="noreferrer noopener" target="_blank">
         <div className="flex flex-row justify-between">
           <div style="text-align: center; display: block;">
             <Image
@@ -163,7 +162,6 @@ export const appCard = (node: any, currentCache: ImageCacheData[]) => `
           </div>
           <p>${node?.description}</p>
         </div>
-      </a>
     </div>
   </div>
 </div>

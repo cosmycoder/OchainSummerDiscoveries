@@ -1,0 +1,78 @@
+/* src/components/Popup/Popup.module.css */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 30;
+    transition: all 0.3s ease-in-out;
+    width: 80%; /* Adjust as needed */
+    max-width: 500px;
+    border-color: #fff;
+    border-width: 1px;
+  }
+  
+  .popupOpen {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .popupClose {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .popupHeader {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  
+  .popupContent {
+    font-size: 16px;
+    color: #fff;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .highlight {
+    background: linear-gradient(45deg, #0052ff, #2ecc71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .goToSiteButton {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #0052ff, #2ecc71); /* Gradient background */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease; /* Transition for background */
+}
+
+.goToSiteButton:hover {
+    background: linear-gradient(45deg, #003bb3, #1eb25d); /* Gradient on hover */
+    transform: scale(1.05);
+}
+
+.goToSiteButton:active {
+    background: linear-gradient(45deg, #002a80, #17a34b); /* Gradient on active */
+    transform: scale(0.95);
+}
