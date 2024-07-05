@@ -37,8 +37,7 @@ export const createThreeObject = (
 const addOnChainSummerRegistryNode = (group: THREE.Group, node: any, base3dLogo: any) => {
   const texture = new THREE.TextureLoader().load(base3dLogo.imageUrl);
   const sphere = createSphere(10, texture);
-  const text = createText(node.description, "#99CCFF", 3, 0, -15, 0);
-
+  // const text = createText(node.description, "#99CCFF", 3, 0, -15, 0);
   group.add(sphere);
 };
 
@@ -58,10 +57,10 @@ const addDappNode = (group: THREE.Group, node: any, currentCache: ImageCacheData
   const texture = new THREE.TextureLoader().load(base64str);
 
   const sprite = createDappSprite(texture);
-  const sphere = createTransparentSphere(4, 0xffffff, 0.1);
-  const text = createText(String(node.id), "#d3d3d3", 2, 0, -4, 0);
+  const sphere = createTransparentSphere(2, 0xffffff, 0.15);
+  const text = createText(String(node.id), "#d3d3d3", 2, 0, -5, 0);
 
-  group.add(sprite, text);
+  group.add(sprite, text, sphere);
 };
 
 const createSphere = (scale: number, texture: THREE.Texture): THREE.Mesh => {
