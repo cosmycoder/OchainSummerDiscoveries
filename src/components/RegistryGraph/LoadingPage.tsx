@@ -77,10 +77,10 @@ const createSpheres = () => {
   const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.8 });
 
   return [
-    createSphere(geometry, material, -60, 0, 50, Math.PI, 0.01, 0, 0),
+    createSphere(geometry, material, -60, 0, 50, -Math.PI, 0.01, 0, 0),
     createSphere(geometry, material, -20, 0, 50, 0, 0.01, 0.01, 0.01),
     createSphere(geometry, material, 20, 0, 50, 0, -0.01, -0.01, -0.01),
-    createSphere(geometry, material, 60, 0, 50, -Math.PI, -0.01, 0, 0),
+    createSphere(geometry, material, 60, 0, 50, -0.01, 0, 0, 0.01),
   ];
 };
 

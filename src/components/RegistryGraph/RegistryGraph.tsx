@@ -125,7 +125,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     if (loading) return <LoadingPage />;
     if (error) return <ErrorMessage message={error} />;
 
-    const handleOpenPopup = (node: any) => {
+    const handleOpenPopup = async (node: any) => {
         setIsPopupOpen(true);
         setPopupValue(node);
     };
@@ -174,6 +174,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const getCurrentSvgCache = () => svgCache;
     const getBase3dLogo = () => base3dLogo;
     const getPopupValue = () => popupValue;
+    const getIsPopupOpen = () => isPopupOpen;
 
     return (
         <>
@@ -215,7 +216,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 />
             </div>
             <SearchBar onSearch={handleSearch} />
-            <Popup isOpen={isPopupOpen} onClose={handleClosePopup} popupValue={getPopupValue()} currentCache={getCurrentCache()} />
+            <Popup isOpen={getIsPopupOpen()} onClose={handleClosePopup} popupValue={getPopupValue()} currentCache={getCurrentCache()} />
         </>
     );
 });
