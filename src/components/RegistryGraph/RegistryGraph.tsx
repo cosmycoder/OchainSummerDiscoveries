@@ -27,7 +27,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const [popupValue, setPopupValue] = useState<any>();
 
 
-    const DISTANCE = 200;
+    const DISTANCE = 210;
     const ROTATION_SPEED = 0.0001;
     const DEBOUNCE_DELAY = 1000;
     const MIN_DISTANCE = 50;
@@ -69,7 +69,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 const [initialGraph, fetchedData, base3dLogoData] = await Promise.all([
                     fetchFleekApi(['', 'AND', '2']),
                     fleekCreateIconCacheData(),
-                    //createIconCacheData(),
+                    // createIconCacheData(),
                     fetchBase64data('/base-sphere-square.png')
                 ]);
                 const svgData = await svgPreloader(initialGraph);
@@ -137,7 +137,18 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const handleSearch = debounce(async (query: string[]) => {
         try {
             // const result = await searchGraphDataByValues(query);
-            const result = query[0].length === 0 ? await fetchFleekApi(['', 'AND', '2']) : await fetchFleekApi(query);
+            const result = await (async () => {
+                if (query[0].length === 0) {
+                    const result = await fetchFleekApi(['', 'AND', '2'])
+                    setCamLoading(true);
+                    return result
+
+                } else {
+                    const result = await fetchFleekApi(query);
+                    return result
+                }
+            })();
+
             setData(result);
             setVisibility(false);
             setTimeout(imageDelay(result));
@@ -207,9 +218,9 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                     nodeRelSize={1}
                     showNavInfo={false}
                     onNodeClick={(node) => {
-                        node.depth === 1 ? handleSearch(['', 'AND', '2']) : null; // Back to initial graph
-                        node.depth === 2 ? handleClick(String(node?.id)) : null; // Search by tag
-                        node.depth === 3 ? handleOpenPopup(node) : null;
+                        if (node.depth === 1) { handleSearch(['', 'AND', '2']) } // Back to initial graph
+                        if (node.depth === 2) { handleClick(String(node?.id)) } // Search by tag
+                        if (node.depth === 3) { handleOpenPopup(node) }
                     }}
                     nodeThreeObject={(node) => createThreeObject(node, getCurrentCache(), getCurrentSvgCache(), getBase3dLogo() as any) as any}
                     nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}

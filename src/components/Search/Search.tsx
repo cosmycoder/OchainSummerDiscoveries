@@ -1,7 +1,6 @@
-/* src/components/Search/Search */
-
 import { useState, ChangeEvent, KeyboardEvent, FC } from 'react';
 import styles from './Search.module.css';
+import { MdOutlineRestartAlt } from "react-icons/md";
 
 interface SearchProps {
   onSearch: (query: string[]) => void;
@@ -31,6 +30,11 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
     }
   };
 
+  const handleReload = () => {
+    const finalQuery = [''];
+    onSearch(finalQuery);
+  };
+
   return (
     <div className={styles.searchBarContainer}>
       <div className={styles.searchBar}>
@@ -58,8 +62,10 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
           >
             OR
           </button>
-
         </div>
+        <button onClick={handleReload} className={styles.reloadButton}>
+        <MdOutlineRestartAlt />
+        </button>
       </div>
     </div>
   );
