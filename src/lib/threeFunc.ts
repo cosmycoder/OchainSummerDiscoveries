@@ -2,6 +2,10 @@ import { ImageCacheData, SvgCacheData } from "@/types/api";
 import * as THREE from 'three';
 import SpriteText from 'three-spritetext';
 
+const HEART_SVG = '<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 107.39"><defs><style>.cls-1{fill:#ed1b24;fill-rule:evenodd;}</style></defs><title>red-heart</title><path class="cls-1" d="M60.83,17.18c8-8.35,13.62-15.57,26-17C110-2.46,131.27,21.26,119.57,44.61c-3.33,6.65-10.11,14.56-17.61,22.32-8.23,8.52-17.34,16.87-23.72,23.2l-17.4,17.26L46.46,93.55C29.16,76.89,1,55.92,0,29.94-.63,11.74,13.73.08,30.25.29c14.76.2,21,7.54,30.58,16.89Z"/></svg>';
+const blob = new Blob([HEART_SVG], { type: 'image/svg+xml' });
+const heart_blob = URL.createObjectURL(blob)
+
 export const createThreeObject = (
   node: any,
   currentCache: ImageCacheData[],
@@ -54,13 +58,19 @@ const addCategoryNode = (group: THREE.Group, node: any, currentSvgCache: SvgCach
 
 const addDappNode = (group: THREE.Group, node: any, currentCache: ImageCacheData[]) => {
   const base64str = deriveBase64DataFromCache(node, currentCache);
-  const texture = new THREE.TextureLoader().load(base64str);
 
+  const texture = new THREE.TextureLoader().load(base64str);
   const sprite = createDappSprite(texture);
+
+  //favorite icon
+  const fatexture = new THREE.TextureLoader().load(heart_blob);
+  const fasprite = createHeartSprite(fatexture);
+
   const sphere = createTransparentSphere(2, 0xffffff, 0.15);
   const text = createText(String(node.id), "#d3d3d3", 2, 0, -5, 0);
 
-  group.add(sprite, text, sphere);
+  // Display Hartmark if localstorage have value.
+  localStorage.getItem(node.id) ? group.add(sprite, text, sphere, fasprite) : group.add(sprite, text, sphere);
 };
 
 const createSphere = (scale: number, texture: THREE.Texture): THREE.Mesh => {
@@ -99,6 +109,22 @@ const createDappSprite = (texture: THREE.Texture): THREE.Sprite => {
   sprite.scale.set(4, 4, 4);
   return sprite;
 };
+
+const createHeartSprite = (texture: THREE.Texture): THREE.Sprite => {
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    alphaToCoverage: true,
+    premultipliedAlpha: true,
+    transparent: true,
+    alphaTest: 0.7,
+    blending: THREE.AdditiveBlending
+  });
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(5, 5, 5);
+  sprite.position.set(0, 3, 3);
+  return sprite;
+};
+
 
 const createText = (
   text: string | undefined,

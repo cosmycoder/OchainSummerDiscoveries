@@ -28,7 +28,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
 
 
     const DISTANCE = 210;
-    const ROTATION_SPEED = 0.0001;
+    const ROTATION_SPEED = 0.0002;
     const DEBOUNCE_DELAY = 1000;
     const MIN_DISTANCE = 50;
     // calc delay time
@@ -101,7 +101,8 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     }, [camloading]);
 
     // Graph rotation animation
-    setInterval(() => {
+    useEffect(() => {
+        const rotationInterval =  setInterval(() => {
         fgRef.current?.scene().rotateZ(ROTATION_SPEED);
         if (fgRef.current?.camera()?.position) {
             const position = fgRef.current?.camera()?.position;
@@ -116,8 +117,9 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 );
             }
         };
-    }, 100);
-
+    }, 50);
+    return () => clearInterval(rotationInterval);
+}, []);
     // Graph node visivility
     setInterval(() => (visibility === false) ? setVisibility(true) : null, timeout);
 
@@ -125,10 +127,10 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     if (loading) return <LoadingPage />;
     if (error) return <ErrorMessage message={error} />;
 
-    const handleOpenPopup = async (node: any) => {
+    const handleOpenPopup = debounce(async (node: any) => {
         setIsPopupOpen(true);
         setPopupValue(node);
-    };
+    }, 500);
 
     const handleClosePopup = () => {
         setIsPopupOpen(false);

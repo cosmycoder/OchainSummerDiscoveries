@@ -1,0 +1,21 @@
+.favoriteLabel {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: #ff6b6b; /* You can change the color as needed */
+    cursor: pointer; /* Indicates it's clickable */
+  }
+  
+  .heartIcon {
+    margin-right: 8px; /* Adjust spacing as needed */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .scale {
+    transform: scale(1.5);
+  }
+  
+  .labelText {
+    font-weight: bold;
+  }
+  

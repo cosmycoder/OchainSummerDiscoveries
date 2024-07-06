@@ -22,7 +22,7 @@ interface RootLayoutProps {
 const RootLayout: FC<RootLayoutProps> = ({ children }) => (
   <html lang="en">
     <head>
-      <link rel="apple-touch-icon" href="/logo.png" /> {/* Optional: For iOS devices */}
+      <link rel="apple-touch-icon" href="/logo.png" />
     </head>
     <body>
       <main>{children}</main>
