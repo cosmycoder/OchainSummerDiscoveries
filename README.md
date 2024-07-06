@@ -49,7 +49,7 @@ It returns **IPFS HASH with url**
 
 `get-graph.js` is a query function for retrieving BASE ecosystem data for graph representation.
 
-Change and change [the first line](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/blob/main/src/fleek-functions/get-graph.js#L1) to `ecosystem-data.js` hash value you got.
+Change [the first line](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/blob/main/src/fleek-functions/get-graph.js#L1) to `ecosystem-data.js` hash value you got.
 ```bash
 vi get-graph.js
 ```
