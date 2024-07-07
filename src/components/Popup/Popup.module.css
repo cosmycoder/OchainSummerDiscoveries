@@ -76,3 +76,9 @@
     background: linear-gradient(45deg, #002a80, #17a34b); /* Gradient on active */
     transform: scale(0.95);
 }
+
+.description {
+  max-height: 200px; /* Adjust the height as needed */
+  overflow-y: auto;
+  padding: 10px;
+}
