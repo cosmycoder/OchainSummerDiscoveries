@@ -174,7 +174,7 @@ export const getNiceDomainDisplayFromUrl = (url: string) =>
   url.replace('https://', '').replace('http://', '').replace('www.', '').split('/')[0];
 
 export const appCard = (node: any, currentCache: ImageCacheData[]) => `
-<div style="border-radius: 3px; width: 400px; padding: 10px; border: 1px solid #ccc; text-align: center; background-color: rgba(0, 0, 0, 0.8);">
+<div style="border-radius: 3px; width: 350px; padding: 10px; border: 1px solid #ccc; text-align: center; background-color: rgba(0, 0, 0, 0.8);">
   <div>
     <div>
         <div className="flex flex-row justify-between">
