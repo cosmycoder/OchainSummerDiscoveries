@@ -100,6 +100,27 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
         return () => clearInterval(interval); // Clean up the interval on component unmount
     }, [camloading]);
 
+    // Responsively change the size of display
+    useEffect(() => {
+        const handleResize = () => {
+            if (fgRef.current) {
+                const camera = fgRef.current.camera() as THREE.PerspectiveCamera;
+                const renderer = fgRef.current.renderer();
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     // Graph rotation animation
     useEffect(() => {
         const rotationInterval =  setInterval(() => {
