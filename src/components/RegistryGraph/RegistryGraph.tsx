@@ -27,7 +27,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const [popupValue, setPopupValue] = useState<any>();
 
 
-    const DISTANCE = 210;
+    const DISTANCE = 200000/window.innerHeight;
     const ROTATION_SPEED = 0.0002;
     const DEBOUNCE_DELAY = 1000;
     const MIN_DISTANCE = 50;
