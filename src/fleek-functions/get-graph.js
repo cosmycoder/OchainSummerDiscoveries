@@ -16,6 +16,11 @@ export const main = (request) => {
         const tag = request.query.tagsearch;
         return searchGraphDataByTag(tag)
     }
+    if (request.query.names !== undefined) {
+        const names = request.query.names;
+        const nameArray = names.split(',')
+        return searchGraphDataByNames(nameArray)
+    }
 };
 
 // Settings
@@ -138,6 +143,22 @@ export const searchGraphDataByTag = async (searchValue, depth = 3) => {
     const filteredData = searchObjectByTag(registryData, searchValue);
     return createGraphData(filteredData, depth);
 }
+
+
+// search object by name array
+export const searchObjectByNames = (registryData, searchValues) => {
+    const lowerSearchValues = searchValues.map(value => value.toLowerCase());
+    return registryData.filter(val =>
+        lowerSearchValues.some(sv => val.name.toString().toLowerCase() === sv)
+    );
+}
+
+// Fetching graph data
+export const searchGraphDataByNames = async (searchValues, depth = 3) => {
+    const filteredData = searchObjectByNames(registryData, searchValues);
+    return createGraphData(filteredData, depth);
+}
+
 
 export const createImageUrlArray = () => registryData.map(({ imageUrl }) => imageUrl);
 

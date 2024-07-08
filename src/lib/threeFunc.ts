@@ -76,7 +76,7 @@ const addDappNode = (group: THREE.Group, node: any, currentCache: ImageCacheData
   const text = createText(String(node.id), "#d3d3d3", 2, 0, -5, 0);
 
   // Display Hartmark if localstorage have value.
-  localStorage.getItem(node.id) ? group.add(sprite, text, sphere, fasprite) : group.add(sprite, text, sphere);
+  localStorage.getItem(node.id)==="true" ? group.add(sprite, text, sphere, fasprite) : group.add(sprite, text, sphere);
 };
 
 const createSphere = (scale: number, texture: THREE.Texture): THREE.Mesh => {
@@ -178,7 +178,7 @@ export const appCard = (node: any, currentCache: ImageCacheData[]) => `
   <div>
     <div>
         <div className="flex flex-row justify-between">
-          ${localStorage.getItem(node.id)?favoriteIcon():""}
+          ${localStorage.getItem(node.id)==="true"?favoriteIcon():""}
           <div style="text-align: center; display: block;">
             <Image
               src="${deriveBase64DataFromCache(node, currentCache)}"

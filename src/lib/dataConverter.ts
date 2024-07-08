@@ -123,6 +123,16 @@ export const searchObjectByTag = (registryData: RegistryData[], searchValue: str
   );
 }
 
+
+// search object by name array
+export const searchObjectByNames = (registryData: RegistryData[], searchValues: string[]): RegistryData[] => {
+  const lowerSearchValues = searchValues.map(value => value.toLowerCase());
+  return registryData.filter(val =>
+     lowerSearchValues.some(sv => val.name.toString().toLowerCase()===sv)
+  );
+}
+
+
 // Alighning tag value to lowercases.
 const createRegistryData = (rawRegistryData: RegistryData[]) => rawRegistryData.map(item => ({
   ...item,
@@ -145,6 +155,15 @@ export const searchGraphDataByTag = async (searchValue: string, url: string = JS
   const filteredData = searchObjectByTag(registryData, searchValue);
   return createGraphData(filteredData, depth);
 }
+
+// Fetching graph data
+export const searchGraphDataByNames = async (searchValues: string[], url: string = JSON_URL, depth: number = 3): Promise<GraphData> => {
+  const rawRegistryData = await fetchRegistryData(url);
+  const registryData = createRegistryData(rawRegistryData);
+  const filteredData = searchObjectByNames(registryData, searchValues);
+  return createGraphData(filteredData, depth);
+}
+
 
 // Getting base dapp json data
 export const fetchFleekApi = async (
@@ -297,4 +316,21 @@ export const svgPreloader = async (tagGraphData: GraphData): Promise<SvgCacheDat
     }
   }));
   return svgCacheData;
+};
+
+// Getting base dapp json data by name
+export const fetchFleekByNames = async (
+  query: string[]
+): Promise<GraphData> => {
+
+  const url = `${FLEEK_API}?names=${query.join(',').trim()}`
+  console.log(`Query by Fleek API. URL: ${url}`);
+  const response = await fetch(url);
+  return !response.ok
+    ? () => {
+      throw new Error(
+        `Failed to fetch data from ${url}: ${response.statusText}`
+      );
+    }
+    : response.json();
 };

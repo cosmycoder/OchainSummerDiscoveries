@@ -14,7 +14,9 @@ import {
   searchObjectByTag,
   searchGraphDataByTag,
   andSearchObjectByValues,
-  mergeGraphData
+  mergeGraphData,
+  searchObjectByNames,
+  searchGraphDataByNames
 } from "../lib/dataConverter";
 import { BASE_URL, REGISTRY_URL, BASE_LOGO, JSON_URL, FLEEK_API, FLEEK_CACHE_API, DEFAULT_ICON_URL, DEFAULT_ICON_URL_BASE64, DEFAULT_ICON_URL_SVG } from '../app.settings'
 const testJsonData = fs.readFileSync('src/__test__/ecosystem.test.json', 'utf-8');
@@ -104,6 +106,21 @@ describe('Data Filtering and Searching', () => {
     expect(graphData.links).toHaveLength(97);
     expect(graphData.nodes).toHaveLength(98);
   });
+
+  it("Should get designated names of registry objects", () => {
+    const filteredData = searchObjectByNames(registryTestData, ['uniswap', 'aave']);
+    // console.log(filteredData);
+    expect(filteredData).toHaveLength(2);
+  });
+
+  it("Should get filtered registry graph data", async () => {
+    const graphData = await searchGraphDataByNames(['uniswap', 'aave']);
+    // console.log(graphData);
+    expect(graphData.links).toHaveLength(3);
+    expect(graphData.nodes).toHaveLength(4);
+  });
+
+
 });
 
 describe('Graph data functions', () => {

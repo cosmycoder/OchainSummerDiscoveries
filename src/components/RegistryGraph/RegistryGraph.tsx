@@ -1,7 +1,8 @@
-import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader, fetchBase64data } from "../../lib/dataConverter"
+import { searchGraphDataByValues, fetchFleekApi, fetchRegistryData, createIconCacheData, fleekCreateIconCacheData, fetchFleekApiByTag, mergeGraphData, svgPreloader, fetchBase64data, fetchFleekByNames } from "../../lib/dataConverter"
 import { GraphData, ImageCacheData, SvgCacheData } from "../../types/api"
 import React, { useState, useEffect, useRef, forwardRef, FC } from 'react';
 import SearchBar from '../../components/Search/Search';
+import ShowFavoriteButton from '../ShowFavoritesButton/ShowFavoritesButton';
 import Popup from '../Popup/Popup'; // 
 import { debounce } from 'lodash';
 import { createThreeObject, appNodeClick, appCard } from '../../lib/threeFunc'
@@ -27,7 +28,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const [popupValue, setPopupValue] = useState<any>();
 
 
-    const DISTANCE = 200000/window.innerHeight;
+    const DISTANCE = 200000 / window.innerHeight;
     const ROTATION_SPEED = 0.0002;
     const DEBOUNCE_DELAY = 1000;
     const MIN_DISTANCE = 50;
@@ -68,8 +69,8 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             try {
                 const [initialGraph, fetchedData, base3dLogoData] = await Promise.all([
                     fetchFleekApi(['', 'AND', '2']),
-                    fleekCreateIconCacheData(),
-                    // createIconCacheData(),
+                    // fleekCreateIconCacheData(),
+                    createIconCacheData(),
                     fetchBase64data('/base-sphere-square.png')
                 ]);
                 const svgData = await svgPreloader(initialGraph);
@@ -123,24 +124,24 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
 
     // Graph rotation animation
     useEffect(() => {
-        const rotationInterval =  setInterval(() => {
-        fgRef.current?.scene().rotateZ(ROTATION_SPEED);
-        if (fgRef.current?.camera()?.position) {
-            const position = fgRef.current?.camera()?.position;
-            const distBase = position.distanceTo(new THREE.Vector3(0, 0, 0))
-            // Minimum distance from Base planet 
-            if (distBase < MIN_DISTANCE) {
-                //   console.log(position.distanceTo(new THREE.Vector3(0, 0, 0)))
-                fgRef.current.cameraPosition(
-                    { x: 0, y: 0, z: DISTANCE }, // new position
-                    { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
-                    1000  // ms transition duration
-                );
-            }
-        };
-    }, 50);
-    return () => clearInterval(rotationInterval);
-}, []);
+        const rotationInterval = setInterval(() => {
+            fgRef.current?.scene().rotateZ(ROTATION_SPEED);
+            if (fgRef.current?.camera()?.position) {
+                const position = fgRef.current?.camera()?.position;
+                const distBase = position.distanceTo(new THREE.Vector3(0, 0, 0))
+                // Minimum distance from Base planet 
+                if (distBase < MIN_DISTANCE) {
+                    //   console.log(position.distanceTo(new THREE.Vector3(0, 0, 0)))
+                    fgRef.current.cameraPosition(
+                        { x: 0, y: 0, z: DISTANCE }, // new position
+                        { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
+                        1000  // ms transition duration
+                    );
+                }
+            };
+        }, 50);
+        return () => clearInterval(rotationInterval);
+    }, []);
     // Graph node visivility
     setInterval(() => (visibility === false) ? setVisibility(true) : null, timeout);
 
@@ -156,6 +157,27 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     const handleClosePopup = () => {
         setIsPopupOpen(false);
     };
+    const handleFavorites = debounce(async () => {
+        try {
+
+            const getAllLocalStorageKeys = () =>
+                Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index))
+                    .filter(key => key !== null && localStorage.getItem(key) === "true").filter(item => item !== null);
+            const result = await fetchFleekByNames(getAllLocalStorageKeys());
+            if (fgRef.current) {
+                const scene = fgRef.current.scene();
+                disposeScene(scene);
+            }
+            setData(result);
+            setVisibility(false);
+            setTimeout(imageDelay(result));
+        } catch (error) {
+            console.error('Error on click:', error);
+            setError('Failed to fetch data by favorites.');
+        }
+
+
+    }, DEBOUNCE_DELAY);
 
     const handleSearch = debounce(async (query: string[]) => {
         try {
@@ -249,6 +271,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                     nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
                 />
             </div>
+            <ShowFavoriteButton onFavorites={handleFavorites} />
             <SearchBar onSearch={handleSearch} />
             <Popup isOpen={getIsPopupOpen()} onClose={handleClosePopup} popupValue={getPopupValue()} currentCache={getCurrentCache()} />
         </>

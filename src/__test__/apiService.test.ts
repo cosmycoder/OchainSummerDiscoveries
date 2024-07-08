@@ -6,6 +6,7 @@ import {
     fetchFleekApiByTag,
     fleekFetchBase64data,
     fetchFleekApiImgArray,
+    fetchFleekByNames
 } from "../lib/dataConverter";
 import { BASE_URL, REGISTRY_URL, BASE_LOGO, JSON_URL, FLEEK_API, FLEEK_CACHE_API, DEFAULT_ICON_URL, DEFAULT_ICON_URL_BASE64, DEFAULT_ICON_URL_SVG } from '../app.settings'
 
@@ -37,4 +38,10 @@ it("Should get base64data from Fleek functions API", async () => {
     });
 
 });
+it("Should get graphData from Fleek API by names", async () => {
+    const graphData = await fetchFleekByNames(["uniswap", "aave"]);
+    expect(graphData.nodes).toHaveLength(4);
+    expect(graphData.links).toHaveLength(3);
+});
+
 
