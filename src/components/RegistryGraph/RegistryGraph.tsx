@@ -69,8 +69,8 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             try {
                 const [initialGraph, fetchedData, base3dLogoData] = await Promise.all([
                     fetchFleekApi(['', 'AND', '2']),
-                    // fleekCreateIconCacheData(),
-                    createIconCacheData(),
+                    fleekCreateIconCacheData(),
+                    // createIconCacheData(),
                     fetchBase64data('/base-sphere-square.png')
                 ]);
                 const svgData = await svgPreloader(initialGraph);
