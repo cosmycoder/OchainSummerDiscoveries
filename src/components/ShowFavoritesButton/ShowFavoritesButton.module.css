@@ -3,7 +3,7 @@
   position: fixed;
   right: 7%; /* Adjust the value to move it further from the left */
   top: 9%; /* Adjust the value to move it further from the top */
-  background-color: #ff4b5c;
+  background: linear-gradient(45deg, #0052ff, #2ecc71);
   color: white;
   border: none;
   border-radius: 50%; /* Make the button circular */
@@ -21,7 +21,7 @@
 }
 
 .floatingButton:hover {
-  background-color: #ff1c3c;
+  background: linear-gradient(45deg, #003bb3, #1eb25d);
   transform: scale(1.1); /* Slightly enlarge the button on hover */
 }
 
@@ -30,5 +30,6 @@
 }
 
 .floatingButton:active {
+  background: linear-gradient(45deg, #002a80, #17a34b);
   transform: scale(0.95); /* Slightly reduce the button size on click */
 }

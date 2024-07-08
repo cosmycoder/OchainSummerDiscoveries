@@ -163,7 +163,21 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             const getAllLocalStorageKeys = () =>
                 Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index))
                     .filter(key => key !== null && localStorage.getItem(key) === "true").filter(item => item !== null);
-            const result = await fetchFleekByNames(getAllLocalStorageKeys());
+
+            const favoritesArray =  getAllLocalStorageKeys();
+
+            const result = await (async () => {
+                if (favoritesArray.length === 0) {
+                    const result = await fetchFleekApi(['', 'AND', '2'])
+                    setCamLoading(true);
+                    return result
+
+                } else {
+                    const result =  await fetchFleekByNames(getAllLocalStorageKeys());
+                    return result
+                }
+            })();
+
             if (fgRef.current) {
                 const scene = fgRef.current.scene();
                 disposeScene(scene);
