@@ -13,6 +13,7 @@
     max-width: 500px;
     border-color: #fff;
     border-width: 1px;
+    color: #fff; /* Change text color to white */
   }
   
   .popupOpen {
