@@ -5,12 +5,12 @@
 
 :root {
   /* Color variables */
-  --color-foreground: 0, 0, 0;
-  --color-background-start: 214, 219, 220;
-  --color-background-end: 255, 255, 255;
+  --color-foreground: 255, 255, 255;
+  --color-background-start: 0, 0, 0;
+  --color-background-end: 0, 0, 0;
   --color-highlight: #0070f3;
-  --color-text-dark: #333;
-  --color-text-light: #666;
+  --color-text-dark: #ffffff;
+  --color-text-light: #bbbbbb;
 
   /* Gradients and other variables */
   --primary-gradient: linear-gradient(45deg, #3498db, #2ecc71);
@@ -40,16 +40,12 @@
 }
 
 @layer base {
-  html,
-  body {
+  html, body {
     height: 100vh;
   }
-
   body {
     color: rgb(var(--color-foreground));
-    background: linear-gradient(to bottom,
-        transparent,
-        rgb(var(--color-background-end))) rgb(var(--color-background-start));
+    background: linear-gradient(to bottom, transparent, rgb(var(--color-background-end))) rgb(var(--color-background-start));
     font-family: var(--font-inter);
   }
   footer {
@@ -73,17 +69,14 @@
     font-weight: bold;
     color: var(--color-text-dark);
   }
-
   .highlight {
     color: var(--color-highlight);
   }
-
   .description {
     font-family: var(--font-inter);
     font-size: var(--size-description);
     color: var(--color-text-light);
   }
-
   .cta {
     font-family: var(--font-roboto);
     background-color: var(--color-highlight);

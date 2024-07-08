@@ -17,6 +17,7 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
   white-space: pre-wrap;
+  color: #fff; /* Change text color to white */
 }
 
 .coolButton:hover {
