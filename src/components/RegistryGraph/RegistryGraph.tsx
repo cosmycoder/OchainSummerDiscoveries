@@ -162,9 +162,9 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
 
             const getAllLocalStorageKeys = () =>
                 Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index))
-                    .filter(key => key !== null && localStorage.getItem(key) === "true").filter(item => item !== null);
+                    .filter(key => key !== null && localStorage.getItem(key) === "true").filter(item => item !== null) as string[];;
 
-            const favoritesArray =  getAllLocalStorageKeys();
+            const favoritesArray = getAllLocalStorageKeys();
 
             const result = await (async () => {
                 if (favoritesArray.length === 0) {
@@ -173,7 +173,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                     return result
 
                 } else {
-                    const result =  await fetchFleekByNames(getAllLocalStorageKeys());
+                    const result = await fetchFleekByNames(favoritesArray);
                     return result
                 }
             })();
