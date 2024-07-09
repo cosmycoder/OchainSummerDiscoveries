@@ -170,11 +170,11 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 if (favoritesArray.length === 0) {
                     const result = await fetchFleekApi(['', 'AND', '2'])
                     setCamLoading(true);
-                    return result as GraphData
+                    return result as GraphData;
 
                 } else {
                     const result = await fetchFleekByNames(favoritesArray);
-                    return result as GraphData
+                    return result as GraphData;
                 }
             })();
 
@@ -200,11 +200,11 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 if (query[0].length === 0) {
                     const result = await fetchFleekApi(['', 'AND', '2'])
                     setCamLoading(true);
-                    return result as GraphData
+                    return result as GraphData;
 
                 } else {
                     const result = await fetchFleekApi(query);
-                    return result as GraphData
+                    return result as GraphData;
                 }
             })();
 
