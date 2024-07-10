@@ -3,12 +3,12 @@
     "short_name": "OCS-D",
     "icons": [
       {
-        "src": "/logo.png",
+        "src": "/pwa-logo.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "/logo.png",
+        "src": "/pwa-logo.png",
         "sizes": "512x512",
         "type": "image/png"
       }
