@@ -99,7 +99,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             }
         }, 1000);
         return () => clearInterval(interval); // Clean up the interval on component unmount
-    }, [camloading]);
+    }, [camloading, DISTANCE]);
 
     // Responsively change the size of display
     useEffect(() => {
@@ -141,7 +141,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             };
         }, 50);
         return () => clearInterval(rotationInterval);
-    }, []);
+    }, [DISTANCE]);
     // Graph node visivility
     setInterval(() => (visibility === false) ? setVisibility(true) : null, timeout);
 

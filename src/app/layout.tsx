@@ -1,7 +1,15 @@
 import type { Metadata } from 'next';
 import { FC, ReactNode } from 'react';
+import type { Viewport } from 'next'
 import './globals.css';
 
+export const viewport: Viewport = {
+  width: 'device-width', 
+  initialScale: 1, 
+  maximumScale: 1, 
+  themeColor: '#000000'
+}
+ 
 export const metadata: Metadata = {
   title: 'OCS-Discoveries',
   description: 'Onchain Summer Discoveries',
@@ -10,9 +18,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
-  manifest: '/manifest.json', // Add this line for PWA support
-  themeColor: '#000000', // Optional: Set your theme color
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, themeColor=#000000'// Optional: Recommended for mobile devices
+  manifest: '/manifest.json', // Add this line for PWA suppor
 }
 
 interface RootLayoutProps {
