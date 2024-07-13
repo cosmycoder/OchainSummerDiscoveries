@@ -1,5 +1,4 @@
-// src/components/Popup/Popup.tsx
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useMemo } from 'react';
 import styles from './Popup.module.css';
 import { deriveBase64DataFromCache, getNiceDomainDisplayFromUrl } from '@/lib/threeFunc';
 import Image from 'next/image';
@@ -12,34 +11,42 @@ interface PopupProps {
     currentCache: any;
 }
 
-const Popup: FC<PopupProps> = ({ isOpen, onClose, popupValue, currentCache }) => {
-    return (
-        <div className={`${styles.popup} ${isOpen ? styles.popupOpen : styles.popupClose}`}>
+const Popup: FC<PopupProps> = React.memo(({ isOpen, onClose, popupValue, currentCache }) => {
+    const popupImage = useMemo(() => deriveBase64DataFromCache(popupValue, currentCache) ?? "/logo.png", [popupValue, currentCache]);
+    const popupTitle = useMemo(() => popupValue?.id, [popupValue]);
+    const popupDescription = useMemo(() => popupValue?.description, [popupValue]);
+    const popupUrl = useMemo(() => popupValue?.url ?? "https://base.org", [popupValue]);
+    const niceDomainDisplay = useMemo(() => getNiceDomainDisplayFromUrl(popupUrl), [popupUrl]);
+
+    const handleGoToSite = () => window.open(popupUrl, '_blank');
+
+    return isOpen ? (
+        <div className={`${styles.popup} ${styles.popupOpen}`}>
             <div className={styles.closeButton} onClick={onClose}>
                 &times;
             </div>
-            <FavoriteLabel labelValue={popupValue}/>
-            <div className="flex flex-row justify-center"> {/* Centering container */}
+            <FavoriteLabel labelValue={popupValue} />
+            <div className="flex flex-row justify-center">
                 <div>
                     <Image
-                        src={deriveBase64DataFromCache(popupValue, currentCache) ?? "/logo.png"}
-                        alt={`Logo of ${popupValue?.id}`}
-                        width={100}  // Adjusted size (10% of 1000px width)
-                        height={100} // Adjusted size (10% of 1000px width)
+                        src={popupImage}
+                        alt={`Logo of ${popupTitle}`}
+                        width={100}
+                        height={100}
                         className="rounded-lg bg-white bg-opacity-30"
                     />
                 </div>
             </div>
-            <div className="text-center"> {/* Centering title and content */}
-                <h2>{popupValue?.id}</h2>
-                <span>{getNiceDomainDisplayFromUrl(popupValue?.url ?? "https://base.org")}</span>
-                <p className={styles.description}>{popupValue?.description}</p>
-                <button className={styles.goToSiteButton} onClick={() => window.open(popupValue?.url, '_blank')}>
+            <div className="text-center">
+                <h2>{popupTitle}</h2>
+                <span>{niceDomainDisplay}</span>
+                <p className={styles.description}>{popupDescription}</p>
+                <button className={styles.goToSiteButton} onClick={handleGoToSite}>
                     Go to Site
                 </button>
             </div>
         </div>
-    );
-};
+    ) : null;
+});
 
 export default Popup;

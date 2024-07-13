@@ -150,8 +150,12 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     if (error) return <ErrorMessage message={error} />;
 
     const handleOpenPopup = debounce(async (node: any) => {
-        setIsPopupOpen(true);
-        setPopupValue(node);
+        try {
+            setIsPopupOpen(true);
+            setPopupValue(node);
+        } catch (error) {
+            console.error('Error opening popup:', error);
+        }
     }, 500);
 
     const handleClosePopup = () => {
