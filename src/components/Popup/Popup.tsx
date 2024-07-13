@@ -50,3 +50,4 @@ const Popup: FC<PopupProps> = React.memo(({ isOpen, onClose, popupValue, current
 });
 
 export default Popup;
+Popup.displayName = 'Popup';
