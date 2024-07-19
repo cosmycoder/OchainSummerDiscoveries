@@ -23,7 +23,7 @@ const WalletComponents: FC = () => (
       <Avatar className="h-6 w-6" />
       <Name className={styles.name} />
     </ConnectWallet>
-    <WalletDropdown >
+    <WalletDropdown className={styles.dropdown}>
       <Identity schemaId="0xf8b05c79f090979bf4a80270aba232dff11a10d9ca55c4f88de95317970f0de9" className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
         <Avatar />
         <Name>
