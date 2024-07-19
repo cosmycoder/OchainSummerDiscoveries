@@ -1,3 +1,4 @@
+'use client';
 import React, { FC, ReactNode, useMemo } from 'react';
 import styles from './Popup.module.css';
 import { deriveBase64DataFromCache, getNiceDomainDisplayFromUrl } from '@/lib/threeFunc';

@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { FC, ReactNode } from 'react';
 import type { Viewport } from 'next'
 import './globals.css';
+import '@coinbase/onchainkit/styles.css';
+import OnchainProviders from '../components/OnchainProviders/OnchainProviders'
 
 export const viewport: Viewport = {
   width: 'device-width', 
@@ -26,12 +28,13 @@ interface RootLayoutProps {
 }
 
 const RootLayout: FC<RootLayoutProps> = ({ children }) => (
+
   <html lang="en">
     <head>
       <link rel="apple-touch-icon" href="/logo.png" />
     </head>
     <body>
-      <main>{children}</main>
+      <OnchainProviders>{children}</OnchainProviders>
     </body>
   </html>
 )

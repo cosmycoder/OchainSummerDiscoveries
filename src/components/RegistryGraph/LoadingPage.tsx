@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, forwardRef, FC } from 'react';
 import * as THREE from 'three';
-import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 const LoadingPage: FC = forwardRef((_props, _ref) => {
   const refContainer = useRef<HTMLDivElement | null>(null);

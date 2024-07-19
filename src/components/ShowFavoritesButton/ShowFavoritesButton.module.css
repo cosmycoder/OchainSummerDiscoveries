@@ -1,8 +1,8 @@
 /* components/FloatingFavoritesButton.module.css */
 .floatingButton {
   position: fixed;
-  right: 7%; /* Adjust the value to move it further from the left */
-  top: 9%; /* Adjust the value to move it further from the top */
+  right: 10%; /* Adjust the value to move it further from the left */
+  top: 13%; /* Adjust the value to move it further from the top */
   background: linear-gradient(45deg, #0052ff, #2ecc71);
   color: white;
   border: none;

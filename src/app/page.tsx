@@ -1,5 +1,4 @@
 'use client';
-
 import styles from './page.module.css';
 import { FadeIn } from '../components/FadeIn/FadeIn';
 import FeatureCard from '@/components/FeatureCard/FeatureCard';
@@ -51,7 +50,7 @@ const Home: FC = () => (
       </FadeIn>
       <FadeIn delay={0.2}>
         <p className={styles.description}>
-           Boosting the discoverability of the BASE ecosystem with highly accessible graph visualizations
+          Boosting the discoverability of the BASE ecosystem with highly accessible graph visualizations
         </p>
       </FadeIn>
       <div className={styles.grid}>
@@ -67,6 +66,7 @@ const Home: FC = () => (
       </div>
     </main>
     <Footer />
+
   </>
 );
 
