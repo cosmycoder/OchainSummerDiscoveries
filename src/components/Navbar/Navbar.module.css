@@ -4,8 +4,11 @@
   top: 0;
   width: 100%;
   background: transparent;
-  z-index: 20;
-  transition: background 0.3s;
+  z-index: 200;
+  -webkit-transition: background 0.3s; /* For Safari/Chrome */
+  -moz-transition: background 0.3s;    /* For Firefox */
+  -o-transition: background 0.3s;      /* For older Opera versions */
+  transition: background 0.3s;         /* Standard syntax */
 }
 
 .navbar.scrolled {
@@ -34,5 +37,6 @@
 .highlight {
   background: linear-gradient(45deg, #0052ff, #2ecc71);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }

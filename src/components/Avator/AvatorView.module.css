@@ -1,0 +1,8 @@
+.container {
+    border-radius: 10px; /* Smooth rounded corners */
+    border: none; /* Remove the default border */
+    background: linear-gradient(45deg,#000000, #3e3d3d); /* Trendy gradient background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Soft shadow for a floating effect */
+    padding: 2px; /* Increased padding for better spacing */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}

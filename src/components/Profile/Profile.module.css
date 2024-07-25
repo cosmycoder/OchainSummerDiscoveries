@@ -1,0 +1,106 @@
+.profileContainer {
+    top: 10%;
+    left: 10%;
+    max-width: 300px;
+    position: absolute;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px #0000004d;
+    z-index: 100;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.profilePic:hover {
+    transform: scale(1.1);
+}
+
+.name {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    background: linear-gradient(to right, #ffffff, #0f3460);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 3s ease-in-out infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #ffffff, 0 0 7px #ffffff, 0 0 10px #ffffff;
+    }
+
+    to {
+        text-shadow: 0 0 7px #ffffff, 0 0 9px #ffffff, 0 0 12px #ffffff;
+    }
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.infoItem {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    /* Add this to contain overflowing content */
+}
+
+.infoItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(216, 200, 202, 0.3);
+}
+
+.infoLabel {
+    font-size: 0.9rem;
+    color: #a5a5a5;
+    margin-bottom: 0.5rem;
+}
+
+.infoValue {
+    font-size: 1rem;
+    color: #ffffff;
+    word-break: break-all;
+    /* Allows breaking of very long words */
+    overflow-wrap: break-word;
+    /* Allows wrapping of long words */
+}
+
+
+.addressValue {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 600px) {
+    .profileContainer {
+        top: 70px;
+        left: 0px;
+        width: 100%;
+        max-width: 600px;
+        position: relative;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        z-index: 100;
+    }
+
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+}

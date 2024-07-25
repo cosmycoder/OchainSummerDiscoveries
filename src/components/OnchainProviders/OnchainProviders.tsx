@@ -13,7 +13,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
-import { base } from 'wagmi/chains';
+import { base, mainnet } from 'wagmi/chains';
 
 import '@coinbase/onchainkit/styles.css';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -26,7 +26,7 @@ const queryClient = new QueryClient();
 const wagmiConfig = getDefaultConfig({
   appName: 'onchainkit',
   projectId: PROJECT_ID ?? "NO_PROJECT_ID",
-  chains: [base],
+  chains: [base, mainnet],
   ssr: true, // If your dApp uses server side rendering (SSR)
 });
 

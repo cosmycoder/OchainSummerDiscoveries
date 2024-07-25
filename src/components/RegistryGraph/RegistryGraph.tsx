@@ -10,6 +10,7 @@ import ForceGraph3D, { ForceGraphMethods, ForceGraphProps } from "react-force-gr
 import * as THREE from 'three';
 import LoadingPage from "./LoadingPage";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import Profile from '@/components/Profile/Profile';
 
 
 const RegistryGraph: FC = forwardRef((_props, _ref) => {
@@ -253,6 +254,7 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     return (
         <>
             <div>
+                <Profile><ShowFavoriteButton onFavorites={handleFavorites} /></ Profile>
                 <ForceGraph3D
                     key={graphKey} // Force re-render by changing the key
                     // onEngineStop={() => fgRef.current?.zoomToFit(1000)}
@@ -289,7 +291,6 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                     nodeLabel={(node) => node.depth === 3 ? appCard(node, getCurrentCache()) : String(node.id)}
                 />
             </div>
-            <ShowFavoriteButton onFavorites={handleFavorites} />
             <SearchBar onSearch={handleSearch} />
             <Popup isOpen={getIsPopupOpen()} onClose={handleClosePopup} popupValue={getPopupValue()} currentCache={getCurrentCache()} />
         </>
