@@ -8,8 +8,8 @@ import { formatEther } from 'viem';
 import AvatarView from '../Avator/AvatorView';
 import styles from './Profile.module.css';  // Import the CSS module
 
-type Props = { 
-  children: ReactNode 
+type Props = {
+  children: ReactNode
 };
 
 const Profile = ({ children }: Props) => {
@@ -29,7 +29,9 @@ const Profile = ({ children }: Props) => {
     <div className={styles.profileContainer}>
       <div className={styles.header}>
         <AvatarView imgSrc={avatar ?? '/baselogo.png'} />
-        <div className={styles.name}>{ensName ? ensName : 'Not connected!'}</div>
+        <div className={styles.name}>{ensName ? ensName
+          : address ? address
+            : 'Not connected!'}</div>
       </div>
       {children}
       <div className={styles.infoGrid}>
