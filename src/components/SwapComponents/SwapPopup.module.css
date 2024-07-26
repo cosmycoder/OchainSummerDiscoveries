@@ -1,0 +1,50 @@
+/* src/components/Popup/Popup.module.css */
+.swapPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 1); /* Semi-transparent background */
+    padding: 40px;
+    border-radius: 8px;
+    z-index: 30;
+    transition: all 0.3s ease-in-out;
+    width: 80%;
+    max-width: 580px;
+    border: 1px solid #fff;
+    color: #fff;
+    
+    /* Create a new stacking context */
+    isolation: isolate;
+  }
+  
+  .popupOpen {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .popupClose {
+    opacity: 0;
+    visibility: hidden;
+  }
+    
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  
+  .warning {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    font-size: 16px;
+  }

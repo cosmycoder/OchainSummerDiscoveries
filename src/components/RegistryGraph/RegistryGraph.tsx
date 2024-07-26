@@ -11,6 +11,8 @@ import * as THREE from 'three';
 import LoadingPage from "./LoadingPage";
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Profile from '@/components/Profile/Profile';
+import SwapButton from "../SwapButton/SwapButton";
+import styles from './RegistryGraph.module.css';
 
 
 const RegistryGraph: FC = forwardRef((_props, _ref) => {
@@ -254,7 +256,12 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
     return (
         <>
             <div>
-                <Profile><ShowFavoriteButton onFavorites={handleFavorites} /></ Profile>
+                <Profile>
+                    <div className={styles.buttonContainer}>
+                    <ShowFavoriteButton onFavorites={handleFavorites} />
+                    <SwapButton />
+                    </div>
+                </ Profile>
                 <ForceGraph3D
                     key={graphKey} // Force re-render by changing the key
                     // onEngineStop={() => fgRef.current?.zoomToFit(1000)}

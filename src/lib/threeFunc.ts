@@ -1,4 +1,5 @@
 import { ImageCacheData, SvgCacheData } from "@/types/api";
+import { svg } from "d3";
 import * as THREE from 'three';
 import SpriteText from 'three-spritetext';
 
@@ -44,17 +45,18 @@ export const createThreeObject = (
   return group;
 };
 
-const addOnChainSummerRegistryNode = (group: THREE.Group, node: any, base3dLogo: any) => {
-  const texture = new THREE.TextureLoader().load(base3dLogo.imageUrl);
+const addOnChainSummerRegistryNode = async (group: THREE.Group, node: any, base3dLogo: any) => {
+  const loader = new THREE.TextureLoader();
+  const texture = await loader.loadAsync(base3dLogo.imageUrl);
   const sphere = createSphere(10, texture);
   // const text = createText(node.description, "#99CCFF", 3, 0, -15, 0);
   group.add(sphere);
 };
 
-const addCategoryNode = (group: THREE.Group, node: any, currentSvgCache: SvgCacheData[]) => {
+const addCategoryNode = async (group: THREE.Group, node: any, currentSvgCache: SvgCacheData[]) => {
   const svgData = deriveSvgDataFromCache(node, currentSvgCache);
-  const texture = new THREE.TextureLoader().load(svgData);
-
+  const loader = new THREE.TextureLoader();
+  const texture = await loader.loadAsync(svgData);
   const sprite = createSprite(texture, 8);
   const sphere = createTransparentSphere(5, 0x87cefa, 0.2);
   const text = createText(node.description, "#00bfff", 3, 0, -8, 0);
@@ -62,21 +64,23 @@ const addCategoryNode = (group: THREE.Group, node: any, currentSvgCache: SvgCach
   group.add(sprite, sphere, text);
 };
 
-const addDappNode = (group: THREE.Group, node: any, currentCache: ImageCacheData[]) => {
+const addDappNode = async (group: THREE.Group, node: any, currentCache: ImageCacheData[]) => {
   const base64str = deriveBase64DataFromCache(node, currentCache);
-
-  const texture = new THREE.TextureLoader().load(base64str);
+  const loader = new THREE.TextureLoader();
+  const texture = await loader.loadAsync(base64str);
   const sprite = createDappSprite(texture);
 
   //favorite icon
-  const fatexture = new THREE.TextureLoader().load(heart_blob);
+
+  const faloader = new THREE.TextureLoader();
+  const fatexture = await loader.loadAsync(heart_blob);
   const fasprite = createHeartSprite(fatexture);
 
   const sphere = createTransparentSphere(2, 0xffffff, 0.15);
   const text = createText(String(node.id), "#d3d3d3", 2, 0, -5, 0);
 
   // Display Hartmark if localstorage have value.
-  localStorage.getItem(node.id)==="true" ? group.add(sprite, text, sphere, fasprite) : group.add(sprite, text, sphere);
+  localStorage.getItem(node.id) === "true" ? group.add(sprite, text, sphere, fasprite) : group.add(sprite, text, sphere);
 };
 
 const createSphere = (scale: number, texture: THREE.Texture): THREE.Mesh => {
@@ -112,7 +116,8 @@ const createDappSprite = (texture: THREE.Texture): THREE.Sprite => {
     blending: THREE.AdditiveBlending
   });
   const sprite = new THREE.Sprite(material);
-  sprite.scale.set(4, 4, 4);
+  const aspectRatio = texture.image.width / texture.image.height;
+  sprite.scale.set(aspectRatio * 4, 4, 4);
   return sprite;
 };
 
@@ -178,7 +183,7 @@ export const appCard = (node: any, currentCache: ImageCacheData[]) => `
   <div>
     <div>
         <div className="flex flex-row justify-between">
-          ${localStorage.getItem(node.id)==="true"?favoriteIcon():""}
+          ${localStorage.getItem(node.id) === "true" ? favoriteIcon() : ""}
           <div style="text-align: center; display: block;">
             <Image
               src="${deriveBase64DataFromCache(node, currentCache)}"
@@ -199,7 +204,7 @@ export const appCard = (node: any, currentCache: ImageCacheData[]) => `
 </div>
 `;
 
-const favoriteIcon = () =>`
+const favoriteIcon = () => `
 <Image
   src="${heart_blob}"
   style="border-radius: 3px; background-color: rgba(255, 255, 255, 0); display: block; margin-right: auto; width: 5%;"

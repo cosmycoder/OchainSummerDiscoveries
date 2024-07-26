@@ -1,0 +1,8 @@
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    /* Adjust the spacing between buttons */
+    align-items: center;
+    /* Center align the buttons horizontally */
+}
