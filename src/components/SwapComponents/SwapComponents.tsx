@@ -12,6 +12,7 @@ import type {
   BuildSwapTransaction,
   SwapError,
 } from '@coinbase/onchainkit/swap';
+import styles from './SwapPopup.module.css'
 
 export default function SwapComponents() {
   const { address } = useAccount();
@@ -85,7 +86,9 @@ export default function SwapComponents() {
           <SwapMessage className='text-red-600' />
         </Swap>
       ) : (
-        <p>Connect wallet to use Swap components</p>
+
+ 
+    <p className={styles.warning} >Connect wallet to use Swap components</p>
       )}
     </div>
   );
