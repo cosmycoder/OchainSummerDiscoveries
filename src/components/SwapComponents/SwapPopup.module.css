@@ -5,7 +5,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 1); /* Semi-transparent background */
-    padding: 50px 5px 5px 5px;
+    padding: 40px 0px 0px 0px;
     border-radius: 15px;
     transition: all 0.3s ease-in-out;
     width: 80%;
@@ -31,7 +31,7 @@
     
   .closeButton {
     position: absolute;
-    top: 10px;
+    top: 0px;
     right: 10px;
     background: transparent;
     border: none;
