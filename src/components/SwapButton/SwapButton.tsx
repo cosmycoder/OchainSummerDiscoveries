@@ -1,4 +1,3 @@
-'use client';
 // components/FloatingFavoritesButton.tsx
 import React, { FC, useState } from 'react';
 import { RiTokenSwapLine } from "react-icons/ri";

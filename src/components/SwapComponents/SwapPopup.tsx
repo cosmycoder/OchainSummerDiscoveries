@@ -1,4 +1,3 @@
-'use client';
 import React, { FC } from 'react';
 import styles from './SwapPopup.module.css';
 import SwapComponents from './SwapComponents';
@@ -13,9 +12,6 @@ const SwapPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => {
         <div className={`${styles.swapPopup} ${styles.popupOpen}`}>
             <div className={styles.closeButton} onClick={onClose}>
                 &times;
-            </div>
-            <div className={styles.warning}>
-                This is an experimental feature by Onchainkit made by Coinbase. Please trade your discretion.
             </div>
             <div className="text-center">
                 <SwapComponents />

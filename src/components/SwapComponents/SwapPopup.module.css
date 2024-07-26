@@ -4,19 +4,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 1); /* Semi-transparent background */
-    padding: 40px;
-    border-radius: 8px;
-    z-index: 30;
+    background: rgba(255, 255, 255, 1); /* Semi-transparent background */
+    padding: 50px 5px 5px 5px;
+    border-radius: 15px;
     transition: all 0.3s ease-in-out;
     width: 80%;
-    max-width: 580px;
+    max-width: 500px;
     border: 1px solid #fff;
-    color: #fff;
+    color: #000;
     
     /* Create a new stacking context */
     isolation: isolate;
+    z-index: 3000;    
   }
+  
   
   .popupOpen {
     opacity: 1;
@@ -34,11 +35,12 @@
     right: 10px;
     background: transparent;
     border: none;
-    color: #fff;
+    color: #000;
     font-size: 28px;
     cursor: pointer;
+    text-underline-offset: 1;
   }
-  
+
   .warning {
     padding: 10px;
     margin: 10px 0;
