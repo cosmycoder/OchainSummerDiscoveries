@@ -13,6 +13,9 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Profile from '@/components/Profile/Profile';
 import SwapButton from "../SwapButton/SwapButton";
 import styles from './RegistryGraph.module.css';
+import UploadButton from "../UploadButton/UploadButton";
+import { FaDownload } from "react-icons/fa";
+import DownloadButton from "../DownloadButton/DownloadButton";
 
 
 const RegistryGraph: FC = forwardRef((_props, _ref) => {
@@ -259,6 +262,8 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 <Profile>
                     <div className={styles.buttonContainer}>
                     <ShowFavoriteButton onFavorites={handleFavorites} />
+                    <UploadButton />
+                    <DownloadButton />
                     <SwapButton />
                     </div>
                 </ Profile>

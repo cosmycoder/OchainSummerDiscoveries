@@ -1,0 +1,32 @@
+/* components/FloatingFavoritesButton.module.css */
+.floatingButton {
+  background: linear-gradient(45deg, #0052ff, #2ecc71);
+  color: white;
+  border: none;
+  border-radius: 50%; /* Make the button circular */
+  width: 40px; /* Set a fixed width */
+  height: 40px; /* Set a fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  font-size: 20px; /* Increase the font size for the icon */
+  padding: 0; /* Remove padding to keep it circular */
+  margin-bottom: 0.5rem;
+}
+
+.floatingButton:hover {
+  background: linear-gradient(45deg, #003bb3, #1eb25d);
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
+}
+
+.heartIcon {
+  margin: 0; /* Remove margin to center the icon */
+}
+
+.floatingButton:active {
+  background: linear-gradient(45deg, #002a80, #17a34b);
+  transform: scale(0.95); /* Slightly reduce the button size on click */
+}

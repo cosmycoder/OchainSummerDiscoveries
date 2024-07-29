@@ -1,12 +1,12 @@
 // components/FloatingFavoritesButton.tsx
 import React, { FC, useState } from 'react';
-import { RiTokenSwapFill } from "react-icons/ri";
-import styles from './SwapButton.module.css';
-import SwapPopup from '../SwapComponents/SwapPopup';
+import { FaUpload } from "react-icons/fa";
+import styles from './UploadButton.module.css';
+import UploadPopup from '../UploadComponents/UploadPopup';
 
 
 
-const SwapButton: FC= () => {
+const UploadButton: FC= () => {
 
     const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -20,10 +20,10 @@ const SwapButton: FC= () => {
     return (
         <div>
             <button className={styles.floatingButton} onClick={isPopupOpen ?  handleClosePopup : handleOpenPopup }>
-                <RiTokenSwapFill className={styles.heartIcon} />
+                <FaUpload className={styles.heartIcon} />
             </button>
-            <SwapPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
+            <UploadPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
         </div>
     );
 };
-export default SwapButton;
+export default UploadButton;
