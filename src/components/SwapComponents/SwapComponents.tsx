@@ -66,7 +66,7 @@ export default function SwapComponents() {
   return (
     <div className="flex items-center space-x-4">
       {address ? (
-        <Swap address={address}>
+        <Swap address={address} experimental={{ useAggregator: false }}>
           <SwapAmountInput
             label="Sell"
             swappableTokens={swappableTokens}
