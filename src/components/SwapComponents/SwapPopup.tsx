@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styles from './SwapPopup.module.css';
 import SwapComponents from './SwapComponents';
+import Image from 'next/image';
 
 interface PopupProps {
     isOpen: boolean;
@@ -14,6 +15,16 @@ const SwapPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => {
                 &times;
             </div>
             <div className="text-center">
+                <h2 className={styles.logoTextContainer}>
+                    <Image
+                        src="/baselogo.png"
+                        alt="baselogo"
+                        width={24}
+                        height={24}
+                        className={styles.logo}
+                    />
+                    BASE Network
+                </h2>
                 <SwapComponents />
             </div>
         </div>
