@@ -25,7 +25,7 @@ const LocalStorageDownload: React.FC = () => {
 
             const encryptedName = signToKeccak256(signature);
 
-            const response = await axios.get('/api/download', { params: { name: encryptedName } });
+            const response = await axios.post('/api/download', { data: { name: encryptedName } });
             const downloadResponse = await axios.get(response.data.downloadUrl);
 
             const favoriteJsonData = decryptData(downloadResponse.data.data, signature);

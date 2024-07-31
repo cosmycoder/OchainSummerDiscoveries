@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
-export async function GET(req: NextRequest) {
+export async function POST(request: NextRequest) {
   const pinataApiKey = process.env.PINATA_API_KEY;
   const pinataSecretApiKey = process.env.PINATA_SECRET_API_KEY;
 
   if (!pinataApiKey || !pinataSecretApiKey) {
     return NextResponse.json({ error: 'Pinata API keys are not set in the environment variables' }, { status: 500 });
   }
-
-  const fileName = req.nextUrl.searchParams.get('name');
-
+  const body = await request.json();
+  const fileName = body.data.name;
   if (!fileName) {
     return NextResponse.json({ error: 'Invalid file name' }, { status: 400 });
   }
