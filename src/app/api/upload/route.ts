@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     });
 
     // If file is found
-    if (response && response.rows && response.rows.length > 0) {
+    if (response && response.rows && response.rows.length > 1) {
       const file = response.rows[1];
       console.log(file);
       const fileHash = file.ipfs_pin_hash;
