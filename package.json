@@ -4,12 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm run copy-dist",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "test:watch": "vitest --watch",
-     "copy-dist": "mkdir -p dist && cp -R .next dist/"
+    "test:watch": "vitest --watch"
   },
   "dependencies": {
     "3d-force-graph": "^1.73.3",
