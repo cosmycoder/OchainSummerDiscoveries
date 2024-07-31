@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import pinataSDK from '@pinata/sdk';
 
-const pinataApiKey = process.env.PINATA_API_KEY;
-const pinataSecretApiKey = process.env.PINATA_SECRET_API_KEY;
+export const dynamic = 'force-dynamic';
 
-if (!pinataApiKey || !pinataSecretApiKey) {
-  throw new Error('Pinata API keys are not set in the environment variables');
-}
-
-const pinata = new pinataSDK({ pinataApiKey, pinataSecretApiKey });
 export async function GET(req: NextRequest) {
+  const pinataApiKey = process.env.PINATA_API_KEY;
+  const pinataSecretApiKey = process.env.PINATA_SECRET_API_KEY;
+
+  if (!pinataApiKey || !pinataSecretApiKey) {
+    return NextResponse.json({ error: 'Pinata API keys are not set in the environment variables' }, { status: 500 });
+  }
+
   const fileName = req.nextUrl.searchParams.get('name');
 
   if (!fileName) {
@@ -17,6 +17,10 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    // Dynamically import Pinata SDK
+    const pinataSDK = (await import('@pinata/sdk')).default;
+    const pinata = new pinataSDK({ pinataApiKey, pinataSecretApiKey });
+
     // Fetch the file from Pinata
     const response = await pinata.pinList({
       status: 'pinned',
@@ -43,5 +47,3 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
-
-export const dynamic = 'force-static'
