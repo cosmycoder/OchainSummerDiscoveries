@@ -1,5 +1,6 @@
 /* src/components/Popup/Popup.module.css */
 .swapPopup {
+    z-index: 200;    
     position: fixed;
     top: 50%;
     left: 50%;
@@ -12,10 +13,6 @@
     max-width: 500px;
     border: 1px solid #fff;
     color: #000;
-    
-    /* Create a new stacking context */
-    isolation: isolate;
-    z-index: 3000;    
   }
   
   
@@ -30,6 +27,7 @@
   }
     
   .closeButton {
+    z-index: 200; 
     position: absolute;
     top: 0px;
     right: 10px;
@@ -53,7 +51,7 @@
     width: 100%;
   }
   .logoTextContainer {
-    font-size: 24px;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;

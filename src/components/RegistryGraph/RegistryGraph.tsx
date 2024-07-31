@@ -174,7 +174,16 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
                 Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index))
                     .filter(key => key !== null && localStorage.getItem(key) === "true").filter(item => item !== null) as string[];;
 
-            const favoritesArray = getAllLocalStorageKeys();
+            const removeFavoritePrefix = (value: any): any => {
+                if (Array.isArray(value)) {
+                    return value.map(item =>
+                        typeof item === 'string' ? item.replace(/^FAVORITE#/, '') : item
+                    );
+                }
+                return value;
+            }
+
+            const favoritesArray = removeFavoritePrefix(getAllLocalStorageKeys());
 
             const result = await (async () => {
                 if (favoritesArray.length === 0) {
@@ -261,10 +270,10 @@ const RegistryGraph: FC = forwardRef((_props, _ref) => {
             <div>
                 <Profile>
                     <div className={styles.buttonContainer}>
-                    <ShowFavoriteButton onFavorites={handleFavorites} />
-                    <UploadButton />
-                    <DownloadButton />
-                    <SwapButton />
+                        <ShowFavoriteButton onFavorites={handleFavorites} />
+                        <UploadButton />
+                        <DownloadButton />
+                        <SwapButton />
                     </div>
                 </ Profile>
                 <ForceGraph3D

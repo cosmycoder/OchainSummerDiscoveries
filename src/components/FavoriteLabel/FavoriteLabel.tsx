@@ -29,7 +29,7 @@ const FavoriteLabel: React.FC<LabelProps> = ({ labelValue }) => {
         setTimeout(() => setIsClicked(false), 300); // Duration of the animation
 
         if (labelValue?.id) {
-            localStorage.setItem(labelValue.id, JSON.stringify(newFavoriteState));
+            localStorage.setItem(`FAVORITE#${labelValue.id}`, JSON.stringify(newFavoriteState));
         }
     }, [isFavorite, labelValue]);
 

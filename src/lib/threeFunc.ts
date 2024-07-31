@@ -80,7 +80,7 @@ const addDappNode = async (group: THREE.Group, node: any, currentCache: ImageCac
   const text = createText(String(node.id), "#d3d3d3", 2, 0, -5, 0);
 
   // Display Hartmark if localstorage have value.
-  localStorage.getItem(node.id) === "true" ? group.add(sprite, text, sphere, fasprite) : group.add(sprite, text, sphere);
+  localStorage.getItem(`FAVORITE#${node.id}`) === "true" ? group.add(sprite, text, sphere, fasprite) : group.add(sprite, text, sphere);
 };
 
 const createSphere = (scale: number, texture: THREE.Texture): THREE.Mesh => {
