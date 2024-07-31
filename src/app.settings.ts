@@ -11,11 +11,8 @@ export const DEFAULT_ICON_URL_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAo
 export const DEFAULT_ICON_URL_SVG = '<svg width="146" height="146" viewBox="0 0 146 146" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="73" cy="73" r="73" fill="#0052FF"/><path d="M73.323 123.729C101.617 123.729 124.553 100.832 124.553 72.5875C124.553 44.343 101.617 21.4463 73.323 21.4463C46.4795 21.4463 24.4581 42.0558 22.271 68.2887H89.9859V76.8864H22.271C24.4581 103.119 46.4795 123.729 73.323 123.729Z" fill="white"/></svg>'
 export const MESSAGE = `
 !!!!WARNING!!!!
-
-This message is for sign https://ocs-discoveries.universalbase.xyz.
-If you face this message on a different site. 
-It is a deceptive site.
-Please securely check the website https://ocs-discoveries.universalbase.xyz.
-If you sign the message on a different site.
-It might leak your favorite app list.
+- This message is for sign https://ocs-discoveries.universalbase.xyz.
+- If you see this message on a different site, it must be a deceptive site.
+- Please surely check whether the website is https://ocs-discoveries.universalbase.xyz.
+- If you sign the message on a different site, it might leak your favorite app list.
 `
