@@ -12,7 +12,7 @@ const FavoriteLabel: React.FC<LabelProps> = ({ labelValue }) => {
 
     useEffect(() => {
         if (labelValue?.id) {
-            const favoriteState = localStorage.getItem(`FAVORITE#${labelValue.id}`);
+            const favoriteState = localStorage.getItem(`${labelValue.id}`);
             if (favoriteState) {
                 setIsFavorite(JSON.parse(favoriteState));
             } else {
