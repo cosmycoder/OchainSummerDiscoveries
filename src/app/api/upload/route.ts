@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import pinataSDK from '@pinata/sdk';
-
+export const dynamic = 'force-dynamic';
 export async function POST(request: NextRequest) {
   try {
     const pinataApiKey = process.env.PINATA_API_KEY;
