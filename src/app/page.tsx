@@ -28,7 +28,7 @@ const FeatureCards: FeatureCardProps[] = [
     delay: 0.6
   },
   {
-    title: "Discover on BASE",
+    title: "Discover on Base",
     description: "Base is a secure, low-cost, builder-friendly Ethereum L2 built to bring the next billion users onchain.",
     icon: "/Base_Wordmark_White.svg",
     delay: 0.8
@@ -50,7 +50,7 @@ const Home: FC = () => (
       </FadeIn>
       <FadeIn delay={0.2}>
         <p className={styles.description}>
-          Boosting the discoverability of the BASE ecosystem with highly accessible graph visualizations
+          Boosting the discoverability of the Base ecosystem with highly accessible graph visualizations
         </p>
       </FadeIn>
       <div className={styles.grid}>
