@@ -11,16 +11,16 @@ export const POST = async (request: NextRequest) => {
       throw new Error('Pinata API keys are not set in the environment variables!');
     }
 
-    // Dynamically import Pinata SDK
-    const pinataSDK = (await import('@pinata/sdk')).default;
-    const pinata = new pinataSDK({ pinataApiKey, pinataSecretApiKey });
-
     const body = await request.json();
     const data = body.data;
 
     if (!data || Object.keys(data).length === 0) {
       return NextResponse.json({ error: 'No data provided' }, { status: 400 });
     }
+
+    // Dynamically import Pinata SDK
+    const pinataSDK = (await import('@pinata/sdk')).default;
+    const pinata = new pinataSDK({ pinataApiKey, pinataSecretApiKey });
 
     const options = {
       pinataMetadata: {
