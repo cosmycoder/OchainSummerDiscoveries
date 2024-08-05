@@ -8,28 +8,27 @@ interface PopupProps {
     onClose: () => void;
 }
 
-const SwapPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => {
-    return isOpen ? (
-        <div className={`${styles.swapPopup} ${styles.popupOpen}`}>
-            <div className={styles.closeButton} onClick={onClose}>
-                &times;
-            </div>
-            <div className="text-center">
-                <h2 className={styles.logoTextContainer}>
-                    <Image
-                        src="/baselogo.png"
-                        alt="baselogo"
-                        width={24}
-                        height={24}
-                        className={styles.logo}
-                    />
-                    BASE Network
-                </h2>
-                <SwapComponents />
-            </div>
+const SwapPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => isOpen ? (
+    <div className={`${styles.swapPopup} ${styles.popupOpen}`}>
+        <div className={styles.closeButton} onClick={onClose}>
+            &times;
         </div>
-    ) : null;
-});
+        <div className="text-center">
+            <h2 className={styles.logoTextContainer}>
+                <Image
+                    src="/baselogo.png"
+                    alt="baselogo"
+                    width={24}
+                    height={24}
+                    className={styles.logo}
+                />
+                BASE Network
+            </h2>
+            <SwapComponents />
+        </div>
+    </div>
+) : null
+);
 
 export default SwapPopup;
 SwapPopup.displayName = 'SwapPopup';

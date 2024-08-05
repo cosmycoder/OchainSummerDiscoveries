@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { FC, ReactNode, useState } from 'react';
 import { useAccount, useBalance, useEnsAvatar, useEnsName } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 import { formatEther } from 'viem';
@@ -9,7 +9,7 @@ type Props = {
   children: ReactNode
 };
 
-const Profile = ({ children }: Props) => {
+const Profile: FC<Props> = ({ children }) => {
   const [isHidden, setIsHidden] = useState(false);
   const { address } = useAccount();
   const { data: balanceData } = useBalance({ address });
@@ -29,11 +29,11 @@ const Profile = ({ children }: Props) => {
 
   return (
     <>
-       <button 
-        className={`${styles.toggleButton} ${isHidden ? styles.extended : ''}`} 
+      <button
+        className={`${styles.toggleButton} ${isHidden ? styles.extended : ''}`}
         onClick={toggleProfile}
       >
-        {isHidden ? 'Extend': 'Hide'}
+        {isHidden ? 'Extend' : 'Hide'}
       </button>
       <div className={`${styles.profileContainer} ${isHidden ? styles.hidden : ''}`}>
         <div className={styles.header}>

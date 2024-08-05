@@ -6,7 +6,7 @@ import SwapPopup from '../SwapComponents/SwapPopup';
 
 
 
-const SwapButton: FC= () => {
+const SwapButton: FC = () => {
 
     const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -19,7 +19,7 @@ const SwapButton: FC= () => {
     };
     return (
         <div>
-            <button className={styles.floatingButton} onClick={isPopupOpen ?  handleClosePopup : handleOpenPopup }>
+            <button className={styles.floatingButton} onClick={isPopupOpen ? handleClosePopup : handleOpenPopup}>
                 <RiTokenSwapFill className={styles.heartIcon} />
             </button>
             <SwapPopup isOpen={isPopupOpen} onClose={handleClosePopup} />

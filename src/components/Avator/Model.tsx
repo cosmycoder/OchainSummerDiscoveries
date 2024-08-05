@@ -68,7 +68,7 @@ const Model: React.FC<ModelProps> = ({ objUrl, mtlUrl, imgSrc }) => {
       const time = Date.now() * 0.001;
       ref.current.position.y = Math.sin(time) * 0.1 - 3.2; // Make the model float up and down
       ref.current.position.x = Math.cos(time) * 0.1; // Make the model move back and forth
-      ref.current.position.z = Math.sin(time) * 0.1 + 3.2; 
+      ref.current.position.z = Math.sin(time) * 0.1 + 3.2;
     }
   });
 

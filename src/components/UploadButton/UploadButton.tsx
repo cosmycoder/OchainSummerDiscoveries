@@ -6,7 +6,7 @@ import UploadPopup from '../UploadComponents/UploadPopup';
 
 
 
-const UploadButton: FC= () => {
+const UploadButton: FC = () => {
 
     const [isPopupOpen, setPopupOpen] = useState(false);
 
@@ -17,9 +17,10 @@ const UploadButton: FC= () => {
     const handleClosePopup = () => {
         setPopupOpen(false);
     };
+
     return (
         <div>
-            <button className={styles.floatingButton} onClick={isPopupOpen ?  handleClosePopup : handleOpenPopup }>
+            <button className={styles.floatingButton} onClick={isPopupOpen ? handleClosePopup : handleOpenPopup}>
                 <FaUpload className={styles.heartIcon} />
             </button>
             <UploadPopup isOpen={isPopupOpen} onClose={handleClosePopup} />

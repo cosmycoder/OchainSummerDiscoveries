@@ -8,8 +8,8 @@ interface PopupProps {
     onClose: () => void;
 }
 
-const UploadPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => {
-    return isOpen ? (
+const UploadPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) =>
+    isOpen ? (
         <div className={`${styles.swapPopup} ${styles.popupOpen}`}>
             <div className={styles.closeButton} onClick={onClose}>
                 &times;
@@ -26,8 +26,8 @@ const UploadPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => {
                 <UploadComponents />
             </div>
         </div>
-    ) : null;
-});
+    ) : null
+);
 
 export default UploadPopup;
 UploadPopup.displayName = 'UploadPopup';

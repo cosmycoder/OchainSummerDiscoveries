@@ -4,8 +4,6 @@ import { FaDownload } from "react-icons/fa";
 import styles from './DownloadButton.module.css';
 import DownloadPopup from '../DownloadComponents/DownloadPopup';
 
-
-
 const DownloadButton: FC= () => {
 
     const [isPopupOpen, setPopupOpen] = useState(false);
@@ -17,6 +15,7 @@ const DownloadButton: FC= () => {
     const handleClosePopup = () => {
         setPopupOpen(false);
     };
+
     return (
         <div>
             <button className={styles.floatingButton} onClick={isPopupOpen ?  handleClosePopup : handleOpenPopup }>

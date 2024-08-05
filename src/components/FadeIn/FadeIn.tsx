@@ -18,4 +18,4 @@ export const FadeIn: FC<FadeInProps> = ({ children, delay = 0 }) =>
   >
     {children}
   </motion.div>
-)
+);

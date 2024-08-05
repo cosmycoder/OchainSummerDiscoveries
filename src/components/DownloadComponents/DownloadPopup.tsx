@@ -9,8 +9,8 @@ interface PopupProps {
     onClose: () => void;
 }
 
-const DownloadPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => {
-    return isOpen ? (
+const DownloadPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) =>
+    isOpen ? (
         <div className={`${styles.swapPopup} ${styles.popupOpen}`}>
             <div className={styles.closeButton} onClick={onClose}>
                 &times;
@@ -27,8 +27,8 @@ const DownloadPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => {
                 <DownloadComponents />
             </div>
         </div>
-    ) : null;
-});
+    ) : null
+);
 
 export default DownloadPopup;
 DownloadPopup.displayName = 'DownloadPopup';

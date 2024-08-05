@@ -3,7 +3,6 @@ import { ethers } from 'ethers';
 
 // Function to derive a fixed-length key from a signature using Keccak256
 export const signToKeccak256 = (signature: string): string => {
-  console.log("SIGN_KEY",process.env.SIGN_KEY);
   return ethers.keccak256(ethers.toUtf8Bytes(signature));
 };
 

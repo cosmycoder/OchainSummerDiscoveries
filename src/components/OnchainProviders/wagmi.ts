@@ -6,7 +6,7 @@ import { coinbaseWallet } from 'wagmi/connectors';
 export const wagmiConfig = createConfig({
   // Specify the chains you want to use
   chains: [baseSepolia, mainnet],
-  
+
   // Specify the connectors you want to use
   connectors: [
     coinbaseWallet({
