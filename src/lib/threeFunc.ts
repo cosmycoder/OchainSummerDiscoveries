@@ -117,7 +117,7 @@ const createDappSprite = (texture: THREE.Texture): THREE.Sprite => {
   });
   const sprite = new THREE.Sprite(material);
   const aspectRatio = texture.image.width / texture.image.height;
-  sprite.scale.set(aspectRatio * 4, 4, 4);
+  sprite.scale.set(4, 4 / aspectRatio, 1);
   return sprite;
 };
 

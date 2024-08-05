@@ -22,7 +22,7 @@ const SwapPopup: FC<PopupProps> = React.memo(({ isOpen, onClose }) => isOpen ? (
                     height={24}
                     className={styles.logo}
                 />
-                BASE Network
+                Base
             </h2>
             <SwapComponents />
         </div>
