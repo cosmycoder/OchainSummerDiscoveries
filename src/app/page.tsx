@@ -45,7 +45,7 @@ const Home: FC = () => (
     <main className={styles.main}>
       <FadeIn>
         <h3 className={styles.title}>
-          <span className={styles.highlight}>BASE</span> Ecosystem Finder
+          <span className={styles.highlight}>Base</span> Ecosystem Finder
         </h3>
       </FadeIn>
       <FadeIn delay={0.2}>
