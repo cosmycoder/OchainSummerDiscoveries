@@ -4,10 +4,10 @@ export const dynamic = 'force-dynamic';
 
 export const POST = async (request: NextRequest) => {
   try {
-    const pinataApiKey = process.env.PINATA_API_KEY;
-    const pinataSecretApiKey = process.env.PINATA_SECRET_API_KEY;
+    const pinataJwt = process.env.PINATA_JWT;
+    const pinataGateway = process.env.PINATA_GATEWAY;
 
-    if (!pinataApiKey || !pinataSecretApiKey) {
+    if (!pinataJwt || !pinataGateway) {
       throw new Error('Pinata API keys are not set in the environment variables!');
     }
 
@@ -19,32 +19,24 @@ export const POST = async (request: NextRequest) => {
     }
 
     // Dynamically import Pinata SDK
-    const pinataSDK = (await import('@pinata/sdk')).default;
-    const pinata = new pinataSDK({ pinataApiKey, pinataSecretApiKey });
+    const pinataSdk = (await import('pinata')).PinataSDK;
+    const pinata = new pinataSdk({ pinataJwt, pinataGateway });
 
-    const options = {
-      pinataMetadata: {
-        name: data.name,
-      },
-    };
 
-    const result = await pinata.pinJSONToIPFS(data, options);
 
-    // Fetch the file from Pinata by name
-    const response = await pinata.pinList({
-      status: 'pinned',
-      metadata: {
-        name: data.name,
-        keyvalues: {}
-      }
+    const result = await pinata.upload.json(data).addMetadata({
+      name: data.name
     });
 
+    // Fetch the file from Pinata by name
+    const response = await pinata.listFiles().name(data.name);
+
     // If duplicate files are found, unpin the older ones
-    if (response && response.rows && response.rows.length > 1) {
-      const file = response.rows[1];
+    if (response?.length > 1) {
+      const file = response[1];
       console.log(file);
       const fileHash = file.ipfs_pin_hash;
-      await pinata.unpin(fileHash);
+      await pinata.unpin([fileHash]);
     }
 
     return NextResponse.json({ ipfsHash: result.IpfsHash });

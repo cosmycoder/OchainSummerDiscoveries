@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (request: NextRequest) => {
   try {
-    const pinataApiKey = process.env.PINATA_API_KEY;
-    const pinataSecretApiKey = process.env.PINATA_SECRET_API_KEY;
+    const pinataJwt = process.env.PINATA_JWT;
+    const pinataGateway = process.env.PINATA_GATEWAY;
 
-    if (!pinataApiKey || !pinataSecretApiKey) {
+    if (!pinataJwt || !pinataGateway) {
       throw new Error('Pinata API keys are not set in the environment variables!');
     }
 
@@ -16,22 +16,17 @@ export const POST = async (request: NextRequest) => {
     }
 
     // Dynamically import Pinata SDK
-    const pinataSDK = (await import('@pinata/sdk')).default;
-    const pinata = new pinataSDK({ pinataApiKey, pinataSecretApiKey });
+    const pinataSdk = (await import('pinata')).PinataSDK;
+    const pinata = new pinataSdk({ pinataJwt, pinataGateway });
 
     // Fetch the file from Pinata
-    const response = await pinata.pinList({
-      status: 'pinned',
-      metadata: {
-        name: fileName,
-        keyvalues: {}
-      }
-    });
+    const response = await pinata.listFiles().name(fileName);
+
 
     // If file is found
-    if (response?.rows?.length > 0) {
+    if (response?.length > 0) {
 
-      const fileHash = response.rows[0].ipfs_pin_hash;
+      const fileHash = response[0].ipfs_pin_hash;
       // Construct the download URL
       const downloadUrl = `https://gateway.pinata.cloud/ipfs/${fileHash}`;
 
