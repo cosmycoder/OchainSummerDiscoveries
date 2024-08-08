@@ -2,19 +2,19 @@ import React, { useState, FormEvent } from 'react';
 import axios from 'axios';
 import { useAccount, useSignMessage } from 'wagmi';
 import { decryptData, signToKeccak256 } from '@/lib/encryption';
-import styles from '../UploadComponents/FileUpload.module.css';
+import styles from '../UploadComponents/Upload.module.css';
 import { FaDownload } from 'react-icons/fa';
 import { MESSAGE } from '../../app.settings';
+import DownloadingAnimation from './DownloadingAnimation';
 
-const LocalStorageDownload: React.FC = () => {
+const DownloadFileFromIPFS: React.FC = () => {
   const { address } = useAccount();
   const { signMessageAsync } = useSignMessage();
-  const [message, setMessage] = useState<{ type: 'error' | 'success'; content: string } | null>(null);
+  const [message, setMessage] = useState<{ type: 'error' | 'success' | 'progress'; content: string } | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMessage(null);
-
+    setMessage({ type: 'progress', content: 'Downloading in progress' });
     if (!address) {
       setMessage({ type: 'error', content: 'No wallet connected. Please connect your wallet.' });
       return;
@@ -43,7 +43,7 @@ const LocalStorageDownload: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <p className={styles.warning}>This feature is experimental.</p>
+      <DownloadingAnimation message={message} />
       <div className={styles.header}>
         <p>Download and decrypt your favorite data from IPFS.</p>
       </div>
@@ -52,13 +52,8 @@ const LocalStorageDownload: React.FC = () => {
           Download <FaDownload />
         </button>
       </form>
-      {message && (
-        <p className={message.type === 'error' ? styles.error : styles.success}>
-          {message.content}
-        </p>
-      )}
     </div>
   );
 };
 
-export default LocalStorageDownload;
+export default DownloadFileFromIPFS;

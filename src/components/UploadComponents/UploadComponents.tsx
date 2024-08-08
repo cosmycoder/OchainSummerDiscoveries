@@ -1,6 +1,6 @@
 import { useAccount } from 'wagmi';
 import styles from './UploadPopup.module.css'
-import LocalStorageUpload from './FileUpload';
+import UploadFileToIPFS from './UploadFIleToIPFS';
 
 export default function UploadComponents() {
   const { address } = useAccount();
@@ -8,7 +8,7 @@ export default function UploadComponents() {
   return (
     <div className="flex items-center space-x-4">
       {address ? (
-        <LocalStorageUpload />
+        <UploadFileToIPFS />
       ) : (
         <p className={styles.warning} >Connect wallet to use Upload components</p>
       )}
