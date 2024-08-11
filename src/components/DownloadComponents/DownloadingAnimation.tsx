@@ -27,33 +27,17 @@ const Box: React.FC<BoxProps> = ({ color }) => {
     color: color ?? 'black'
   });
 
-
-  // Function to extract the decimal part
-  const extractDecimal = (number: number) => number - Math.trunc(number);
-
-  // Function to crop the decimal to a specified number of places
-  const cropDecimal = (decimal: number, places: number) => {
-    const factor = Math.pow(10, places);
-    return Math.trunc(decimal * factor) / factor;
-  };
-
-  // Composing the functions to get the cropped decimal part
-  const getCroppedDecimal = (number: number, decimalPlaces: number) =>
-    cropDecimal(extractDecimal(number), decimalPlaces);
-
-
-
   useFrame(() => {
 
-
+    const rotationToDegree = (rotation: number) => Math.floor((rotation * (180 / Math.PI)) % 360);
 
     if (ref.current) {
       if (color !== 'silver' && color !== 'green' && color !== 'red') {
         ref.current.rotation.x += 0.01;
         ref.current.rotation.y += 0.01;
       } else {
-        getCroppedDecimal(ref.current.rotation.x, 2) !== getCroppedDecimal(Math.PI / 5, 2) ? ref.current.rotation.x += 0.01 : ref.current.rotation.x = Math.PI / 5;
-        getCroppedDecimal(ref.current.rotation.y, 2) !== getCroppedDecimal(Math.PI / 4, 2) ? ref.current.rotation.y += 0.01 : ref.current.rotation.y = Math.PI / 4;
+        rotationToDegree(ref.current.rotation.x) !== 36 ? ref.current.rotation.x += 0.01 : ref.current.rotation.x = Math.PI / 5;
+        rotationToDegree(ref.current.rotation.y) !== 45 ? ref.current.rotation.y += 0.01 : ref.current.rotation.y = Math.PI / 4;
       }
     }
   });
