@@ -1,182 +1,183 @@
 .profileContainer {
-    top: 15%;
-    left: 10%;
-    max-width: 300px;
-    position: absolute;
-    padding: 1rem;
-    background: linear-gradient(45deg, #003bb3, #1eb25d);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px #0000004d;
-    opacity: 1;
-    z-index: 300;
+  top: 15%;
+  left: 10%;
+  max-width: 300px;
+  position: absolute;
+  padding: 1rem;
+  background: linear-gradient(45deg, #003bb3, #1eb25d);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px #0000004d;
+  opacity: 1;
+  z-index: 300;
 }
 
 .profileContainer.hidden {
-    transform: translateX(-200%);
+  transform: translateX(-200%);
 }
 
 .toggleButton {
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    padding: 3px 40px;
-    background: linear-gradient(45deg, #000000, #000000);
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    z-index: 200;
-    font-weight: bold;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 1px 1px 1px rgba(0, 114, 255, 0.9);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    /* New properties for gradient border */
-    border: 2px solid transparent;
-    background-origin: border-box;
-    background-clip: content-box, border-box;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  padding: 3px 40px;
+  background: linear-gradient(45deg, #000000, #000000);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 200;
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 1px 1px 1px rgba(0, 114, 255, 0.9);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  /* New properties for gradient border */
+  border: 2px solid transparent;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+.toggleButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
+}
+
+.toggleButton:active {
+  transform: translateY(1px);
+}
+
+.toggleButton::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+  transform: scale(0);
+  transition: transform 0.5s ease-out;
+}
+
+.toggleButton:hover::before {
+  transform: scale(1);
+}
+
+.toggleButton::after {
+  content: '<<';
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.toggleButton.extended::after {
+  content: '>>';
+  left: 24px;
+  right: auto;
+}
+
+.toggleButton:hover::after {
+  opacity: 1;
+  right: 16px;
+}
+
+.toggleButton.extended:hover::after {
+  left: 16px;
+  right: auto;
+}
+
+/* New keyframes for button glow effect */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(0, 198, 255, 0.5), 0 0 10px rgba(0, 198, 255, 0.4), 0 0 20px rgba(0, 198, 255, 0.3), 0 0 30px rgba(0, 198, 255, 0.2);
   }
-  
-  .toggleButton:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
+
+  100% {
+    box-shadow: 0 0 10px rgba(0, 198, 255, 0.5), 0 0 20px rgba(0, 198, 255, 0.4), 0 0 30px rgba(0, 198, 255, 0.3), 0 0 40px rgba(0, 198, 255, 0.2);
   }
-  
-  .toggleButton:active {
-    transform: translateY(1px);
-  }
-  
-  .toggleButton::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-    transform: scale(0);
-    transition: transform 0.5s ease-out;
-  }
-  
-  .toggleButton:hover::before {
-    transform: scale(1);
-  }
-  
-  .toggleButton::after {
-    content: '<<';
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
-    transition: all 0.3s ease;
-  }
-  
-  .toggleButton.extended::after {
-    content: '>>';
-    left: 24px;
-    right: auto;
-  }
-  
-  .toggleButton:hover::after {
-    opacity: 1;
-    right: 16px;
-  }
-  
-  .toggleButton.extended:hover::after {
-    left: 16px;
-    right: auto;
-  }
-  
-  /* New keyframes for button glow effect */
-  @keyframes glow {
-    0% {
-      box-shadow: 0 0 5px rgba(0, 198, 255, 0.5), 0 0 10px rgba(0, 198, 255, 0.4), 0 0 20px rgba(0, 198, 255, 0.3), 0 0 30px rgba(0, 198, 255, 0.2);
-    }
-    100% {
-      box-shadow: 0 0 10px rgba(0, 198, 255, 0.5), 0 0 20px rgba(0, 198, 255, 0.4), 0 0 30px rgba(0, 198, 255, 0.3), 0 0 40px rgba(0, 198, 255, 0.2);
-    }
-  }
-  
-  /* Applying the glow animation */
-  .toggleButton:hover {
-    animation: glow 1.5s infinite alternate;
-  }
-  
+}
+
+/* Applying the glow animation */
+.toggleButton:hover {
+  animation: glow 1.5s infinite alternate;
+}
+
 
 .header {
-    text-align: center;
-    margin-bottom: 0.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 .profilePic:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .name {
-    font-size: 1.2rem;
-    margin: 0.5rem;
-    background: linear-gradient(to right, #ffffff, #0f3460);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: glow 3s ease-in-out infinite alternate;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 1.2rem;
+  margin: 0.5rem;
+  background: linear-gradient(to right, #ffffff, #0f3460);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glow 3s ease-in-out infinite alternate;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @keyframes glow {
-    from {
-        text-shadow: 0 0 5px #ffffff, 0 0 7px #ffffff, 0 0 10px #ffffff;
-    }
+  from {
+    text-shadow: 0 0 5px #ffffff, 0 0 7px #ffffff, 0 0 10px #ffffff;
+  }
 
-    to {
-        text-shadow: 0 0 7px #ffffff, 0 0 9px #ffffff, 0 0 12px #ffffff;
-    }
+  to {
+    text-shadow: 0 0 7px #ffffff, 0 0 9px #ffffff, 0 0 12px #ffffff;
+  }
 }
 
 .infoGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
 }
 
 .infoItem {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    /* Add this to contain overflowing content */
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  /* Add this to contain overflowing content */
 }
 
 .infoItem:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(216, 200, 202, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(216, 200, 202, 0.3);
 }
 
 .infoLabel {
-    font-size: 0.9rem;
-    color: #a5a5a5;
-    margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #a5a5a5;
+  margin-bottom: 0.5rem;
 }
 
 .infoValue {
-    font-size: 1rem;
-    color: #ffffff;
-    word-break: break-all;
-    /* Allows breaking of very long words */
-    overflow-wrap: break-word;
-    /* Allows wrapping of long words */
+  font-size: 1rem;
+  color: #ffffff;
+  word-break: break-all;
+  /* Allows breaking of very long words */
+  overflow-wrap: break-word;
+  /* Allows wrapping of long words */
 }
 
 
 .addressValue {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

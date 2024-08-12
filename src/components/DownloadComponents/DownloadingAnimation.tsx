@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Html, OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
+import styles from './DownloadingAnimation.module.css';
 
 interface MessageProps {
   message: {
@@ -22,9 +23,12 @@ const Box: React.FC<BoxProps> = ({ color }) => {
   const texture = loader.load('/images/ipfs-face.png');
 
   // Create materials with the textures
-  const material = new THREE.MeshBasicMaterial({
-    map: texture, // Your texture
-    color: color ?? 'black'
+  const material = new THREE.MeshPhongMaterial({
+    map: texture,
+    color: color ?? 'black',
+    shininess: 100,
+    emissive: color === 'gray' ? 0x444444 : 0x000000,
+    emissiveIntensity: 0.5,
   });
 
   useFrame(() => {
@@ -65,14 +69,20 @@ const DownloadingAnimation: React.FC<MessageProps> = ({ message }) => {
   };
 
   return (
-    <Canvas style={{ height: '200px' }}>
+    <Canvas className={styles.canvasContainer}>
       {/**  <OrthographicCamera makeDefault zoom={30} position={[0,0,10]} /> */}
       <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={45} />
-      <ambientLight intensity={1} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
+      <ambientLight intensity={0.7} />
+      <spotLight
+        position={[15, 15, 15]}
+        angle={0.3}
+        penumbra={1}
+        intensity={1}
+        castShadow
+      />
       <Box color={getColor()} />
       <Html center>
-        <div style={{ color: 'white', fontSize: '18px', textAlign: 'center' }}>
+        <div className={styles.textContainer}>
           {message?.content ?? "IPFS"}
         </div>
       </Html>
