@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Html, OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
+import { Html, OrthographicCamera, PerspectiveCamera, SpotLight } from '@react-three/drei';
 import * as THREE from 'three';
 import styles from './DownloadingAnimation.module.css';
 
@@ -25,9 +25,9 @@ const Box: React.FC<BoxProps> = ({ color }) => {
   // Create materials with the textures
   const material = new THREE.MeshPhongMaterial({
     map: texture,
-    color: color ?? 'black',
+    color: color ?? 'silver',
     shininess: 100,
-    emissive: color === 'gray' ? 0x444444 : 0x000000,
+    emissive: 0x000000,
     emissiveIntensity: 0.5,
   });
 
@@ -36,7 +36,7 @@ const Box: React.FC<BoxProps> = ({ color }) => {
     const rotationToDegree = (rotation: number) => Math.floor((rotation * (180 / Math.PI)) % 360);
 
     if (ref.current) {
-      if (color !== 'silver' && color !== 'green' && color !== 'red') {
+      if (color !== 'silver' && color !== 'lightgreen' && color !== 'red') {
         ref.current.rotation.x += 0.01;
         ref.current.rotation.y += 0.01;
       } else {
@@ -58,11 +58,11 @@ const DownloadingAnimation: React.FC<MessageProps> = ({ message }) => {
   const getColor = () => {
     switch (message?.type) {
       case 'success':
-        return 'green';
+        return 'lightgreen';
       case 'error':
         return 'red';
       case 'progress':
-        return 'gray';
+        return 'white';
       default:
         return 'silver';
     }
@@ -72,12 +72,12 @@ const DownloadingAnimation: React.FC<MessageProps> = ({ message }) => {
     <Canvas className={styles.canvasContainer}>
       {/**  <OrthographicCamera makeDefault zoom={30} position={[0,0,10]} /> */}
       <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={45} />
-      <ambientLight intensity={0.7} />
-      <spotLight
+      <ambientLight intensity={1} />
+      <SpotLight
         position={[15, 15, 15]}
         angle={0.3}
-        penumbra={1}
-        intensity={1}
+        penumbra={0.1}
+        intensity={2}
         castShadow
       />
       <Box color={getColor()} />
