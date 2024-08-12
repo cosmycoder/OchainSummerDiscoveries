@@ -1,7 +1,7 @@
 .profileContainer {
   top: 15%;
   left: 10%;
-  max-width: 300px;
+  max-width: 275px;
   position: absolute;
   padding: 1rem;
   background: linear-gradient(45deg, #003bb3, #1eb25d);
