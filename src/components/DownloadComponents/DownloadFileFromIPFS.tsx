@@ -45,7 +45,7 @@ const DownloadFileFromIPFS: React.FC = () => {
     <div className={styles.container}>
       <DownloadingAnimation message={message} />
       <div className={styles.header}>
-        <p>Download and decrypt your favorite data from IPFS.</p>
+        Download and decrypt your favorite data from IPFS.
       </div>
       <form className={styles.form} onSubmit={handleSubmit}>
         <button type="submit" className={styles.button} disabled={!address}>

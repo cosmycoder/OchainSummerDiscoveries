@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi';
 import DownloadFileFromIPFS from './DownloadFileFromIPFS';
 import styles from './DownloadPopup.module.css'
 
-export default function DownloadComponents() {
+const DownloadComponents = () => {
   const { address } = useAccount();
 
   return (
@@ -16,3 +16,5 @@ export default function DownloadComponents() {
     </div>
   );
 }
+
+export default DownloadComponents;
