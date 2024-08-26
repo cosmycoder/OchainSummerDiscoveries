@@ -1,6 +1,5 @@
 # OCS-Discoveries (Onchain Summer Discoveries)
 
-![image](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/assets/32320988/3e45cee4-8a44-441d-a5e0-67682b8a0481)
 
 [OCS-Discoveries (Onchain Summer Discoveries)](https://ocs-discoveries.universalbase.xyz/) focuses on enhancing the discoverability of the BASE ecosystem using Fleek Infrastructure, provides highly discoverable graph representations. As the driving force behind the Onchain Summer Registry, OCS-Discoveries emphasizes the ease of finding registered apps powered by Fleek's robust technical infrustructure. This approach effectively addresses the challenge of locating applications within the rapidly growing BASE ecosystem.
 
@@ -14,7 +13,7 @@
 - [License](#license)
 
 ## Architecture
-![ocs-discoveries-techbackground-2](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/assets/32320988/213739dd-43d1-4a9a-92f6-70215367f75b)
+![ocs-discoveries-techbackground-2]
 
 ## Installation
 
@@ -49,7 +48,7 @@ It returns **IPFS HASH with url**
 
 `get-graph.js` is a query function for retrieving BASE ecosystem data for graph representation.
 
-Change [the first line](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/blob/main/src/fleek-functions/get-graph.js#L1) to `ecosystem-data.js` hash value you got.
+Change [the first line] to `ecosystem-data.js` hash value you got.
 ```bash
 vi get-graph.js
 ```
@@ -65,7 +64,7 @@ $ fleek functions deploy --noBundle --name get-graph --path ./get-graph.js
 $ fleek functions deploy --name get-base64data.js --path ./get-base64data.js
 ```
 
-5. Describe Fleek functions API URL in [app.settings.ts](https://github.com/HiroyukiNaito/OchainSummerDiscoveries/blob/main/src/app.settings.ts)
+5. Describe Fleek functions API URL in [app.settings.ts]
 
 | VALUABLE      | FLEEK　API　URL |
 | ------------- | -------------  |
@@ -99,19 +98,9 @@ The user manual can be kindly found in the [GitBook](https://solidoak.gitbook.io
 1. Push to the branch (git push origin feature/AmazingFeature).
 1. Open a pull request.
 
-## Credits
-
-- Author: Hiroyuki Naito @HiroyukiNaito
-- Maintainer: Hiroyuki Naito @HiroyukiNaito
 
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
-
-## Contacts
-
-- Email: hiroyukinait.eth@gmail.com
-- X: @hnaito_eth
-- Warpcast: @hiroyukinaito
 
 
